@@ -15,7 +15,7 @@
   }
 
   body {
-    @apply m-0 grid place-items-center min-w-[320px] min-h-screen;
+    @apply m-0 min-w-[320px] min-h-screen;
   }
 
   a {
@@ -39,7 +39,7 @@
 
 @layer components {
   #root {
-    @apply max-w-[1280px] mx-auto p-8 text-center;
+    @apply max-w-[1280px] mx-auto pt-0 px-4 md:px-6 text-left;
   }
 
   .card {
