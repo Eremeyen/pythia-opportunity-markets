@@ -1,0 +1,80 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    color-scheme: light dark;
+    color: rgba(255, 255, 255, 0.87);
+    background-color: #242424;
+    font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply m-0 grid place-items-center min-w-[320px] min-h-screen;
+  }
+
+  a {
+    @apply font-medium text-[#646cff] no-underline;
+  }
+
+  a:hover {
+    @apply text-[#535bf2];
+  }
+
+  @media (prefers-color-scheme: light) {
+    :root {
+      color: #213547;
+      background-color: #ffffff;
+    }
+    a:hover {
+      color: #747bff;
+    }
+  }
+}
+
+@layer components {
+  #root {
+    @apply max-w-[1280px] mx-auto p-8 text-center;
+  }
+
+  .card {
+    @apply p-8;
+  }
+
+  .read-the-docs {
+    color: #888;
+  }
+}
+
+@layer utilities {
+  .logo {
+    height: 6em;
+    padding: 1.5em;
+    will-change: filter;
+    transition: filter 300ms;
+  }
+
+  .logo:hover {
+    filter: drop-shadow(0 0 2em #646cffaa);
+  }
+
+  .logo.react:hover {
+    filter: drop-shadow(0 0 2em #61dafbaa);
+  }
+
+  @keyframes logo-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    a:nth-of-type(2) .logo {
+      animation: logo-spin infinite 20s linear;
+    }
+  }
+}
