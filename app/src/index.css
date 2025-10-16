@@ -2,9 +2,9 @@
 
 @layer base {
   :root {
-    color-scheme: light dark;
-    color: rgba(255, 255, 255, 0.87);
-    background-color: #242424;
+    color-scheme: light;
+    color: #0b1f3a; 
+    background-color: #ffffff; 
     font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
     line-height: 1.5;
     font-weight: 400;
@@ -19,27 +19,20 @@
   }
 
   a {
-    @apply font-medium text-[#646cff] no-underline;
+    @apply font-medium no-underline;
+    color: #0b1f3a;
   }
 
   a:hover {
-    @apply text-[#535bf2];
+    color: #174a8c; /* slightly lighter blue on hover */
   }
 
-  @media (prefers-color-scheme: light) {
-    :root {
-      color: #213547;
-      background-color: #ffffff;
-    }
-    a:hover {
-      color: #747bff;
-    }
-  }
+  /* Light theme is default; remove OS overrides for consistency */
 }
 
 @layer components {
   #root {
-    @apply max-w-[1280px] mx-auto pt-0 px-4 md:px-6 text-left;
+    @apply pt-0 text-left;
   }
 
   .card {
