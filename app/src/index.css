@@ -3,8 +3,8 @@
 @layer base {
   :root {
     color-scheme: light;
-    color: #0b1f3a; 
-    background-color: #ffffff; 
+    color: #0b1f3a;
+    background-color: #ffffff;
     font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
     line-height: 1.5;
     font-weight: 400;
@@ -61,8 +61,12 @@
   }
 
   @keyframes logo-spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
   }
 
   @media (prefers-reduced-motion: no-preference) {

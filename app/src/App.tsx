@@ -1,10 +1,6 @@
-import './App.css'
-import { Routes, Route } from 'react-router-dom'
-import RootLayout from './layouts/RootLayout'
-
-
-
-
+import "./App.css";
+import { Routes, Route } from "react-router-dom";
+import RootLayout from "./layouts/RootLayout";
 
 function App() {
   return (
@@ -13,7 +9,7 @@ function App() {
         <Route index element={<div />} />
       </Route>
     </Routes>
-  )
+  );
 }
 
-export default App
+export default App;

@@ -1,5 +1,5 @@
-import { Outlet } from 'react-router-dom'
-import PageHeader from '../components/PageHeader'
+import { Outlet } from "react-router-dom";
+import PageHeader from "../components/PageHeader";
 
 export default function RootLayout() {
   return (
@@ -13,7 +13,5 @@ export default function RootLayout() {
         <Outlet />
       </main>
     </div>
-  )
+  );
 }
-
-
