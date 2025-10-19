@@ -4,7 +4,7 @@ import PageHeader from "../components/PageHeader";
 export default function RootLayout() {
   return (
     <div className="min-h-screen">
-      <header className="sticky top-0 z-50 bg-transparent border-b border-black/1000">
+      <header className="sticky top-0 z-50 bg-white border-b border-black">
         <div className="mx-auto max-w-screen-2x px-2 md:px-3 pt-2">
           <PageHeader />
         </div>
