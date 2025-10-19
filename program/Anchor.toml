@@ -5,10 +5,10 @@ package_manager = "yarn"
 resolution = true
 skip-lint = false
 
-[programs.localnet]
-pythia_op = "5MqofGJPEaBLZPzhdevGcsgN4kraDP5wnLCCygpjQ2Yf"
-
 [programs.devnet]
+pythia_op = "7kcFUfyJaAh5eLJELkrrEWoiNknoY9Yb28f67a314zUs"
+
+[programs.localnet]
 pythia_op = "5MqofGJPEaBLZPzhdevGcsgN4kraDP5wnLCCygpjQ2Yf"
 
 [registry]
