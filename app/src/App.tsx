@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import RootLayout from "./layouts/RootLayout";
 import MarketPreviewCard from "./components/MarketPreviewCard";
 import AboutSection from "./components/AboutSection";
+import MarketDetails from "./pages/MarketDetails";
 
 function App() {
   return (
@@ -71,6 +72,7 @@ function App() {
             </div>
           }
         />
+        <Route path="/markets/:id" element={<MarketDetails />} />
       </Route>
     </Routes>
   );

@@ -6,5 +6,21 @@ Screens
 - [ ] Trading screen
 - [ ] Market categories (sponsors are categories)
 
+
+Market Preview Screen
+- [ ] add more detail to sparkline chart, consider replacing it with airbnb package
+
+Hooks
+- [ ] data hook for charts
+
+Improve Loading State of Market Details Page
+- [ ]
+
+Interfaces
+- [ ] change time fields at /app/src/types/market.ts 
+
 Sponsor / Traders
 - [ ] Sponsors should have a different screen
+
+Aesthetics
+- [ ] dark mode

@@ -2,8 +2,11 @@ import AttentionIndicator from "./AttentionIndicator";
 import Sparkline from "./Sparkline";
 import { formatDurationShort } from "../utils/time";
 import { useCountdown, useNow } from "../hooks/useCountdown";
+import { Link } from "react-router-dom";
 
 export type MarketPreviewCardProps = {
+    // MARKET ID MAY NEED TO BE IN DIFFERENT FORMAT
+    // THE TYPE OF THIS PROP MAY HAVE TO CHANGE
   id: string;
   logoUrl: string;
   title: string;
@@ -65,11 +68,13 @@ export default function MarketPreviewCard(props: MarketPreviewCardProps) {
   }
 
   return (
-    <div
+    <Link
+      to={`/markets/${props.id}`}
       className={
-        "group p-[3px] rounded-2xl bg-gradient-to-r from-[#0b1f3a] via-[#174a8c] to-[#6b5b95] transition-all duration-300 " +
+        "block group p-[3px] rounded-2xl bg-gradient-to-r from-[#0b1f3a] via-[#174a8c] to-[#6b5b95] transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#174a8c] focus-visible:ring-offset-white " +
         (className ?? "")
       }
+      aria-label={`Open market ${title}`}
     >
       <div className="h-full bg-white rounded-[calc(1rem-3px)] border-4 border-black p-4 md:p-5 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:shadow-md flex flex-col">
         <div className="flex items-start gap-3">
@@ -109,7 +114,7 @@ export default function MarketPreviewCard(props: MarketPreviewCardProps) {
           )}
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
 
