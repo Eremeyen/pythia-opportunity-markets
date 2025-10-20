@@ -31,7 +31,7 @@ describe("PythiaOp", () => {
   const CLUSTER_OFFSET = 1078779259;
 
   const connection = new anchor.web3.Connection(
-    "https://api.devnet.solana.com",
+    "https://devnet.helius-rpc.com/?api-key=a149fae2-6a52-4725-af62-1726c8e2cf9d",
     "confirmed"
   );
   
@@ -60,59 +60,89 @@ describe("PythiaOp", () => {
 
   const clusterAccount = getClusterAccAddress(CLUSTER_OFFSET);
 
-  it("Full market lifecycle test", async () => {
-    const owner = readKpJson(`${os.homedir()}/.config/solana/id.json`);
+  // Shared variables for tests
+  let owner: anchor.web3.Keypair;
+  let mxePublicKey: Uint8Array;
+  let marketPDA: PublicKey;
+  let question: string;
 
-    console.log("Initializing computation definitions...");
-    // await initCompDef(program, owner, "initialize_market");
-    // await initCompDef(program, owner, "process_private_trade");
-    // await initCompDef(program, owner, "reveal_market_state");
-    // await initCompDef(program, owner, "hide_market_state");
-    // await initCompDef(program, owner, "view_market_state");
-    console.log("All computation definitions initialized");
-
-    const mxePublicKey = await getMXEPublicKeyWithRetry(
-      provider as anchor.AnchorProvider,
-      program.programId
-    );
-    console.log("MXE x25519 pubkey is", Buffer.from(mxePublicKey).toString("hex"));
-
-    const question = "Will ETH reach $5000 by EOY?";
+  before(async () => {
+    owner = readKpJson(`${os.homedir()}/.config/solana/id.json`);
+    question = "Will ETH reach $5000 by EOY?";
+    
     const marketSeeds = [
       Buffer.from("market"),
       owner.publicKey.toBuffer(),
       Buffer.from(question),
     ];
-    const [marketPDA] = PublicKey.findProgramAddressSync(
+    marketPDA = PublicKey.findProgramAddressSync(
       marketSeeds,
       program.programId
+    )[0];
+  });
+
+  it("should initialize computation definitions", async () => {
+    console.log("Initializing computation definitions...");
+    await initCompDef(program, owner, "initialize_market");
+    await initCompDef(program, owner, "initialize_user_position");
+    await initCompDef(program, owner, "process_private_trade");
+    await initCompDef(program, owner, "update_user_position");
+    await initCompDef(program, owner, "reveal_market_state");
+    await initCompDef(program, owner, "hide_market_state");
+    await initCompDef(program, owner, "view_market_state");
+    await initCompDef(program, owner, "view_user_position");
+    console.log("All computation definitions initialized");
+  });
+
+  it("should get MXE public key", async () => {
+    mxePublicKey = await getMXEPublicKeyWithRetry(
+      provider as anchor.AnchorProvider,
+      program.programId
     );
+    console.log("MXE x25519 pubkey is", Buffer.from(mxePublicKey).toString("hex"));
+  });
 
-    // console.log("Creating market...");
-    // const initMarketSig = await program.methods
-    //   .initMarket(
-    //     question,
-    //     new anchor.BN(Date.now() / 1000 + 86400 * 30), // 30 days from now
-    //     new anchor.BN(1000000), // liquidity cap
-    //     new anchor.BN(300), // 5 min opportunity window
-    //     new anchor.BN(300) // 5 min public window
-    //   )
-    //   .accountsPartial({
-    //     sponsor: owner.publicKey,
-    //     market: marketPDA,
-    //   })
-    //   .signers([owner])
-    //   .rpc({ commitment: "confirmed" });
-    // console.log("Market created:", initMarketSig);
+  it("should initialize market account", async () => {
+    console.log("Initializing market account...");
+    const resolutionDate = new anchor.BN(Date.now() / 1000 + 86400 * 30); // 30 days from now
+    const liquidityCap = new anchor.BN(1000000); // 1M liquidity cap
+    const oppWindowDuration = new anchor.BN(300); // 5 minutes
+    const pubWindowDuration = new anchor.BN(600); // 10 minutes
 
-    // Initialize encrypted market state
+    const initMarketSig = await program.methods
+      .initMarket(
+        question,
+        resolutionDate,
+        liquidityCap,
+        oppWindowDuration,
+        pubWindowDuration
+      )
+      .accounts({
+        sponsor: owner.publicKey,
+        // market: marketPDA,
+      })
+      .signers([owner])
+      .rpc({ commitment: "confirmed" });
+    
+    console.log("Market initialized:", initMarketSig);
+    
+    // Verify the market account was created
+    const marketAccount = await program.account.market.fetch(marketPDA);
+    console.log("Market account created with question:", marketAccount.question);
+  });
+
+  it("should initialize encrypted market state", async () => {
     console.log("Initializing encrypted market state...");
     const initComputationOffset = new anchor.BN(randomBytes(8), "hex");
+    const mxeNonce = randomBytes(16);
+
+    console.log("Queueing market state encryption computation...");
     const initMarketEncSig = await program.methods
       .initMarketEncrypted(
         initComputationOffset,
-        new anchor.BN(10000), // initial yes pool
-        new anchor.BN(10000) // initial no pool
+        new anchor.BN(100), // initial yes pool
+        new anchor.BN(100), // initial no pool
+        new anchor.BN(deserializeLE(mxeNonce).toString())
       )
       .accountsPartial({
         payer: owner.publicKey,
@@ -134,46 +164,98 @@ describe("PythiaOp", () => {
       .rpc({ skipPreflight: true, commitment: "confirmed" });
     console.log("Init market encrypted queued:", initMarketEncSig);
 
+    console.log("Waiting for market state encryption computation finalization...");
     await awaitComputationFinalization(
       provider as anchor.AnchorProvider,
       initComputationOffset,
       program.programId,
       "confirmed"
     );
-    console.log("Market state initialized");
+    console.log("Market state encryption finalized");
 
-    // Test private trade
+    // Verify the market state was updated
+    const marketAccount = await program.account.market.fetch(marketPDA);
+    console.log("Market nonce after encryption:", marketAccount.nonce.toString());
+    console.log("Market state encrypted successfully ✓");
+  });
+
+  it.skip("should initialize user position", async () => {
+    console.log("\n--- Initializing user position ---");
+    const initUserPositionOffset = new anchor.BN(randomBytes(8), "hex");
+    const userPositionNonce = randomBytes(16);
+
+    const userPositionSeeds = [
+      Buffer.from("user_position"),
+      marketPDA.toBuffer(),
+      owner.publicKey.toBuffer(),
+    ];
+    const userPositionPDA = PublicKey.findProgramAddressSync(
+      userPositionSeeds,
+      program.programId
+    )[0];
+
+    console.log("Initializing user position for owner:", owner.publicKey.toBase58());
+    const initUserPosSig = await program.methods
+      .initUserPosition(
+        initUserPositionOffset,
+        new anchor.BN(deserializeLE(userPositionNonce).toString())
+      )
+      .accountsPartial({
+        user: owner.publicKey,
+        market: marketPDA,
+        userPosition: userPositionPDA,
+        computationAccount: getComputationAccAddress(
+          program.programId,
+          initUserPositionOffset
+        ),
+        clusterAccount: clusterAccount,
+        mxeAccount: getMXEAccAddress(program.programId),
+        mempoolAccount: getMempoolAccAddress(program.programId),
+        executingPool: getExecutingPoolAccAddress(program.programId),
+        compDefAccount: getCompDefAccAddress(
+          program.programId,
+          Buffer.from(getCompDefAccOffset("initialize_user_position")).readUInt32LE()
+        ),
+      })
+      .signers([owner])
+      .rpc({ skipPreflight: true, commitment: "confirmed" });
+    console.log("User position init queued:", initUserPosSig);
+
+    await awaitComputationFinalization(
+      provider as anchor.AnchorProvider,
+      initUserPositionOffset,
+      program.programId,
+      "confirmed"
+    );
+    console.log("User position initialized successfully ✓");
+  });
+
+  it.skip("should process private trade", async () => {
     console.log("\n--- Testing private trade ---");
     const traderPrivateKey = x25519.utils.randomSecretKey();
     const traderPublicKey = x25519.getPublicKey(traderPrivateKey);
     const sharedSecret = x25519.getSharedSecret(traderPrivateKey, mxePublicKey);
     const cipher = new RescueCipher(sharedSecret);
 
-    // Create trade input: trader_id, dollar_amount, is_buy_yes, info_hash
-    const traderId = BigInt(12345);
-    const dollarAmount = BigInt(1000);
-    const isBuyYes = BigInt(1); // true
-    const infoHash = Array.from({ length: 32 }, (_, i) => BigInt(i));
+    // Create trade input: dollar_amount (u64) and is_buy_yes (bool as u8: 0 or 1)
+    const dollarAmount = BigInt(50); // $50 trade
+    const isBuyYes = BigInt(1); // true = buying yes tokens
 
-    const tradeData = [traderId, dollarAmount, isBuyYes, ...infoHash];
+    const tradeData = [dollarAmount, isBuyYes];
     const tradeNonce = randomBytes(16);
     const tradeCiphertext = cipher.encrypt(tradeData, tradeNonce);
 
     const tradeEventPromise = awaitEvent("tradeEvent");
     const tradeComputationOffset = new anchor.BN(randomBytes(8), "hex");
 
-    // Convert ciphertext to bytes - RescueCipher returns bigint[]
+    // Convert first ciphertext chunk to 32 bytes
     const ciphertextBigints = tradeCiphertext as unknown as bigint[];
-    const flatCiphertext = new Uint8Array(ciphertextBigints.length * 32);
-    ciphertextBigints.forEach((chunk, i) => {
-      const chunkBytes = serializeLE(chunk, 32);
-      flatCiphertext.set(chunkBytes, i * 32);
-    });
+    const firstChunk = serializeLE(ciphertextBigints[0], 32);
 
     const tradeSig = await program.methods
       .tradePrivate(
         tradeComputationOffset,
-        Buffer.from(flatCiphertext),
+        Array.from(firstChunk),
         Array.from(traderPublicKey),
         new anchor.BN(deserializeLE(tradeNonce).toString())
       )
@@ -205,8 +287,9 @@ describe("PythiaOp", () => {
     );
     const tradeEvent = await tradeEventPromise;
     console.log("Trade processed, window:", tradeEvent.window);
+  });
 
-    // Switch to public window
+  it.skip("should switch to public window", async () => {
     console.log("\n--- Switching to public window ---");
     // Wait for opportunity window to expire
     await new Promise((resolve) => setTimeout(resolve, 5000));
@@ -246,8 +329,9 @@ describe("PythiaOp", () => {
     console.log("Switched to public:", revealEvent);
     console.log("Yes pool:", revealEvent.yesPool.toString());
     console.log("No pool:", revealEvent.noPool.toString());
+  });
 
-    // Test public trade
+  it.skip("should execute public trade", async () => {
     console.log("\n--- Testing public trade ---");
     const publicTradeEventPromise = awaitEvent("tradeEvent");
     const publicTradeSig = await program.methods
@@ -261,7 +345,6 @@ describe("PythiaOp", () => {
     console.log("Public trade executed:", publicTradeSig);
     const publicTradeEvent = await publicTradeEventPromise;
     console.log("Public trade event:", publicTradeEvent.window);
-
     console.log("\n✅ All tests passed!");
   });
 

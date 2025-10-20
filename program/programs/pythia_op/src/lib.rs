@@ -17,7 +17,7 @@ const COMP_DEF_OFFSET_HIDE_MARKET_STATE: u32 = comp_def_offset("hide_market_stat
 const COMP_DEF_OFFSET_VIEW_MARKET_STATE: u32 = comp_def_offset("view_market_state");
 const COMP_DEF_OFFSET_VIEW_USER_POSITION: u32 = comp_def_offset("view_user_position");
 
-declare_id!("7kcFUfyJaAh5eLJELkrrEWoiNknoY9Yb28f67a314zUs");
+declare_id!("CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm");
 
 #[arcium_program]
 pub mod pythia_op {
@@ -98,11 +98,15 @@ pub mod pythia_op {
         computation_offset: u64,
         initial_yes: u64,
         initial_no: u64,
+        mxe_nonce: u128,
     ) -> Result<()> {
         use arcium_client::idl::arcium::types::CallbackAccount;
         
         ctx.accounts.sign_pda_account.bump = ctx.bumps.sign_pda_account;
+        
+        // Queue the initialization computation with plaintext inputs
         let args = vec![
+            Argument::PlaintextU128(mxe_nonce),
             Argument::PlaintextU64(initial_yes),
             Argument::PlaintextU64(initial_no),
         ];
@@ -138,9 +142,11 @@ pub mod pythia_op {
     pub fn init_user_position(
         ctx: Context<InitUserPosition>,
         computation_offset: u64,
+        mxe_nonce: u128,
     ) -> Result<()> {
         use arcium_client::idl::arcium::types::CallbackAccount;
         
+        // Initialize user position account
         ctx.accounts.user_position.bump = ctx.bumps.user_position;
         ctx.accounts.user_position.user = ctx.accounts.user.key();
         ctx.accounts.user_position.market = ctx.accounts.market.key();
@@ -149,7 +155,10 @@ pub mod pythia_op {
         
         ctx.accounts.sign_pda_account.bump = ctx.bumps.sign_pda_account;
         
-        let args = vec![];
+        // Queue the initialization computation
+        let args = vec![
+            Argument::PlaintextU128(mxe_nonce),
+        ];
 
         queue_computation(
             ctx.accounts,
@@ -198,7 +207,9 @@ pub mod pythia_op {
 
         ctx.accounts.sign_pda_account.bump = ctx.bumps.sign_pda_account;
         
+        // Queue the private trade computation
         let args = vec![
+            Argument::PlaintextU128(ctx.accounts.market.nonce),
             Argument::Account(
                 ctx.accounts.market.key(),
                 // Offset: 8 (discriminator) + 1 (bump) + 32 (sponsor) + 32 (authority) + (4 + 200) (question)
@@ -256,7 +267,9 @@ pub mod pythia_op {
         
         ctx.accounts.sign_pda_account.bump = ctx.bumps.sign_pda_account;
         
+        // Queue the user position update computation
         let args = vec![
+            Argument::PlaintextU128(ctx.accounts.user_position.nonce),
             Argument::Account(
                 ctx.accounts.user_position.key(),
                 // Offset: 8 (discriminator) + 1 (bump) + 32 (user) + 32 (market)
@@ -300,6 +313,8 @@ pub mod pythia_op {
         ctx: Context<SwitchToPublic>,
         computation_offset: u64,
     ) -> Result<()> {
+        use arcium_client::idl::arcium::types::CallbackAccount;
+        
         let market = &ctx.accounts.market;
         let clock = Clock::get()?;
         
@@ -317,6 +332,7 @@ pub mod pythia_op {
 
         ctx.accounts.sign_pda_account.bump = ctx.bumps.sign_pda_account;
         
+        // Queue the reveal market state computation
         let args = vec![
             Argument::PlaintextU128(ctx.accounts.market.nonce),
             Argument::Account(
@@ -332,7 +348,12 @@ pub mod pythia_op {
             computation_offset,
             args,
             None,
-            vec![RevealMarketStateCallback::callback_ix(&[])],
+            vec![RevealMarketStateCallback::callback_ix(&[
+                CallbackAccount {
+                    pubkey: ctx.accounts.market.key(),
+                    is_writable: true,
+                },
+            ])],
         )?;
 
         Ok(())
@@ -406,6 +427,7 @@ pub mod pythia_op {
     pub fn switch_to_private(
         ctx: Context<SwitchToPrivate>,
         computation_offset: u64,
+        mxe_nonce: u128,
     ) -> Result<()> {
         use arcium_client::idl::arcium::types::CallbackAccount;
         
@@ -426,8 +448,9 @@ pub mod pythia_op {
 
         ctx.accounts.sign_pda_account.bump = ctx.bumps.sign_pda_account;
         
-        // Pass the current public state to encrypt it
+        // Queue the hide market state computation - encrypt public state back to private
         let args = vec![
+            Argument::PlaintextU128(mxe_nonce),
             Argument::PlaintextU64(market.public_yes_pool),
             Argument::PlaintextU64(market.public_no_pool),
             Argument::PlaintextU64(market.public_last_price),
@@ -483,7 +506,7 @@ pub mod pythia_op {
     pub fn get_sponsor_view(
         ctx: Context<GetSponsorView>,
         computation_offset: u64,
-        pub_key: [u8; 32],
+        sponsor_pub_key: [u8; 32],
     ) -> Result<()> {
         let market = &ctx.accounts.market;
         
@@ -501,13 +524,14 @@ pub mod pythia_op {
 
         ctx.accounts.sign_pda_account.bump = ctx.bumps.sign_pda_account;
         
+        // Queue the view market state computation
         let args = vec![
             Argument::Account(
                 ctx.accounts.market.key(),
                 8 + 1 + 32 + 32 + (4 + 200) + 8 + 1 + 8,
                 32 * 4,
             ),
-            Argument::ArcisPubkey(pub_key),
+            Argument::ArcisPubkey(sponsor_pub_key),
         ];
 
         queue_computation(
@@ -543,25 +567,26 @@ pub mod pythia_op {
     pub fn get_user_position_view(
         ctx: Context<GetUserPositionView>,
         computation_offset: u64,
-        pub_key: [u8; 32],
+        sponsor_pub_key: [u8; 32],
     ) -> Result<()> {
-        let user_position = &ctx.accounts.user_position;
+        let market = &ctx.accounts.market;
         
-        // Only the user can view their own position
+        // Only sponsor can view user positions
         require!(
-            ctx.accounts.user.key() == user_position.user,
+            ctx.accounts.sponsor.key() == market.sponsor,
             ErrorCode::Unauthorized
         );
 
         ctx.accounts.sign_pda_account.bump = ctx.bumps.sign_pda_account;
         
+        // Queue the view user position computation
         let args = vec![
             Argument::Account(
                 ctx.accounts.user_position.key(),
                 8 + 1 + 32 + 32,
                 32 * 2,
             ),
-            Argument::ArcisPubkey(pub_key),
+            Argument::ArcisPubkey(sponsor_pub_key),
         ];
 
         queue_computation(
@@ -1124,19 +1149,16 @@ pub struct ViewMarketStateCallback<'info> {
     pub instructions_sysvar: AccountInfo<'info>,
 }
 
-#[queue_computation_accounts("view_user_position", user)]
+#[queue_computation_accounts("view_user_position", sponsor)]
 #[derive(Accounts)]
 #[instruction(computation_offset: u64)]
 pub struct GetUserPositionView<'info> {
     #[account(mut)]
-    pub user: Signer<'info>,
+    pub sponsor: Signer<'info>,
     
     pub market: Account<'info, Market>,
     
     #[account(
-        seeds = [b"user_position", market.key().as_ref(), user.key().as_ref()],
-        bump = user_position.bump,
-        has_one = user,
         has_one = market
     )]
     pub user_position: Account<'info, UserPosition>,
@@ -1144,7 +1166,7 @@ pub struct GetUserPositionView<'info> {
     #[account(
         init_if_needed,
         space = 9,
-        payer = user,
+        payer = sponsor,
         seeds = [&SIGN_PDA_SEED],
         bump,
         address = derive_sign_pda!(),
