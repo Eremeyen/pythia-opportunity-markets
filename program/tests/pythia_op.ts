@@ -5,12 +5,10 @@ import { PythiaOp } from "../target/types/pythia_op";
 import { randomBytes } from "crypto";
 import {
   awaitComputationFinalization,
-  getArciumEnv,
   getClusterAccAddress,
   getCompDefAccOffset,
   getArciumAccountBaseSeed,
   getArciumProgAddress,
-  uploadCircuit,
   buildFinalizeCompDefTx,
   RescueCipher,
   deserializeLE,
@@ -30,16 +28,9 @@ import { expect } from "chai";
 describe("PythiaOp", () => {
   const CLUSTER_OFFSET = 1078779259;
 
-  const connection = new anchor.web3.Connection(
-    "https://api.devnet.solana.com",
-    "confirmed"
-  );
-  
-  const wallet = anchor.AnchorProvider.env().wallet;
-  const provider = new anchor.AnchorProvider(connection, wallet, {
-    commitment: "confirmed",
-  });
-  
+  // Use the environment-provided provider so `arcium test` localnet works,
+  // and devnet works when invoked with `--skip-local-validator --provider.cluster devnet`.
+  const provider = anchor.AnchorProvider.env();
   anchor.setProvider(provider);
   const program = anchor.workspace.PythiaOp as Program<PythiaOp>;
 
@@ -64,11 +55,19 @@ describe("PythiaOp", () => {
     const owner = readKpJson(`${os.homedir()}/.config/solana/id.json`);
 
     console.log("Initializing computation definitions...");
-    // await initCompDef(program, owner, "initialize_market");
-    // await initCompDef(program, owner, "process_private_trade");
-    // await initCompDef(program, owner, "reveal_market_state");
-    // await initCompDef(program, owner, "hide_market_state");
-    // await initCompDef(program, owner, "view_market_state");
+    const requiredCircuits = [
+      "initialize_market",
+      "initialize_user_position",
+      "process_private_trade",
+      "update_user_position",
+      "reveal_market_state",
+      "hide_market_state",
+      "view_market_state",
+      "view_user_position",
+    ];
+    for (const circuit of requiredCircuits) {
+      await initCompDef(program, owner, circuit);
+    }
     console.log("All computation definitions initialized");
 
     const mxePublicKey = await getMXEPublicKeyWithRetry(
@@ -88,22 +87,23 @@ describe("PythiaOp", () => {
       program.programId
     );
 
-    // console.log("Creating market...");
-    // const initMarketSig = await program.methods
-    //   .initMarket(
-    //     question,
-    //     new anchor.BN(Date.now() / 1000 + 86400 * 30), // 30 days from now
-    //     new anchor.BN(1000000), // liquidity cap
-    //     new anchor.BN(300), // 5 min opportunity window
-    //     new anchor.BN(300) // 5 min public window
-    //   )
-    //   .accountsPartial({
-    //     sponsor: owner.publicKey,
-    //     market: marketPDA,
-    //   })
-    //   .signers([owner])
-    //   .rpc({ commitment: "confirmed" });
-    // console.log("Market created:", initMarketSig);
+    console.log("Creating market...");
+    const initMarketSig = await program.methods
+      .initMarket(
+        question,
+        new anchor.BN(Date.now() / 1000 + 86400 * 30), // 30 days from now
+        new anchor.BN(1_000_000), // liquidity cap
+        new anchor.BN(300), // 5 min opportunity window
+        new anchor.BN(300) // 5 min public window
+      )
+      .accounts({
+        sponsor: owner.publicKey,
+        market: marketPDA,
+        systemProgram: anchor.web3.SystemProgram.programId,
+      })
+      .signers([owner])
+      .rpc({ commitment: "confirmed" });
+    console.log("Market created:", initMarketSig);
 
     // Initialize encrypted market state
     console.log("Initializing encrypted market state...");
@@ -306,12 +306,10 @@ describe("PythiaOp", () => {
       program.programId
     );
 
-    const latestBlockhash = await provider.connection.getLatestBlockhash();
-    finalizeTx.recentBlockhash = latestBlockhash.blockhash;
-    finalizeTx.lastValidBlockHeight = latestBlockhash.lastValidBlockHeight;
-
-    finalizeTx.sign(owner);
-    await provider.sendAndConfirm(finalizeTx);
+    finalizeTx.feePayer = owner.publicKey;
+    await provider.sendAndConfirm(finalizeTx, [owner], {
+      commitment: "confirmed",
+    });
 
     console.log(`  ✓ ${circuitName} initialized`);
     return sig;

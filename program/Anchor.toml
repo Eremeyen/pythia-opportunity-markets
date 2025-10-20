@@ -1,21 +1,22 @@
 [toolchain]
+anchor_version = "0.31.1"
 package_manager = "yarn"
 
 [features]
 resolution = true
 skip-lint = false
 
+[programs.localnet]
+pythia_op = "92hgxDDhAPgWYXZez4Y7J9A2YCiDzkPDSzKhikuKaGyE"
+
 [programs.devnet]
 pythia_op = "7kcFUfyJaAh5eLJELkrrEWoiNknoY9Yb28f67a314zUs"
-
-[programs.localnet]
-pythia_op = "5MqofGJPEaBLZPzhdevGcsgN4kraDP5wnLCCygpjQ2Yf"
 
 [registry]
 url = "https://api.apr.dev"
 
 [provider]
-cluster = "devnet"
+cluster = "localnet"
 wallet = "~/.config/solana/id.json"
 
 [scripts]
