@@ -1,16 +1,15 @@
 import * as anchor from "@coral-xyz/anchor";
 import { Program } from "@coral-xyz/anchor";
-import { PublicKey } from "@solana/web3.js";
+import { PublicKey, SendTransactionError } from "@solana/web3.js";
 import { PythiaOp } from "../target/types/pythia_op";
 import { randomBytes } from "crypto";
 import {
   awaitComputationFinalization,
   getArciumEnv,
-  getClusterAccAddress,
   getCompDefAccOffset,
   getArciumAccountBaseSeed,
   getArciumProgAddress,
-  uploadCircuit,
+  getClockAccAddress,
   buildFinalizeCompDefTx,
   RescueCipher,
   deserializeLE,
@@ -25,22 +24,15 @@ import {
 } from "@arcium-hq/client";
 import * as fs from "fs";
 import * as os from "os";
+import * as path from "path";
 import { expect } from "chai";
 
 describe("PythiaOp", () => {
-  const CLUSTER_OFFSET = 1078779259;
-
-  const connection = new anchor.web3.Connection(
-    "https://devnet.helius-rpc.com/?api-key=a149fae2-6a52-4725-af62-1726c8e2cf9d",
-    "confirmed"
-  );
-  
-  const wallet = anchor.AnchorProvider.env().wallet;
-  const provider = new anchor.AnchorProvider(connection, wallet, {
-    commitment: "confirmed",
-  });
-  
+  const provider = anchor.AnchorProvider.env();
+  const connection = provider.connection;
+  const wallet = provider.wallet;
   anchor.setProvider(provider);
+
   const program = anchor.workspace.PythiaOp as Program<PythiaOp>;
 
   type Event = anchor.IdlEvents<(typeof program)["idl"]>;
@@ -58,7 +50,8 @@ describe("PythiaOp", () => {
     return event;
   };
 
-  const clusterAccount = getClusterAccAddress(CLUSTER_OFFSET);
+  const clusterAccount = loadClusterAccount();
+  const SIGNER_PDA_SEED = Buffer.from("SignerAccount");
 
   // Shared variables for tests
   let owner: anchor.web3.Keypair;
@@ -79,6 +72,8 @@ describe("PythiaOp", () => {
       marketSeeds,
       program.programId
     )[0];
+
+    console.log("Derived market PDA:", marketPDA.toBase58());
   });
 
   it("should initialize computation definitions", async () => {
@@ -119,7 +114,7 @@ describe("PythiaOp", () => {
       )
       .accounts({
         sponsor: owner.publicKey,
-        // market: marketPDA,
+        market: marketPDA,
       })
       .signers([owner])
       .rpc({ commitment: "confirmed" });
@@ -128,7 +123,16 @@ describe("PythiaOp", () => {
     
     // Verify the market account was created
     const marketAccount = await program.account.market.fetch(marketPDA);
+    const rawMarketInfo = await provider.connection.getAccountInfo(marketPDA);
+    if (!rawMarketInfo) {
+      throw new Error("Failed to fetch raw market account info");
+    }
     console.log("Market account created with question:", marketAccount.question);
+    console.log(
+      "Market account owner:",
+      rawMarketInfo.owner.toBase58()
+    );
+    expect(rawMarketInfo.owner.equals(program.programId)).to.be.true;
   });
 
   it("should initialize encrypted market state", async () => {
@@ -137,31 +141,64 @@ describe("PythiaOp", () => {
     const mxeNonce = randomBytes(16);
 
     console.log("Queueing market state encryption computation...");
-    const initMarketEncSig = await program.methods
-      .initMarketEncrypted(
-        initComputationOffset,
-        new anchor.BN(100), // initial yes pool
-        new anchor.BN(100), // initial no pool
-        new anchor.BN(deserializeLE(mxeNonce).toString())
-      )
-      .accountsPartial({
-        payer: owner.publicKey,
-        market: marketPDA,
-        computationAccount: getComputationAccAddress(
-          program.programId,
-          initComputationOffset
-        ),
-        clusterAccount: clusterAccount,
-        mxeAccount: getMXEAccAddress(program.programId),
-        mempoolAccount: getMempoolAccAddress(program.programId),
-        executingPool: getExecutingPoolAccAddress(program.programId),
-        compDefAccount: getCompDefAccAddress(
-          program.programId,
-          Buffer.from(getCompDefAccOffset("initialize_market")).readUInt32LE()
-        ),
-      })
-      .signers([owner])
-      .rpc({ skipPreflight: true, commitment: "confirmed" });
+    const signPdaAccount = PublicKey.findProgramAddressSync(
+      [SIGNER_PDA_SEED],
+      program.programId
+    )[0];
+    const initMarketEncSig = await (async () => {
+      try {
+        return await program.methods
+          .initMarketEncrypted(
+            initComputationOffset,
+            new anchor.BN(100), // initial yes pool
+            new anchor.BN(100), // initial no pool
+            new anchor.BN(deserializeLE(mxeNonce).toString())
+          )
+          .accounts({
+            payer: owner.publicKey,
+            market: marketPDA,
+            signPdaAccount,
+            mxeAccount: getMXEAccAddress(program.programId),
+            mempoolAccount: getMempoolAccAddress(program.programId),
+            executingPool: getExecutingPoolAccAddress(program.programId),
+            computationAccount: getComputationAccAddress(
+              program.programId,
+              initComputationOffset
+            ),
+            compDefAccount: getCompDefAccAddress(
+              program.programId,
+              Buffer.from(getCompDefAccOffset("initialize_market")).readUInt32LE()
+            ),
+            clusterAccount: clusterAccount,
+            poolAccount: loadFeePoolAccount(),
+            clockAccount: getClockAccAddress(),
+            systemProgram: anchor.web3.SystemProgram.programId,
+            arciumProgram: getArciumProgAddress(),
+          })
+          .signers([owner])
+          .rpc({ skipPreflight: true, commitment: "confirmed" });
+      } catch (error) {
+        if (error instanceof SendTransactionError) {
+          try {
+            const rpcUrl =
+              (provider.connection as any)?._rpcEndpoint ??
+              (provider.connection as any)?.rpcEndpoint ??
+              process.env.ANCHOR_PROVIDER_URL;
+            const confirmedConn = rpcUrl
+              ? new anchor.web3.Connection(rpcUrl, "confirmed")
+              : provider.connection;
+            const logs = await error.getLogs(confirmedConn);
+            console.error("initMarketEncrypted logs:", logs);
+          } catch (logErr) {
+            console.error(
+              "initMarketEncrypted failed; unable to fetch logs:",
+              logErr
+            );
+          }
+        }
+        throw error;
+      }
+    })();
     console.log("Init market encrypted queued:", initMarketEncSig);
 
     console.log("Waiting for market state encryption computation finalization...");
@@ -176,6 +213,7 @@ describe("PythiaOp", () => {
     // Verify the market state was updated
     const marketAccount = await program.account.market.fetch(marketPDA);
     console.log("Market nonce after encryption:", marketAccount.nonce.toString());
+    expect(marketAccount.nonce.gt(new anchor.BN(0))).to.be.true;
     console.log("Market state encrypted successfully ✓");
   });
 
@@ -383,18 +421,36 @@ describe("PythiaOp", () => {
       });
 
     // Finalize comp def
-    const finalizeTx = await buildFinalizeCompDefTx(
-      provider as anchor.AnchorProvider,
-      Buffer.from(offset).readUInt32LE(),
-      program.programId
-    );
-
-    const latestBlockhash = await provider.connection.getLatestBlockhash();
-    finalizeTx.recentBlockhash = latestBlockhash.blockhash;
-    finalizeTx.lastValidBlockHeight = latestBlockhash.lastValidBlockHeight;
-
-    finalizeTx.sign(owner);
-    await provider.sendAndConfirm(finalizeTx);
+    const compDefOffset = Buffer.from(offset).readUInt32LE();
+    const maxFinalizeAttempts = 3;
+    for (let attempt = 1; attempt <= maxFinalizeAttempts; attempt++) {
+      const finalizeTx = await buildFinalizeCompDefTx(
+        provider as anchor.AnchorProvider,
+        compDefOffset,
+        program.programId
+      );
+      finalizeTx.feePayer = owner.publicKey;
+      try {
+        await provider.sendAndConfirm(finalizeTx, [owner], {
+          commitment: "confirmed",
+          skipPreflight: true,
+          preflightCommitment: "confirmed",
+        });
+        break;
+      } catch (error) {
+        const isBlockhashError =
+          error instanceof SendTransactionError &&
+          error.message.includes("Blockhash not found");
+        const canRetry = isBlockhashError && attempt < maxFinalizeAttempts;
+        if (!canRetry) {
+          throw error;
+        }
+        console.log(
+          `  Finalize blockhash expired, retrying (${attempt}/${maxFinalizeAttempts})...`
+        );
+        await new Promise((resolve) => setTimeout(resolve, 250));
+      }
+    }
 
     console.log(`  ✓ ${circuitName} initialized`);
     return sig;
@@ -435,4 +491,39 @@ function readKpJson(path: string): anchor.web3.Keypair {
   return anchor.web3.Keypair.fromSecretKey(
     new Uint8Array(JSON.parse(file.toString()))
   );
+}
+
+function loadClusterAccount(): PublicKey {
+  try {
+    const { arciumClusterPubkey } = getArciumEnv();
+    if (arciumClusterPubkey) {
+      return arciumClusterPubkey;
+    }
+  } catch (error: any) {
+    console.log("ARCIUM env not configured, using local cluster artifact:", error?.message ?? error);
+  }
+
+  const clusterAccPath = path.resolve(__dirname, "../artifacts/cluster_acc_0.json");
+  const raw = fs.readFileSync(clusterAccPath, "utf8");
+  const clusterData = JSON.parse(raw);
+  if (!clusterData?.pubkey) {
+    throw new Error(`Invalid cluster account artifact at ${clusterAccPath}`);
+  }
+  return new PublicKey(clusterData.pubkey);
+}
+
+function loadFeePoolAccount(): PublicKey {
+  try {
+    const feePoolPath = path.resolve(__dirname, "../artifacts/arcium_fee_pool.json");
+    const raw = fs.readFileSync(feePoolPath, "utf8");
+    const feePoolData = JSON.parse(raw);
+    if (!feePoolData?.pubkey) {
+      throw new Error(`Invalid fee pool artifact at ${feePoolPath}`);
+    }
+    return new PublicKey(feePoolData.pubkey);
+  } catch (error) {
+    throw new Error(
+      `Failed to load Arcium fee pool account: ${(error as Error).message}`
+    );
+  }
 }
