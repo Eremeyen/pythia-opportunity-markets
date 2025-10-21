@@ -6,7 +6,7 @@ use crate::state::*;
 #[event]
 pub struct SponsorViewMarketEvent {
     pub market: Pubkey,
-    pub encrypted_state: [[u8; 32]; 4],
+    pub encrypted_state: [[u8; 32]; 5],
     pub nonce: u128,
 }
 
@@ -35,4 +35,12 @@ pub struct WindowSwitchEvent {
     pub new_window: MarketWindow,
     pub yes_pool: u64,
     pub no_pool: u64,
+}
+
+#[event]
+pub struct PayoutClaimedEvent {
+    pub market: Pubkey,
+    pub trader: Pubkey,
+    pub amount: u64,
+    pub outcome: bool,
 }

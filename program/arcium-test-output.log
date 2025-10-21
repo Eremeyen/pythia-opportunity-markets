@@ -1,0 +1,454 @@
+Checking if encrypted instructions are up to date.
+Encrypted instructions are up to date. Skipping build.
+Error: Function _ZN14regex_automata4meta8strategy3new17h4f0efa6c3f2f6d2cE Stack offset of 5208 exceeded max offset of 4096 by 1112 bytes, please minimize large stack variables. Estimated function frame size: 12416 bytes. Exceeding the maximum stack offset may cause undefined behavior during execution.
+
+Error: Function _ZN109_$LT$arcium_client..idl..arcium..utils..Account$u20$as$u20$core..convert..TryFrom$LT$$RF$$u5b$u8$u5d$$GT$$GT$8try_from17hbddb22f423827da0E Stack offset of 721512 exceeded max offset of 4096 by 717416 bytes, please minimize large stack variables. Estimated function frame size: 721536 bytes. Exceeding the maximum stack offset may cause undefined behavior during execution.
+
+warning: unexpected `cfg` condition value: `custom-heap`
+  --> programs/pythia_op/src/lib.rs:26:1
+   |
+26 | #[arcium_program]
+   | ^^^^^^^^^^^^^^^^^
+   |
+   = note: expected values for `feature` are: `cpi`, `default`, `idl-build`, `no-entrypoint`, `no-idl`, and `no-log-ix-name`
+   = help: consider adding `custom-heap` as a feature in `Cargo.toml`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+   = note: `#[warn(unexpected_cfgs)]` on by default
+   = note: this warning originates in the macro `$crate::custom_heap_default` which comes from the expansion of the attribute macro `program` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unexpected `cfg` condition value: `custom-panic`
+  --> programs/pythia_op/src/lib.rs:26:1
+   |
+26 | #[arcium_program]
+   | ^^^^^^^^^^^^^^^^^
+   |
+   = note: expected values for `feature` are: `cpi`, `default`, `idl-build`, `no-entrypoint`, `no-idl`, and `no-log-ix-name`
+   = help: consider adding `custom-panic` as a feature in `Cargo.toml`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+   = note: this warning originates in the macro `$crate::custom_panic_default` which comes from the expansion of the attribute macro `program` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unused import: `arcium_anchor::prelude::*`
+ --> programs/pythia_op/src/state.rs:2:5
+  |
+2 | use arcium_anchor::prelude::*;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused import: `arcium_anchor::prelude::*`
+ --> programs/pythia_op/src/events.rs:2:5
+  |
+2 | use arcium_anchor::prelude::*;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unexpected `cfg` condition value: `anchor-debug`
+  --> programs/pythia_op/src/lib.rs:26:1
+   |
+26 | #[arcium_program]
+   | ^^^^^^^^^^^^^^^^^
+   |
+   = note: expected values for `feature` are: `cpi`, `default`, `idl-build`, `no-entrypoint`, `no-idl`, and `no-log-ix-name`
+   = help: consider adding `anchor-debug` as a feature in `Cargo.toml`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+   = note: this warning originates in the attribute macro `program` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unexpected `cfg` condition value: `anchor-debug`
+  --> programs/pythia_op/src/lib.rs:26:1
+   |
+26 | #[arcium_program]
+   | ^^^^^^^^^^^^^^^^^
+   |
+   = note: expected values for `feature` are: `cpi`, `default`, `idl-build`, `no-entrypoint`, `no-idl`, and `no-log-ix-name`
+   = help: consider adding `anchor-debug` as a feature in `Cargo.toml`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+   = note: this warning originates in the derive macro `Accounts` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unexpected `cfg` condition value: `anchor-debug`
+   --> programs/pythia_op/src/lib.rs:762:10
+    |
+762 | #[derive(Accounts)]
+    |          ^^^^^^^^
+    |
+    = note: expected values for `feature` are: `cpi`, `default`, `idl-build`, `no-entrypoint`, `no-idl`, and `no-log-ix-name`
+    = help: consider adding `anchor-debug` as a feature in `Cargo.toml`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+    = note: this warning originates in the derive macro `Accounts` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unexpected `cfg` condition value: `anchor-debug`
+   --> programs/pythia_op/src/lib.rs:818:10
+    |
+818 | #[derive(Accounts)]
+    |          ^^^^^^^^
+    |
+    = note: expected values for `feature` are: `cpi`, `default`, `idl-build`, `no-entrypoint`, `no-idl`, and `no-log-ix-name`
+    = help: consider adding `anchor-debug` as a feature in `Cargo.toml`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+    = note: this warning originates in the derive macro `Accounts` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unexpected `cfg` condition value: `anchor-debug`
+   --> programs/pythia_op/src/lib.rs:869:10
+    |
+869 | #[derive(Accounts)]
+    |          ^^^^^^^^
+    |
+    = note: expected values for `feature` are: `cpi`, `default`, `idl-build`, `no-entrypoint`, `no-idl`, and `no-log-ix-name`
+    = help: consider adding `anchor-debug` as a feature in `Cargo.toml`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+    = note: this warning originates in the derive macro `Accounts` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unexpected `cfg` condition value: `anchor-debug`
+   --> programs/pythia_op/src/lib.rs:882:10
+    |
+882 | #[derive(Accounts)]
+    |          ^^^^^^^^
+    |
+    = note: expected values for `feature` are: `cpi`, `default`, `idl-build`, `no-entrypoint`, `no-idl`, and `no-log-ix-name`
+    = help: consider adding `anchor-debug` as a feature in `Cargo.toml`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+    = note: this warning originates in the derive macro `Accounts` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unexpected `cfg` condition value: `anchor-debug`
+   --> programs/pythia_op/src/lib.rs:941:10
+    |
+941 | #[derive(Accounts)]
+    |          ^^^^^^^^
+    |
+    = note: expected values for `feature` are: `cpi`, `default`, `idl-build`, `no-entrypoint`, `no-idl`, and `no-log-ix-name`
+    = help: consider adding `anchor-debug` as a feature in `Cargo.toml`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+    = note: this warning originates in the derive macro `Accounts` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unexpected `cfg` condition value: `anchor-debug`
+   --> programs/pythia_op/src/lib.rs:954:10
+    |
+954 | #[derive(Accounts)]
+    |          ^^^^^^^^
+    |
+    = note: expected values for `feature` are: `cpi`, `default`, `idl-build`, `no-entrypoint`, `no-idl`, and `no-log-ix-name`
+    = help: consider adding `anchor-debug` as a feature in `Cargo.toml`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+    = note: this warning originates in the derive macro `Accounts` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unexpected `cfg` condition value: `anchor-debug`
+    --> programs/pythia_op/src/lib.rs:1005:10
+     |
+1005 | #[derive(Accounts)]
+     |          ^^^^^^^^
+     |
+     = note: expected values for `feature` are: `cpi`, `default`, `idl-build`, `no-entrypoint`, `no-idl`, and `no-log-ix-name`
+     = help: consider adding `anchor-debug` as a feature in `Cargo.toml`
+     = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+     = note: this warning originates in the derive macro `Accounts` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unexpected `cfg` condition value: `anchor-debug`
+    --> programs/pythia_op/src/lib.rs:1018:10
+     |
+1018 | #[derive(Accounts)]
+     |          ^^^^^^^^
+     |
+     = note: expected values for `feature` are: `cpi`, `default`, `idl-build`, `no-entrypoint`, `no-idl`, and `no-log-ix-name`
+     = help: consider adding `anchor-debug` as a feature in `Cargo.toml`
+     = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+     = note: this warning originates in the derive macro `Accounts` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unexpected `cfg` condition value: `anchor-debug`
+    --> programs/pythia_op/src/lib.rs:1077:10
+     |
+1077 | #[derive(Accounts)]
+     |          ^^^^^^^^
+     |
+     = note: expected values for `feature` are: `cpi`, `default`, `idl-build`, `no-entrypoint`, `no-idl`, and `no-log-ix-name`
+     = help: consider adding `anchor-debug` as a feature in `Cargo.toml`
+     = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+     = note: this warning originates in the derive macro `Accounts` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unexpected `cfg` condition value: `anchor-debug`
+    --> programs/pythia_op/src/lib.rs:1090:10
+     |
+1090 | #[derive(Accounts)]
+     |          ^^^^^^^^
+     |
+     = note: expected values for `feature` are: `cpi`, `default`, `idl-build`, `no-entrypoint`, `no-idl`, and `no-log-ix-name`
+     = help: consider adding `anchor-debug` as a feature in `Cargo.toml`
+     = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+     = note: this warning originates in the derive macro `Accounts` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unexpected `cfg` condition value: `anchor-debug`
+    --> programs/pythia_op/src/lib.rs:1141:10
+     |
+1141 | #[derive(Accounts)]
+     |          ^^^^^^^^
+     |
+     = note: expected values for `feature` are: `cpi`, `default`, `idl-build`, `no-entrypoint`, `no-idl`, and `no-log-ix-name`
+     = help: consider adding `anchor-debug` as a feature in `Cargo.toml`
+     = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+     = note: this warning originates in the derive macro `Accounts` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unexpected `cfg` condition value: `anchor-debug`
+    --> programs/pythia_op/src/lib.rs:1153:10
+     |
+1153 | #[derive(Accounts)]
+     |          ^^^^^^^^
+     |
+     = note: expected values for `feature` are: `cpi`, `default`, `idl-build`, `no-entrypoint`, `no-idl`, and `no-log-ix-name`
+     = help: consider adding `anchor-debug` as a feature in `Cargo.toml`
+     = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+     = note: this warning originates in the derive macro `Accounts` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unexpected `cfg` condition value: `anchor-debug`
+    --> programs/pythia_op/src/lib.rs:1208:10
+     |
+1208 | #[derive(Accounts)]
+     |          ^^^^^^^^
+     |
+     = note: expected values for `feature` are: `cpi`, `default`, `idl-build`, `no-entrypoint`, `no-idl`, and `no-log-ix-name`
+     = help: consider adding `anchor-debug` as a feature in `Cargo.toml`
+     = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+     = note: this warning originates in the derive macro `Accounts` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unexpected `cfg` condition value: `anchor-debug`
+    --> programs/pythia_op/src/lib.rs:1259:10
+     |
+1259 | #[derive(Accounts)]
+     |          ^^^^^^^^
+     |
+     = note: expected values for `feature` are: `cpi`, `default`, `idl-build`, `no-entrypoint`, `no-idl`, and `no-log-ix-name`
+     = help: consider adding `anchor-debug` as a feature in `Cargo.toml`
+     = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+     = note: this warning originates in the derive macro `Accounts` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unexpected `cfg` condition value: `anchor-debug`
+    --> programs/pythia_op/src/lib.rs:1272:10
+     |
+1272 | #[derive(Accounts)]
+     |          ^^^^^^^^
+     |
+     = note: expected values for `feature` are: `cpi`, `default`, `idl-build`, `no-entrypoint`, `no-idl`, and `no-log-ix-name`
+     = help: consider adding `anchor-debug` as a feature in `Cargo.toml`
+     = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+     = note: this warning originates in the derive macro `Accounts` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unexpected `cfg` condition value: `anchor-debug`
+    --> programs/pythia_op/src/lib.rs:1323:10
+     |
+1323 | #[derive(Accounts)]
+     |          ^^^^^^^^
+     |
+     = note: expected values for `feature` are: `cpi`, `default`, `idl-build`, `no-entrypoint`, `no-idl`, and `no-log-ix-name`
+     = help: consider adding `anchor-debug` as a feature in `Cargo.toml`
+     = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+     = note: this warning originates in the derive macro `Accounts` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unexpected `cfg` condition value: `anchor-debug`
+    --> programs/pythia_op/src/lib.rs:1336:10
+     |
+1336 | #[derive(Accounts)]
+     |          ^^^^^^^^
+     |
+     = note: expected values for `feature` are: `cpi`, `default`, `idl-build`, `no-entrypoint`, `no-idl`, and `no-log-ix-name`
+     = help: consider adding `anchor-debug` as a feature in `Cargo.toml`
+     = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+     = note: this warning originates in the derive macro `Accounts` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unexpected `cfg` condition value: `anchor-debug`
+    --> programs/pythia_op/src/lib.rs:1394:10
+     |
+1394 | #[derive(Accounts)]
+     |          ^^^^^^^^
+     |
+     = note: expected values for `feature` are: `cpi`, `default`, `idl-build`, `no-entrypoint`, `no-idl`, and `no-log-ix-name`
+     = help: consider adding `anchor-debug` as a feature in `Cargo.toml`
+     = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+     = note: this warning originates in the derive macro `Accounts` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unexpected `cfg` condition value: `anchor-debug`
+    --> programs/pythia_op/src/lib.rs:1406:10
+     |
+1406 | #[derive(Accounts)]
+     |          ^^^^^^^^
+     |
+     = note: expected values for `feature` are: `cpi`, `default`, `idl-build`, `no-entrypoint`, `no-idl`, and `no-log-ix-name`
+     = help: consider adding `anchor-debug` as a feature in `Cargo.toml`
+     = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+     = note: this warning originates in the derive macro `Accounts` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unexpected `cfg` condition value: `anchor-debug`
+    --> programs/pythia_op/src/lib.rs:1415:10
+     |
+1415 | #[derive(Accounts)]
+     |          ^^^^^^^^
+     |
+     = note: expected values for `feature` are: `cpi`, `default`, `idl-build`, `no-entrypoint`, `no-idl`, and `no-log-ix-name`
+     = help: consider adding `anchor-debug` as a feature in `Cargo.toml`
+     = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+     = note: this warning originates in the derive macro `Accounts` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unexpected `cfg` condition value: `anchor-debug`
+    --> programs/pythia_op/src/lib.rs:1468:10
+     |
+1468 | #[derive(Accounts)]
+     |          ^^^^^^^^
+     |
+     = note: expected values for `feature` are: `cpi`, `default`, `idl-build`, `no-entrypoint`, `no-idl`, and `no-log-ix-name`
+     = help: consider adding `anchor-debug` as a feature in `Cargo.toml`
+     = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+     = note: this warning originates in the derive macro `Accounts` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unexpected `cfg` condition value: `anchor-debug`
+    --> programs/pythia_op/src/lib.rs:1482:10
+     |
+1482 | #[derive(Accounts)]
+     |          ^^^^^^^^
+     |
+     = note: expected values for `feature` are: `cpi`, `default`, `idl-build`, `no-entrypoint`, `no-idl`, and `no-log-ix-name`
+     = help: consider adding `anchor-debug` as a feature in `Cargo.toml`
+     = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+     = note: this warning originates in the derive macro `Accounts` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unexpected `cfg` condition value: `anchor-debug`
+    --> programs/pythia_op/src/lib.rs:1496:10
+     |
+1496 | #[derive(Accounts)]
+     |          ^^^^^^^^
+     |
+     = note: expected values for `feature` are: `cpi`, `default`, `idl-build`, `no-entrypoint`, `no-idl`, and `no-log-ix-name`
+     = help: consider adding `anchor-debug` as a feature in `Cargo.toml`
+     = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+     = note: this warning originates in the derive macro `Accounts` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unexpected `cfg` condition value: `anchor-debug`
+    --> programs/pythia_op/src/lib.rs:1510:10
+     |
+1510 | #[derive(Accounts)]
+     |          ^^^^^^^^
+     |
+     = note: expected values for `feature` are: `cpi`, `default`, `idl-build`, `no-entrypoint`, `no-idl`, and `no-log-ix-name`
+     = help: consider adding `anchor-debug` as a feature in `Cargo.toml`
+     = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+     = note: this warning originates in the derive macro `Accounts` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unexpected `cfg` condition value: `anchor-debug`
+    --> programs/pythia_op/src/lib.rs:1524:10
+     |
+1524 | #[derive(Accounts)]
+     |          ^^^^^^^^
+     |
+     = note: expected values for `feature` are: `cpi`, `default`, `idl-build`, `no-entrypoint`, `no-idl`, and `no-log-ix-name`
+     = help: consider adding `anchor-debug` as a feature in `Cargo.toml`
+     = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+     = note: this warning originates in the derive macro `Accounts` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unexpected `cfg` condition value: `anchor-debug`
+    --> programs/pythia_op/src/lib.rs:1538:10
+     |
+1538 | #[derive(Accounts)]
+     |          ^^^^^^^^
+     |
+     = note: expected values for `feature` are: `cpi`, `default`, `idl-build`, `no-entrypoint`, `no-idl`, and `no-log-ix-name`
+     = help: consider adding `anchor-debug` as a feature in `Cargo.toml`
+     = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+     = note: this warning originates in the derive macro `Accounts` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unexpected `cfg` condition value: `anchor-debug`
+    --> programs/pythia_op/src/lib.rs:1552:10
+     |
+1552 | #[derive(Accounts)]
+     |          ^^^^^^^^
+     |
+     = note: expected values for `feature` are: `cpi`, `default`, `idl-build`, `no-entrypoint`, `no-idl`, and `no-log-ix-name`
+     = help: consider adding `anchor-debug` as a feature in `Cargo.toml`
+     = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+     = note: this warning originates in the derive macro `Accounts` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: unexpected `cfg` condition value: `anchor-debug`
+    --> programs/pythia_op/src/lib.rs:1566:10
+     |
+1566 | #[derive(Accounts)]
+     |          ^^^^^^^^
+     |
+     = note: expected values for `feature` are: `cpi`, `default`, `idl-build`, `no-entrypoint`, `no-idl`, and `no-log-ix-name`
+     = help: consider adding `anchor-debug` as a feature in `Cargo.toml`
+     = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+     = note: this warning originates in the derive macro `Accounts` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: use of deprecated method `anchor_lang::prelude::AccountInfo::<'a>::realloc`: Use AccountInfo::resize() instead
+  --> programs/pythia_op/src/lib.rs:26:1
+   |
+26 | #[arcium_program]
+   | ^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(deprecated)]` on by default
+   = note: this warning originates in the attribute macro `program` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+Error: Function _ZN109_$LT$pythia_op..InitUserPosition$u20$as$u20$anchor_lang..Accounts$LT$pythia_op..InitUserPositionBumps$GT$$GT$12try_accounts17ha417b3622ccc221aE Stack offset of 4104 exceeded max offset of 4096 by 8 bytes, please minimize large stack variables. Estimated function frame size: 4160 bytes. Exceeding the maximum stack offset may cause undefined behavior during execution.
+
+Error: Function _ZN127_$LT$pythia_op..UpdateUserPositionPrivate$u20$as$u20$anchor_lang..Accounts$LT$pythia_op..UpdateUserPositionPrivateBumps$GT$$GT$12try_accounts17hc3668247744550bfE Stack offset of 4136 exceeded max offset of 4096 by 40 bytes, please minimize large stack variables. Estimated function frame size: 4288 bytes. Exceeding the maximum stack offset may cause undefined behavior during execution.
+
+Error: Function _ZN115_$LT$pythia_op..GetUserPositionView$u20$as$u20$anchor_lang..Accounts$LT$pythia_op..GetUserPositionViewBumps$GT$$GT$12try_accounts17h63e3f4fef0db671bE Stack offset of 4104 exceeded max offset of 4096 by 8 bytes, please minimize large stack variables. Estimated function frame size: 4288 bytes. Exceeding the maximum stack offset may cause undefined behavior during execution.
+
+warning: `pythia_op` (lib) generated 40 warnings (5 duplicates) (run `cargo fix --lib -p pythia_op` to apply 2 suggestions)
+    Finished `release` profile [optimized] target(s) in 0.79s
+WARNING: `idl-build` feature of crate `anchor-spl` is enabled by default. This is not the intended usage.
+
+	To solve, do not enable the `idl-build` feature and include crates that have `idl-build` feature in the `idl-build` feature list:
+
+	[features]
+	idl-build = ["anchor-spl/idl-build", ...]
+
+WARNING: `idl-build` feature of `anchor-spl` is not enabled. This is likely to result in cryptic compile errors.
+
+	To solve, add `anchor-spl/idl-build` to the `idl-build` feature list:
+
+	[features]
+	idl-build = ["anchor-spl/idl-build", ...]
+
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.83s
+     Running unittests src/lib.rs (/Users/abhinav/Projects/pythia-opportunity-markets/program/target/debug/deps/pythia_op-624da1d5db2a44b6)
+Removed artifacts/process_private_trade_raw_circuit_9.json
+Removed artifacts/update_user_position_raw_circuit_0.json
+Removed artifacts/operator_acc_3YKU_ETd3.json
+Removed artifacts/process_private_trade_raw_circuit_5.json
+Removed artifacts/arcium_clock.json
+Removed artifacts/process_private_trade_raw_circuit_4.json
+Removed artifacts/arcium_fee_pool.json
+Removed artifacts/process_private_trade_raw_circuit_8.json
+Removed artifacts/operator_acc_46fw_XnGW.json
+Removed artifacts/mxe_keygen_comp.json
+Removed artifacts/process_private_trade_raw_circuit_3.json
+Removed artifacts/arx_node_46fw_XnGW.json
+Removed artifacts/executing_pool_acc.json
+Removed artifacts/arx_node_3YKU_ETd3.json
+Removed artifacts/reveal_market_state_raw_circuit_0.json
+Removed artifacts/cluster_acc_0.json
+Removed artifacts/process_private_trade_raw_circuit_2.json
+Removed artifacts/hide_market_state_raw_circuit_0.json
+Removed artifacts/process_private_trade_raw_circuit_1.json
+Removed artifacts/process_private_trade_raw_circuit_0.json
+Removed artifacts/wallet_acc_callback_Gx2M_do3m.json
+Removed artifacts/initialize_user_position_raw_circuit_0.json
+Removed artifacts/arx_mint.json
+Removed artifacts/mempool_acc.json
+Removed artifacts/process_private_trade_raw_circuit_7.json
+Removed artifacts/wallet_acc_222m_fyDm.json
+Removed artifacts/arx_ata_3YKU_ETd3.json
+Removed artifacts/wallet_acc_3YKU_ETd3.json
+Removed artifacts/arx_ata_222m_fyDm.json
+Removed artifacts/mxe_acc.json
+Removed artifacts/mxe_keygen_comp_def.json
+Removed artifacts/process_private_trade_raw_circuit_6.json
+Removed artifacts/arx_ata_46fw_XnGW.json
+Removed artifacts/wallet_acc_callback_Hdng_wpr2.json
+Removed artifacts/wallet_acc_46fw_XnGW.json
+Removed artifacts/view_market_state_raw_circuit_0.json
+Removed artifacts/initialize_market_raw_circuit_0.json
+Removed artifacts/view_user_position_raw_circuit_0.json
+Clean completed successfully!
+Generating accounts with owner pubkey: 222mHERHpUKWQc2Hf33szE2rmQ6GXZQXTWBEmahhfyDm
+Creating genesis accounts...
+Starting anchor localnet...
+Waiting for solana localnet to come online at http://127.0.0.1:8899...
+Error in spinning up localnet: Timeout: Solana localnet at http://127.0.0.1:8899 did not come online in time.
+
+thread 'main' panicked at /Users/runner/work/arcium-tooling/arcium-tooling/cli/src/lib.rs:512:9:
+Localnet crashed
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace

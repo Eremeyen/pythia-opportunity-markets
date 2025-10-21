@@ -88,18 +88,49 @@ describe("PythiaOp", () => {
     );
 
     console.log("Creating market...");
+    
+    // Create a mock collateral mint (like USDC)
+    const collateralMint = await import("@solana/spl-token").then(spl => 
+      spl.createMint(
+        provider.connection,
+        owner,
+        owner.publicKey,
+        null,
+        6
+      )
+    );
+    
+    const [yesMint] = anchor.web3.PublicKey.findProgramAddressSync(
+      [Buffer.from("yes_mint"), marketPDA.toBuffer()],
+      program.programId
+    );
+    
+    const [noMint] = anchor.web3.PublicKey.findProgramAddressSync(
+      [Buffer.from("no_mint"), marketPDA.toBuffer()],
+      program.programId
+    );
+    
+    const [vault] = anchor.web3.PublicKey.findProgramAddressSync(
+      [Buffer.from("vault"), marketPDA.toBuffer()],
+      program.programId
+    );
+    
     const initMarketSig = await program.methods
       .initMarket(
         question,
         new anchor.BN(Date.now() / 1000 + 86400 * 30), // 30 days from now
         new anchor.BN(1_000_000), // liquidity cap
+        new anchor.BN(10_000), // liquidity param (b) - NEW
         new anchor.BN(300), // 5 min opportunity window
         new anchor.BN(300) // 5 min public window
       )
-      .accounts({
+      .accountsPartial({
         sponsor: owner.publicKey,
         market: marketPDA,
-        systemProgram: anchor.web3.SystemProgram.programId,
+        yesMint: yesMint,
+        noMint: noMint,
+        collateralMint: collateralMint,
+        vault: vault,
       })
       .signers([owner])
       .rpc({ commitment: "confirmed" });

@@ -1,5 +1,9 @@
 use anchor_lang::prelude::*;
 use arcium_anchor::prelude::*;
+use anchor_spl::{
+    associated_token::AssociatedToken,
+    token::{self, Mint, Token, TokenAccount, Transfer, MintTo, Burn},
+};
 pub mod state;
 pub mod events;
 
@@ -17,7 +21,7 @@ const COMP_DEF_OFFSET_HIDE_MARKET_STATE: u32 = comp_def_offset("hide_market_stat
 const COMP_DEF_OFFSET_VIEW_MARKET_STATE: u32 = comp_def_offset("view_market_state");
 const COMP_DEF_OFFSET_VIEW_USER_POSITION: u32 = comp_def_offset("view_user_position");
 
-declare_id!("92hgxDDhAPgWYXZez4Y7J9A2YCiDzkPDSzKhikuKaGyE");
+declare_id!("3u2pYisM2XDqEPDbt6avhpLvBJvoUKHbiYcEYvwfrueN");
 
 #[arcium_program]
 pub mod pythia_op {
@@ -68,6 +72,7 @@ pub mod pythia_op {
         question: String,
         resolution_date: i64,
         liquidity_cap: u64,
+        liquidity_param: u64,
         opp_window_duration: u64,
         pub_window_duration: u64,
     ) -> Result<()> {
@@ -81,14 +86,22 @@ pub mod pythia_op {
         market.resolution_date = resolution_date;
         market.window_state = MarketWindow::Private;
         market.liquidity_cap = liquidity_cap;
+        market.liquidity_param = liquidity_param;
+        
+        // Store token account pubkeys
+        market.yes_mint = ctx.accounts.yes_mint.key();
+        market.no_mint = ctx.accounts.no_mint.key();
+        market.collateral_mint = ctx.accounts.collateral_mint.key();
+        market.vault = ctx.accounts.vault.key();
+        
         market.nonce = 0;
         market.opp_window_duration = opp_window_duration;
         market.pub_window_duration = pub_window_duration;
         market.last_switch_ts = clock.unix_timestamp;
         market.resolved = false;
         market.outcome = None;
-        // Encrypted market state: [yes_pool, no_pool, last_price, total_trades] as 32-byte ciphertexts
-        market.market_state = [[0; 32]; 4];
+        // Encrypted market state: [yes_pool, no_pool, last_price, total_trades, liquidity_param] as 32-byte ciphertexts
+        market.market_state = [[0; 32]; 5];
 
         Ok(())
     }
@@ -105,6 +118,7 @@ pub mod pythia_op {
         let args = vec![
             Argument::PlaintextU64(initial_yes),
             Argument::PlaintextU64(initial_no),
+            Argument::PlaintextU64(ctx.accounts.market.liquidity_param),
         ];
 
         queue_computation(
@@ -202,9 +216,9 @@ pub mod pythia_op {
             Argument::Account(
                 ctx.accounts.market.key(),
                 // Offset: 8 (discriminator) + 1 (bump) + 32 (sponsor) + 32 (authority) + (4 + 200) (question)
-                // + 8 (resolution_date) + 1 (window_state) + 8 (liquidity_cap)
-                8 + 1 + 32 + 32 + (4 + 200) + 8 + 1 + 8,
-                32 * 4, // 4 encrypted fields (yes_pool, no_pool, last_price, total_trades)
+                // + 8 (resolution_date) + 1 (window_state) + 8 (liquidity_cap) + 8 (liquidity_param)
+                8 + 1 + 32 + 32 + (4 + 200) + 8 + 1 + 8 + 8,
+                32 * 5, // 5 encrypted fields (yes_pool, no_pool, last_price, total_trades, liquidity_param)
             ),
             Argument::ArcisPubkey(trade_pub_key),
             Argument::PlaintextU128(trade_nonce),
@@ -322,8 +336,8 @@ pub mod pythia_op {
             Argument::Account(
                 ctx.accounts.market.key(),
                 // Offset to market_state
-                8 + 1 + 32 + 32 + (4 + 200) + 8 + 1 + 8,
-                32 * 4, // 4 encrypted fields
+                8 + 1 + 32 + 32 + (4 + 200) + 8 + 1 + 8 + 8,
+                32 * 5, // 5 encrypted fields
             ),
         ];
 
@@ -351,14 +365,15 @@ pub mod pythia_op {
         let clock = Clock::get()?;
         let market = &mut ctx.accounts.market;
         
-        // Store revealed state - o is a struct with field_0, field_1, field_2, field_3
+        // Store revealed state - o is a struct with field_0, field_1, field_2, field_3, field_4
         market.public_yes_pool = o.field_0;
         market.public_no_pool = o.field_1;
         market.public_last_price = o.field_2;
         market.public_total_trades = o.field_3;
+        market.public_liquidity_param = o.field_4;
         market.window_state = MarketWindow::Public;
         market.last_switch_ts = clock.unix_timestamp;
-        market.market_state = [[0; 32]; 4]; // Clear encrypted state
+        market.market_state = [[0; 32]; 5]; // Clear encrypted state
         
         emit!(WindowSwitchEvent {
             market: market.key(),
@@ -383,15 +398,61 @@ pub mod pythia_op {
             ErrorCode::WrongWindowState
         );
         
-        // Simple constant-product AMM logic
-        let yes_pool = market.public_yes_pool;
-        let no_pool = market.public_no_pool;
+        // 1. Transfer collateral from trader to vault
+        token::transfer(
+            CpiContext::new(
+                ctx.accounts.token_program.to_account_info(),
+                Transfer {
+                    from: ctx.accounts.trader_collateral.to_account_info(),
+                    to: ctx.accounts.vault.to_account_info(),
+                    authority: ctx.accounts.trader.to_account_info(),
+                },
+            ),
+            amount,
+        )?;
+        
+        // 2. Calculate shares (simplified: 1:1 for now, should use LMSR)
+        let shares = amount;
+        
+        // 3. Mint outcome tokens to trader
+        let market_seeds = &[
+            b"market",
+            market.sponsor.as_ref(),
+            market.question.as_bytes(),
+            &[market.bump],
+        ];
         
         if is_buy_yes {
-            market.public_yes_pool = yes_pool.checked_add(amount)
+            token::mint_to(
+                CpiContext::new_with_signer(
+                    ctx.accounts.token_program.to_account_info(),
+                    MintTo {
+                        mint: ctx.accounts.yes_mint.to_account_info(),
+                        to: ctx.accounts.trader_yes_tokens.to_account_info(),
+                        authority: market.to_account_info(),
+                    },
+                    &[market_seeds],
+                ),
+                shares,
+            )?;
+            
+            market.public_yes_pool = market.public_yes_pool.checked_add(shares)
                 .ok_or(ErrorCode::Overflow)?;
         } else {
-            market.public_no_pool = no_pool.checked_add(amount)
+            token::mint_to(
+                CpiContext::new_with_signer(
+                    ctx.accounts.token_program.to_account_info(),
+                    MintTo {
+                        mint: ctx.accounts.no_mint.to_account_info(),
+                        to: ctx.accounts.trader_no_tokens.to_account_info(),
+                        authority: market.to_account_info(),
+                    },
+                    &[market_seeds],
+                ),
+                shares,
+            )?;
+            
+            market.public_no_pool = market.public_no_pool.checked_add(shares)
                 .ok_or(ErrorCode::Overflow)?;
         }
         
@@ -432,6 +493,7 @@ pub mod pythia_op {
             Argument::PlaintextU64(market.public_no_pool),
             Argument::PlaintextU64(market.public_last_price),
             Argument::PlaintextU64(market.public_total_trades),
+            Argument::PlaintextU64(market.public_liquidity_param),
         ];
 
         queue_computation(
@@ -469,6 +531,7 @@ pub mod pythia_op {
         market.public_no_pool = 0;
         market.public_last_price = 0;
         market.public_total_trades = 0;
+        market.public_liquidity_param = 0;
         
         emit!(WindowSwitchEvent {
             market: market.key(),
@@ -504,8 +567,8 @@ pub mod pythia_op {
         let args = vec![
             Argument::Account(
                 ctx.accounts.market.key(),
-                8 + 1 + 32 + 32 + (4 + 200) + 8 + 1 + 8,
-                32 * 4,
+                8 + 1 + 32 + 32 + (4 + 200) + 8 + 1 + 8 + 8,
+                32 * 5,
             ),
             Argument::ArcisPubkey(pub_key),
         ];
@@ -624,11 +687,74 @@ pub mod pythia_op {
         Ok(())
     }
 
-    // pub fn claim_payout(
-    //     _ctx: Context<ClaimPayout>,
-    // ) -> Result<()> {
-    //     Ok(())
-    // }
+    pub fn claim_payout(
+        ctx: Context<ClaimPayout>,
+    ) -> Result<()> {
+        let market = &ctx.accounts.market;
+        
+        // 1. Check market is resolved
+        require!(market.resolved, ErrorCode::MarketNotResolved);
+        
+        let outcome = market.outcome.ok_or(ErrorCode::NoOutcome)?;
+        
+        // 2. Get trader's token balances
+        let yes_balance = ctx.accounts.trader_yes_tokens.amount;
+        let no_balance = ctx.accounts.trader_no_tokens.amount;
+        
+        // 3. Calculate payout based on outcome
+        let (payout, winning_mint, winning_tokens) = if outcome {
+            // YES won - each YES token worth $1 of collateral
+            (yes_balance, &ctx.accounts.yes_mint, &ctx.accounts.trader_yes_tokens)
+        } else {
+            // NO won - each NO token worth $1 of collateral  
+            (no_balance, &ctx.accounts.no_mint, &ctx.accounts.trader_no_tokens)
+        };
+        
+        require!(payout > 0, ErrorCode::NothingToClaim);
+        
+        // 4. Burn winning tokens
+        token::burn(
+            CpiContext::new(
+                ctx.accounts.token_program.to_account_info(),
+                Burn {
+                    mint: winning_mint.to_account_info(),
+                    from: winning_tokens.to_account_info(),
+                    authority: ctx.accounts.trader.to_account_info(),
+                },
+            ),
+            payout,
+        )?;
+        
+        // 5. Transfer collateral to trader
+        let market_seeds = &[
+            b"market",
+            market.sponsor.as_ref(),
+            market.question.as_bytes(),
+            &[market.bump],
+        ];
+        
+        token::transfer(
+            CpiContext::new_with_signer(
+                ctx.accounts.token_program.to_account_info(),
+                Transfer {
+                    from: ctx.accounts.vault.to_account_info(),
+                    to: ctx.accounts.trader_collateral.to_account_info(),
+                    authority: market.to_account_info(),
+                },
+                &[market_seeds],
+            ),
+            payout,
+        )?;
+        
+        emit!(PayoutClaimedEvent {
+            market: market.key(),
+            trader: ctx.accounts.trader.key(),
+            amount: payout,
+            outcome,
+        });
+        
+        Ok(())
+    }
 }
 
 
@@ -642,13 +768,50 @@ pub struct InitMarket<'info> {
     #[account(
         init,
         payer = sponsor,
-        space = 8 + 1 + 32 + 32 + (4 + 200) + 8 + 1 + 8 + (32 * 4) + 8 + 8 + 8 + 8 + 16 + 8 + 8 + 8 + 1 + 2,
+        space = 8 + 1 + 32 + 32 + (4 + 200) + 8 + 1 + 8 + 8 + (32*4) + (32*5) + 8 + 8 + 8 + 8 + 8 + 16 + 8 + 8 + 8 + 1 + 2,
         seeds = [b"market", sponsor.key().as_ref(), question.as_bytes()],
         bump
     )]
     pub market: Account<'info, Market>,
     
+    // Token mints (YES and NO tokens)
+    #[account(
+        init,
+        payer = sponsor,
+        mint::decimals = 6,
+        mint::authority = market,
+        seeds = [b"yes_mint", market.key().as_ref()],
+        bump
+    )]
+    pub yes_mint: Account<'info, Mint>,
+    
+    #[account(
+        init,
+        payer = sponsor,
+        mint::decimals = 6,
+        mint::authority = market,
+        seeds = [b"no_mint", market.key().as_ref()],
+        bump
+    )]
+    pub no_mint: Account<'info, Mint>,
+    
+    // Collateral mint (e.g., USDC) - passed in by sponsor
+    pub collateral_mint: Account<'info, Mint>,
+    
+    // Market vault for holding collateral
+    #[account(
+        init,
+        payer = sponsor,
+        token::mint = collateral_mint,
+        token::authority = market,
+        seeds = [b"vault", market.key().as_ref()],
+        bump
+    )]
+    pub vault: Account<'info, TokenAccount>,
+    
     pub system_program: Program<'info, System>,
+    pub token_program: Program<'info, Token>,
+    pub rent: Sysvar<'info, Rent>,
 }
 
 #[queue_computation_accounts("initialize_market", payer)]
@@ -994,6 +1157,51 @@ pub struct TradePublic<'info> {
     
     #[account(mut)]
     pub market: Account<'info, Market>,
+    
+    #[account(
+        mut,
+        address = market.yes_mint,
+    )]
+    pub yes_mint: Account<'info, Mint>,
+    
+    #[account(
+        mut,
+        address = market.no_mint,
+    )]
+    pub no_mint: Account<'info, Mint>,
+    
+    #[account(
+        mut,
+        address = market.vault,
+    )]
+    pub vault: Account<'info, TokenAccount>,
+    
+    #[account(
+        mut,
+        associated_token::mint = market.collateral_mint,
+        associated_token::authority = trader,
+    )]
+    pub trader_collateral: Account<'info, TokenAccount>,
+    
+    #[account(
+        init_if_needed,
+        payer = trader,
+        associated_token::mint = yes_mint,
+        associated_token::authority = trader,
+    )]
+    pub trader_yes_tokens: Account<'info, TokenAccount>,
+    
+    #[account(
+        init_if_needed,
+        payer = trader,
+        associated_token::mint = no_mint,
+        associated_token::authority = trader,
+    )]
+    pub trader_no_tokens: Account<'info, TokenAccount>,
+    
+    pub token_program: Program<'info, Token>,
+    pub associated_token_program: Program<'info, AssociatedToken>,
+    pub system_program: Program<'info, System>,
 }
 
 #[queue_computation_accounts("hide_market_state", payer)]
@@ -1211,6 +1419,47 @@ pub struct ClaimPayout<'info> {
     
     #[account(mut)]
     pub market: Account<'info, Market>,
+    
+    #[account(
+        mut,
+        address = market.yes_mint,
+    )]
+    pub yes_mint: Account<'info, Mint>,
+    
+    #[account(
+        mut,
+        address = market.no_mint,
+    )]
+    pub no_mint: Account<'info, Mint>,
+    
+    #[account(
+        mut,
+        address = market.vault,
+    )]
+    pub vault: Account<'info, TokenAccount>,
+    
+    #[account(
+        mut,
+        associated_token::mint = market.collateral_mint,
+        associated_token::authority = trader,
+    )]
+    pub trader_collateral: Account<'info, TokenAccount>,
+    
+    #[account(
+        mut,
+        associated_token::mint = yes_mint,
+        associated_token::authority = trader,
+    )]
+    pub trader_yes_tokens: Account<'info, TokenAccount>,
+    
+    #[account(
+        mut,
+        associated_token::mint = no_mint,
+        associated_token::authority = trader,
+    )]
+    pub trader_no_tokens: Account<'info, TokenAccount>,
+    
+    pub token_program: Program<'info, Token>,
 }
 
 // ========== Computation Definition Init Accounts ==========
@@ -1344,4 +1593,10 @@ pub enum ErrorCode {
     Overflow,
     #[msg("Cluster not set")]
     ClusterNotSet,
+    #[msg("Market is not resolved yet")]
+    MarketNotResolved,
+    #[msg("Market outcome is not set")]
+    NoOutcome,
+    #[msg("Nothing to claim - no winning tokens")]
+    NothingToClaim,
 }

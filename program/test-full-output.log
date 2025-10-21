@@ -1,0 +1,45 @@
+Checking if encrypted instructions are up to date.
+Encrypted instructions are up to date. Skipping build.
+Removed artifacts/process_private_trade_raw_circuit_9.json
+Removed artifacts/update_user_position_raw_circuit_0.json
+Removed artifacts/operator_acc_3YKU_ETd3.json
+Removed artifacts/process_private_trade_raw_circuit_5.json
+Removed artifacts/arcium_clock.json
+Removed artifacts/process_private_trade_raw_circuit_4.json
+Removed artifacts/arcium_fee_pool.json
+Removed artifacts/process_private_trade_raw_circuit_8.json
+Removed artifacts/operator_acc_46fw_XnGW.json
+Removed artifacts/mxe_keygen_comp.json
+Removed artifacts/process_private_trade_raw_circuit_3.json
+Removed artifacts/arx_node_46fw_XnGW.json
+Removed artifacts/executing_pool_acc.json
+Removed artifacts/arx_node_3YKU_ETd3.json
+Removed artifacts/reveal_market_state_raw_circuit_0.json
+Removed artifacts/cluster_acc_0.json
+Removed artifacts/process_private_trade_raw_circuit_2.json
+Removed artifacts/hide_market_state_raw_circuit_0.json
+Removed artifacts/process_private_trade_raw_circuit_1.json
+Removed artifacts/process_private_trade_raw_circuit_0.json
+Removed artifacts/wallet_acc_callback_Gx2M_do3m.json
+Removed artifacts/initialize_user_position_raw_circuit_0.json
+Removed artifacts/arx_mint.json
+Removed artifacts/mempool_acc.json
+Removed artifacts/process_private_trade_raw_circuit_7.json
+Removed artifacts/wallet_acc_222m_fyDm.json
+Removed artifacts/arx_ata_3YKU_ETd3.json
+Removed artifacts/wallet_acc_3YKU_ETd3.json
+Removed artifacts/arx_ata_222m_fyDm.json
+Removed artifacts/mxe_acc.json
+Removed artifacts/mxe_keygen_comp_def.json
+Removed artifacts/process_private_trade_raw_circuit_6.json
+Removed artifacts/arx_ata_46fw_XnGW.json
+Removed artifacts/wallet_acc_callback_Hdng_wpr2.json
+Removed artifacts/wallet_acc_46fw_XnGW.json
+Removed artifacts/view_market_state_raw_circuit_0.json
+Removed artifacts/initialize_market_raw_circuit_0.json
+Removed artifacts/view_user_position_raw_circuit_0.json
+Clean completed successfully!
+Generating accounts with owner pubkey: 222mHERHpUKWQc2Hf33szE2rmQ6GXZQXTWBEmahhfyDm
+Creating genesis accounts...
+Starting anchor localnet...
+Waiting for solana localnet to come online at http://127.0.0.1:8899...

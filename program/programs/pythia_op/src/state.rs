@@ -10,12 +10,21 @@ pub struct Market {
     pub resolution_date: i64,
     pub window_state: MarketWindow,
     pub liquidity_cap: u64,
-    /// Encrypted market state: [yes_pool, no_pool, last_price, total_trades] as 32-byte ciphertexts
-    pub market_state: [[u8; 32]; 4],
+    pub liquidity_param: u64,  // LMSR 'b' parameter
+    
+    // Token accounts for SPL integration
+    pub yes_mint: Pubkey,      // YES token mint
+    pub no_mint: Pubkey,       // NO token mint
+    pub collateral_mint: Pubkey,  // Collateral token (USDC)
+    pub vault: Pubkey,         // Market's collateral vault
+    
+    /// Encrypted market state: [yes_pool, no_pool, last_price, total_trades, liquidity_param] as 32-byte ciphertexts
+    pub market_state: [[u8; 32]; 5],
     pub public_yes_pool: u64,
     pub public_no_pool: u64,
     pub public_last_price: u64,
     pub public_total_trades: u64,
+    pub public_liquidity_param: u64,
     pub nonce: u128,
     pub opp_window_duration: u64,
     pub pub_window_duration: u64,
