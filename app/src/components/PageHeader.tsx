@@ -1,4 +1,4 @@
-import logo from "../assets/ai-gen-logo.png";
+import logo from "../assets/black_pythia_logo.png";
 import AnimatedTitle from "./AnimatedTitle";
 import { usePrivy } from "@privy-io/react-auth";
 import { Link } from "react-router-dom";
@@ -11,7 +11,7 @@ export default function PageHeader() {
     <header className="flex items-center justify-between py-3">
       <Link
         to="/"
-        className="flex items-center gap-4 no-underline hover:opacity-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#174a8c] focus-visible:ring-offset-white rounded-lg"
+        className="flex items-center gap-6 md:gap-8 no-underline hover:opacity-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#174a8c] focus-visible:ring-offset-white rounded-lg"
         aria-label="Go to home"
       >
         <div className="h-8 w-10 md:h-16 md:w-16 overflow-visible">

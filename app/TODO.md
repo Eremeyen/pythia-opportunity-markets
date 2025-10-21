@@ -12,6 +12,7 @@ Market Preview Screen
 
 Hooks
 - [ ] data hook for charts
+- [ ] implement hybrid lookup/cache in useMarket. Market information should be passed directly in Link but users should also be able to open the link directly
 
 Improve Loading State of Market Details Page
 - [ ]
@@ -24,3 +25,6 @@ Sponsor / Traders
 
 Aesthetics
 - [ ] dark mode
+
+Hidden Price Market Details
+- [ ] what should we show instead of the charts?
