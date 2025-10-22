@@ -1,0 +1,7 @@
+2025-10-21T18:58:10.619092Z DEBUG arx: arx/src/main.rs:53: Checking Solana is up and running
+2025-10-21T18:58:10.695491Z  WARN arx::utils: arx/src/utils.rs:66: Attempt 1/5: RPC error while calling client.get_version().map_err(|e|
+ArxError::RpcError(format!("Failed to check cluster status: {}", e))): RPC error: Failed to check cluster status: error sending request for url (http://host.docker.internal:8899/): error trying to connect: tcp connect error: Connection refused (os error 111)
+2025-10-21T18:58:11.701418Z  WARN arx::utils: arx/src/utils.rs:66: Attempt 2/5: RPC error while calling client.get_version().map_err(|e|
+ArxError::RpcError(format!("Failed to check cluster status: {}", e))): RPC error: Failed to check cluster status: error sending request for url (http://host.docker.internal:8899/): error trying to connect: tcp connect error: Connection refused (os error 111)
+2025-10-21T18:58:13.705920Z  WARN arx::utils: arx/src/utils.rs:66: Attempt 3/5: RPC error while calling client.get_version().map_err(|e|
+ArxError::RpcError(format!("Failed to check cluster status: {}", e))): RPC error: Failed to check cluster status: error sending request for url (http://host.docker.internal:8899/): error trying to connect: tcp connect error: Connection refused (os error 111)

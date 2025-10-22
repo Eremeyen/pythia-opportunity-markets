@@ -1,0 +1,188 @@
+2025-10-21T17:35:54.735596Z DEBUG arx: arx/src/main.rs:53: Checking Solana is up and running
+2025-10-21T17:35:54.839564Z  INFO arx: arx/src/main.rs:58: Running ARX
+2025-10-21T17:35:54.839883Z DEBUG arx: arx/src/main.rs:60: Reading node keypair, callback authority keypair, and identity files from env
+2025-10-21T17:35:54.840297Z DEBUG arx: arx/src/main.rs:68: Reading node keypair, callback authority keypair, and identity files
+2025-10-21T17:35:54.849520Z DEBUG arx: arx/src/main.rs:78: Installing AWS LC crypto provider
+2025-10-21T17:35:54.849689Z  INFO arx: arx/src/main.rs:83: Creating ARX coordinator
+2025-10-21T17:35:54.976609Z DEBUG arx::units::online_phase_unit: arx/src/units/online_phase_unit.rs:121: Loaded MXE private shares for CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm
+2025-10-21T17:35:54.978484Z  INFO arx::units::cache_unit: arx/src/units/cache_unit.rs:88: Cache unit started
+2025-10-21T17:35:54.979428Z  INFO arx::units::circuit_unit: arx/src/units/circuit_unit.rs:107: Circuit unit started
+2025-10-21T17:35:54.981050Z  INFO arx::units::cluster_unit: arx/src/units/cluster_unit.rs:66: Cluster unit started
+2025-10-21T17:35:54.981439Z DEBUG arx::units::cluster_unit: arx/src/units/cluster_unit.rs:68: Running pub/sub for arx node account
+2025-10-21T17:35:54.982929Z  INFO arx::units::computation_transaction_unit: arx/src/units/computation_transaction_unit.rs:89: Computation transaction unit started
+2025-10-21T17:35:54.985473Z  INFO arx::units::execpool_unit: arx/src/units/execpool_unit.rs:80: Execpool unit started
+2025-10-21T17:35:54.985555Z DEBUG arx::units::execpool_unit: arx/src/units/execpool_unit.rs:82: Running pub/sub for mempools accounts
+2025-10-21T17:35:54.986860Z DEBUG arx::units::cluster_unit: arx/src/units/cluster_unit.rs:78: Subscribing to arx node account
+2025-10-21T17:35:54.987121Z  INFO arx::units::computation_unit: arx/src/units/computation_unit.rs:74: Inputs unit started
+2025-10-21T17:35:54.988212Z  INFO arx::units::mempool_unit: arx/src/units/mempool_unit.rs:77: Mempool unit started
+2025-10-21T17:35:54.988295Z DEBUG arx::units::mempool_unit: arx/src/units/mempool_unit.rs:79: Running pub/sub for mempools accounts
+2025-10-21T17:35:54.991256Z  INFO arx::units::mxe_unit: arx/src/units/mxe_unit.rs:75: MXE unit started
+2025-10-21T17:35:54.991784Z DEBUG arx::units::mxe_unit: arx/src/units/mxe_unit.rs:77: Running pub/sub for clusters accounts
+2025-10-21T17:35:54.991961Z  INFO arx::units::node_transaction_unit: arx/src/units/node_transaction_unit.rs:65: Node transaction unit started
+2025-10-21T17:35:54.992046Z  INFO arx::units::node_transaction_unit: arx/src/units/node_transaction_unit.rs:67: Activating node
+2025-10-21T17:35:54.993235Z  INFO arx::units::online_phase_unit: arx/src/units/online_phase_unit.rs:152: Online phase unit started
+2025-10-21T17:35:54.995354Z  INFO arx::units::peers_unit: arx/src/units/peers_unit.rs:76: Peers unit started
+2025-10-21T17:35:54.995693Z  INFO arx: arx/src/main.rs:93: Coordinator created successfully
+2025-10-21T17:35:54.995749Z  INFO arx::units::state_unit: arx/src/units/state_unit.rs:109: State unit started
+2025-10-21T17:35:54.996778Z  INFO arx: arx/src/main.rs:102: Starting ARX coordinator
+2025-10-21T17:35:54.998411Z  INFO arx::program: arx/src/program.rs:242: Pub/sub client started
+2025-10-21T17:35:54.999424Z  INFO arx::program: arx/src/program.rs:244: Connecting initial pub/sub
+2025-10-21T17:35:55.000441Z  INFO arx: arx/src/main.rs:105: Waiting for Ctrl+C
+2025-10-21T17:35:55.001615Z  INFO arx::program: arx/src/program.rs:242: Pub/sub client started
+2025-10-21T17:35:55.001700Z  INFO arx::program: arx/src/program.rs:244: Connecting initial pub/sub
+2025-10-21T17:35:55.001912Z  INFO arx::coordinator: arx/src/coordinator.rs:198: Coordinator started
+2025-10-21T17:35:55.002559Z  INFO arx::program: arx/src/program.rs:242: Pub/sub client started
+2025-10-21T17:35:55.002659Z  INFO arx::program: arx/src/program.rs:244: Connecting initial pub/sub
+2025-10-21T17:35:55.005380Z  INFO arx::program: arx/src/program.rs:242: Pub/sub client started
+2025-10-21T17:35:55.005428Z  INFO arx::program: arx/src/program.rs:244: Connecting initial pub/sub
+2025-10-21T17:35:55.048076Z  INFO arx::program: arx/src/program.rs:267: Fetching initial state for account: ELoRR19zrps1G3UYKcAxr7LKbw3kbqkVUXVY9dETMWN7
+2025-10-21T17:35:55.055215Z  INFO arx::program: arx/src/program.rs:279: Subscribing to account: ELoRR19zrps1G3UYKcAxr7LKbw3kbqkVUXVY9dETMWN7
+2025-10-21T17:35:55.057112Z DEBUG arx::units::cluster_unit: arx/src/units/cluster_unit.rs:101: Processing arx node update
+2025-10-21T17:35:55.286825Z DEBUG arx::program: arx/src/program.rs:312: Received update for account: ELoRR19zrps1G3UYKcAxr7LKbw3kbqkVUXVY9dETMWN7
+2025-10-21T17:35:55.287591Z DEBUG arx::units::cluster_unit: arx/src/units/cluster_unit.rs:101: Processing arx node update
+2025-10-21T17:35:55.570931Z  INFO arx::units::node_transaction_unit: arx/src/units/node_transaction_unit.rs:70: Node activated
+2025-10-21T17:35:55.572057Z DEBUG arx::coordinator: arx/src/coordinator.rs:204: Coordinator received activation unit message: activated
+2025-10-21T17:35:55.574813Z DEBUG arx::coordinator: arx/src/coordinator.rs:251: Coordinator received cluster unit message: cluster: 0, status: Joined
+2025-10-21T17:35:55.577876Z DEBUG arx::units::mxe_unit: arx/src/units/mxe_unit.rs:112: Subscribing to cluster: GgSqqAyH7AVY3Umcv8NvncrjFaNJuQLmxzxFxPoPW2Yd
+2025-10-21T17:35:55.578473Z  INFO arx::program: arx/src/program.rs:267: Fetching initial state for account: GgSqqAyH7AVY3Umcv8NvncrjFaNJuQLmxzxFxPoPW2Yd
+2025-10-21T17:35:55.582647Z  INFO arx::program: arx/src/program.rs:279: Subscribing to account: GgSqqAyH7AVY3Umcv8NvncrjFaNJuQLmxzxFxPoPW2Yd
+2025-10-21T17:35:55.583093Z DEBUG arx::units::mxe_unit: arx/src/units/mxe_unit.rs:129: Processing cluster update for account: GgSqqAyH7AVY3Umcv8NvncrjFaNJuQLmxzxFxPoPW2Yd
+2025-10-21T17:35:55.584845Z DEBUG arx::coordinator: arx/src/coordinator.rs:349: Coordinator received mxe unit message: cluster: GgSqqAyH7AVY3Umcv8NvncrjFaNJuQLmxzxFxPoPW2Yd, mxe: CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm, status: Joined
+2025-10-21T17:35:55.585545Z DEBUG arx::units::execpool_unit: arx/src/units/execpool_unit.rs:120: Subscribing to execpool account: CQF2VydaWEk5ZkVRi5q3LxoQTkJNHsRSc2yuUAMS1qUc
+2025-10-21T17:35:55.585906Z DEBUG arx::units::mempool_unit: arx/src/units/mempool_unit.rs:113: Subscribing to mempool account: Eii8e5feybZsNs1xJcmktof6LkWNGrAdTk179oL3ZZyv
+2025-10-21T17:35:55.586712Z  INFO arx::program: arx/src/program.rs:267: Fetching initial state for account: CQF2VydaWEk5ZkVRi5q3LxoQTkJNHsRSc2yuUAMS1qUc
+2025-10-21T17:35:55.586792Z  INFO arx::program: arx/src/program.rs:267: Fetching initial state for account: Eii8e5feybZsNs1xJcmktof6LkWNGrAdTk179oL3ZZyv
+2025-10-21T17:35:55.589004Z  INFO arx::program: arx/src/program.rs:279: Subscribing to account: CQF2VydaWEk5ZkVRi5q3LxoQTkJNHsRSc2yuUAMS1qUc
+2025-10-21T17:35:55.590364Z  INFO arx::program: arx/src/program.rs:279: Subscribing to account: Eii8e5feybZsNs1xJcmktof6LkWNGrAdTk179oL3ZZyv
+2025-10-21T17:35:55.591519Z DEBUG arx::units::mempool_unit: arx/src/units/mempool_unit.rs:136: Processing new mempool update for account: Eii8e5feybZsNs1xJcmktof6LkWNGrAdTk179oL3ZZyv
+2025-10-21T17:35:55.590903Z DEBUG arx::coordinator: arx/src/coordinator.rs:288: Coordinator received execpool unit message: computations ids: [1]
+2025-10-21T17:35:55.593378Z DEBUG arx::units::mempool_unit: arx/src/units/mempool_unit.rs:175: Mempool account Eii8e5feybZsNs1xJcmktof6LkWNGrAdTk179oL3ZZyv contains the same computations, skipping update
+2025-10-21T17:35:55.593993Z DEBUG arx::units::state_unit: arx/src/units/state_unit.rs:231: Processing execpool update
+2025-10-21T17:35:55.593998Z DEBUG arx::units::cache_unit: arx/src/units/cache_unit.rs:144: Processing queued computation: ArxComputationReference (1,1) (cluster: GgSqqAyH7AVY3Umcv8NvncrjFaNJuQLmxzxFxPoPW2Yd, mxe: CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm)
+2025-10-21T17:35:55.595804Z DEBUG arx::units::state_unit: arx/src/units/state_unit.rs:281: Prefetching and executing computation: ArxComputationReference (1,1) (cluster: GgSqqAyH7AVY3Umcv8NvncrjFaNJuQLmxzxFxPoPW2Yd, mxe: CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm) with status (index: 0, executed: false)
+2025-10-21T17:35:55.596448Z DEBUG arx::coordinator: arx/src/coordinator.rs:384: Coordinator received state unit message: prefetch computation: ArxComputationReference (1,1) (cluster: GgSqqAyH7AVY3Umcv8NvncrjFaNJuQLmxzxFxPoPW2Yd, mxe: CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm)
+2025-10-21T17:35:55.597199Z DEBUG arx::coordinator: arx/src/coordinator.rs:405: Coordinator received state unit message: execute computation: ArxComputationReference (1,1) (cluster: GgSqqAyH7AVY3Umcv8NvncrjFaNJuQLmxzxFxPoPW2Yd, mxe: CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm)
+2025-10-21T17:35:55.598114Z DEBUG arx::units::peers_unit: arx/src/units/peers_unit.rs:111: Processing cluster: GgSqqAyH7AVY3Umcv8NvncrjFaNJuQLmxzxFxPoPW2Yd
+2025-10-21T17:35:55.598143Z DEBUG arx::units::circuit_unit: arx/src/units/circuit_unit.rs:148: Processing computation definition: Dpz7xMiZ29fGETVJc3rnexMZSq7G4quyeMrZzbWt88R3
+2025-10-21T17:35:55.604664Z DEBUG arx::coordinator: arx/src/coordinator.rs:309: Coordinator prefetched computation ArxComputationReference (1,1) (cluster: GgSqqAyH7AVY3Umcv8NvncrjFaNJuQLmxzxFxPoPW2Yd, mxe: CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm)
+2025-10-21T17:35:55.605402Z DEBUG arx::coordinator: arx/src/coordinator.rs:312: Coordinator fetched computation ArxComputation 303790697907795210078047774390766665400 (cluster: GgSqqAyH7AVY3Umcv8NvncrjFaNJuQLmxzxFxPoPW2Yd, mxe: CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm) inputs
+2025-10-21T17:35:55.607787Z DEBUG arx::units::cache_unit: arx/src/units/cache_unit.rs:246: Processing fetched inputs: Cerberus Inputs
+2025-10-21T17:35:55.614460Z DEBUG arx::units::circuit_unit: arx/src/units/circuit_unit.rs:198: Deserializing circuit data
+2025-10-21T17:35:55.619255Z DEBUG arx::coordinator: arx/src/coordinator.rs:373: Coordinator received peers unit message
+2025-10-21T17:35:55.619874Z DEBUG arx::units::cache_unit: arx/src/units/cache_unit.rs:209: Processing fetched peers: PeersInfo { cluster: GgSqqAyH7AVY3Umcv8NvncrjFaNJuQLmxzxFxPoPW2Yd, peer_number: 0 }
+2025-10-21T17:35:55.622752Z DEBUG arx::units::circuit_unit: arx/src/units/circuit_unit.rs:215: Inserting circuit info into cache
+2025-10-21T17:35:55.624096Z DEBUG arx::coordinator: arx/src/coordinator.rs:241: Coordinator received circuit unit message
+2025-10-21T17:35:55.624411Z DEBUG arx::units::cache_unit: arx/src/units/cache_unit.rs:170: Processing fetched circuit: CircuitInfo Dpz7xMiZ29fGETVJc3rnexMZSq7G4quyeMrZzbWt88R3
+2025-10-21T17:35:55.625090Z DEBUG arx::coordinator: arx/src/coordinator.rs:221: Coordinator received cache unit message
+2025-10-21T17:35:55.625189Z DEBUG arx::coordinator: arx/src/coordinator.rs:221: Coordinator received cache unit message
+2025-10-21T17:35:55.625470Z DEBUG arx::units::state_unit: arx/src/units/state_unit.rs:296: Processing prefetched computation
+2025-10-21T17:35:55.626041Z  WARN arx::units::online_phase_unit: arx/src/units/online_phase_unit.rs:195: Overwriting existing private shares for MXE keygen computation
+2025-10-21T17:35:55.627981Z  INFO arx::units::online_phase_unit: arx/src/units/online_phase_unit.rs:326: Processing Cerberus computation with id 303790697907795210078047774390766665400
+2025-10-21T17:35:55.628195Z DEBUG arx::units::online_phase_unit: arx/src/units/online_phase_unit.rs:328: Connecting to peers (303790697907795210078047774390766665400)
+2025-10-21T17:35:55.629282Z DEBUG network::router::network_router: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/network_router.rs:79: Handling connection request to peer cf7093    
+2025-10-21T17:35:55.629690Z DEBUG network::router::state::connection_handlers: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/state/connection_handlers.rs:44: Handling internal connection request: ConnectionRequest { expected_peer_id: cf7093, peer_addr: 172.20.0.101:8001, response_sender: Sender { inner: Some(Inner { state: State { is_complete: false, is_closed: false, is_rx_task_set: true, is_tx_task_set: false } }) } }    
+2025-10-21T17:35:55.630265Z DEBUG network::router::state::connection_handlers: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/state/connection_handlers.rs:65: Connection not established yet: 172.20.0.101:8001    
+2025-10-21T17:35:55.630730Z DEBUG network::router::state::connection_handlers: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/state/connection_handlers.rs:100: Connecting to peer: 172.20.0.101:8001    
+2025-10-21T17:35:55.631502Z DEBUG network::router::network_router: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/network_router.rs:85: Connection request to peer cf7093 handled    
+2025-10-21T17:35:55.649836Z DEBUG network::router::state::connection_handlers: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/state/connection_handlers.rs:227: Handling incoming connection request from peer: 172.20.0.101:8001    
+2025-10-21T17:35:55.666151Z DEBUG network::router::state::connection_handlers: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/state/connection_handlers.rs:128: Connecting and checking ID of peer: 172.20.0.101:8001    
+2025-10-21T17:35:55.666330Z DEBUG network::router::state::connection_handlers: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/state/connection_handlers.rs:227: Handling incoming connection request from peer: 172.20.0.104:8001    
+2025-10-21T17:35:55.666846Z DEBUG network::router::state::connection_handlers: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/state/connection_handlers.rs:227: Handling incoming connection request from peer: 172.20.0.102:8001    
+2025-10-21T17:35:55.666885Z DEBUG network::router::state::connection_handlers: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/state/connection_handlers.rs:227: Handling incoming connection request from peer: 172.20.0.103:8001    
+2025-10-21T17:35:55.697728Z DEBUG network::router::state::connection_handlers: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/state/connection_handlers.rs:280: Checking connection liveness to peer: 172.20.0.101:8001    
+2025-10-21T17:35:55.699919Z DEBUG network::router::state::connection_handlers: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/state/connection_handlers.rs:168: Outcome of connection to peer 172.20.0.101:8001 sent.    
+2025-10-21T17:35:55.700392Z DEBUG network::router::state::connection_handlers: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/state/connection_handlers.rs:188: Handling established connection to peer: 172.20.0.101:8001    
+2025-10-21T17:35:55.701124Z  INFO network::router::state::substream_handlers: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/state/substream_handlers.rs:217: Listening to substream requests from address 172.20.0.101:8001.    
+2025-10-21T17:35:55.701719Z DEBUG network::router::network_router: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/network_router.rs:79: Handling connection request to peer b9d570    
+2025-10-21T17:35:55.701826Z DEBUG network::router::state::connection_handlers: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/state/connection_handlers.rs:44: Handling internal connection request: ConnectionRequest { expected_peer_id: b9d570, peer_addr: 172.20.0.102:8001, response_sender: Sender { inner: Some(Inner { state: State { is_complete: false, is_closed: false, is_rx_task_set: true, is_tx_task_set: false } }) } }    
+2025-10-21T17:35:55.701860Z DEBUG network::router::state::connection_handlers: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/state/connection_handlers.rs:65: Connection not established yet: 172.20.0.102:8001    
+2025-10-21T17:35:55.701926Z DEBUG network::router::state::connection_handlers: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/state/connection_handlers.rs:100: Connecting to peer: 172.20.0.102:8001    
+2025-10-21T17:35:55.702352Z DEBUG network::router::state::connection_handlers: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/state/connection_handlers.rs:128: Connecting and checking ID of peer: 172.20.0.102:8001    
+2025-10-21T17:35:55.702388Z DEBUG network::router::network_router: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/network_router.rs:85: Connection request to peer b9d570 handled    
+2025-10-21T17:35:55.720406Z DEBUG network::router::state::connection_handlers: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/state/connection_handlers.rs:280: Checking connection liveness to peer: 172.20.0.102:8001    
+2025-10-21T17:35:55.727387Z DEBUG network::router::state::connection_handlers: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/state/connection_handlers.rs:168: Outcome of connection to peer 172.20.0.102:8001 sent.    
+2025-10-21T17:35:55.727447Z DEBUG network::router::state::connection_handlers: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/state/connection_handlers.rs:188: Handling established connection to peer: 172.20.0.102:8001    
+2025-10-21T17:35:55.727608Z  INFO network::router::state::substream_handlers: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/state/substream_handlers.rs:217: Listening to substream requests from address 172.20.0.102:8001.    
+2025-10-21T17:35:55.727692Z DEBUG network::router::network_router: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/network_router.rs:79: Handling connection request to peer 15eb2e    
+2025-10-21T17:35:55.727750Z DEBUG network::router::state::connection_handlers: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/state/connection_handlers.rs:44: Handling internal connection request: ConnectionRequest { expected_peer_id: 15eb2e, peer_addr: 172.20.0.103:8001, response_sender: Sender { inner: Some(Inner { state: State { is_complete: false, is_closed: false, is_rx_task_set: true, is_tx_task_set: false } }) } }    
+2025-10-21T17:35:55.727788Z DEBUG network::router::state::connection_handlers: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/state/connection_handlers.rs:65: Connection not established yet: 172.20.0.103:8001    
+2025-10-21T17:35:55.727821Z DEBUG network::router::state::connection_handlers: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/state/connection_handlers.rs:100: Connecting to peer: 172.20.0.103:8001    
+2025-10-21T17:35:55.728133Z DEBUG network::router::state::connection_handlers: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/state/connection_handlers.rs:128: Connecting and checking ID of peer: 172.20.0.103:8001    
+2025-10-21T17:35:55.728214Z DEBUG network::router::network_router: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/network_router.rs:85: Connection request to peer 15eb2e handled    
+2025-10-21T17:35:55.751494Z DEBUG network::router::state::connection_handlers: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/state/connection_handlers.rs:280: Checking connection liveness to peer: 172.20.0.103:8001    
+2025-10-21T17:35:55.758604Z DEBUG network::router::state::connection_handlers: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/state/connection_handlers.rs:168: Outcome of connection to peer 172.20.0.103:8001 sent.    
+2025-10-21T17:35:55.758751Z DEBUG network::router::state::connection_handlers: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/state/connection_handlers.rs:188: Handling established connection to peer: 172.20.0.103:8001    
+2025-10-21T17:35:55.758875Z  INFO network::router::state::substream_handlers: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/state/substream_handlers.rs:217: Listening to substream requests from address 172.20.0.103:8001.    
+2025-10-21T17:35:55.758930Z DEBUG network::router::network_router: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/network_router.rs:79: Handling connection request to peer d96e97    
+2025-10-21T17:35:55.758978Z DEBUG network::router::state::connection_handlers: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/state/connection_handlers.rs:44: Handling internal connection request: ConnectionRequest { expected_peer_id: d96e97, peer_addr: 172.20.0.104:8001, response_sender: Sender { inner: Some(Inner { state: State { is_complete: false, is_closed: false, is_rx_task_set: true, is_tx_task_set: false } }) } }    
+2025-10-21T17:35:55.759014Z DEBUG network::router::state::connection_handlers: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/state/connection_handlers.rs:65: Connection not established yet: 172.20.0.104:8001    
+2025-10-21T17:35:55.759043Z DEBUG network::router::state::connection_handlers: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/state/connection_handlers.rs:100: Connecting to peer: 172.20.0.104:8001    
+2025-10-21T17:35:55.759308Z DEBUG network::router::state::connection_handlers: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/state/connection_handlers.rs:128: Connecting and checking ID of peer: 172.20.0.104:8001    
+2025-10-21T17:35:55.759377Z DEBUG network::router::network_router: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/network_router.rs:85: Connection request to peer d96e97 handled    
+2025-10-21T17:35:55.776804Z DEBUG network::router::state::connection_handlers: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/state/connection_handlers.rs:280: Checking connection liveness to peer: 172.20.0.104:8001    
+2025-10-21T17:35:55.783373Z DEBUG network::router::state::connection_handlers: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/state/connection_handlers.rs:168: Outcome of connection to peer 172.20.0.104:8001 sent.    
+2025-10-21T17:35:55.783452Z DEBUG network::router::state::connection_handlers: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/state/connection_handlers.rs:188: Handling established connection to peer: 172.20.0.104:8001    
+2025-10-21T17:35:55.783510Z  INFO network::router::state::substream_handlers: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/state/substream_handlers.rs:217: Listening to substream requests from address 172.20.0.104:8001.    
+2025-10-21T17:35:55.783580Z DEBUG arx::units::online_phase_unit: arx/src/units/online_phase_unit.rs:343: Connected to peers (303790697907795210078047774390766665400)
+2025-10-21T17:35:55.784853Z DEBUG network::router::network_router: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/network_router.rs:105: Opening substream for protocol (303790697907795210078047774390766665400, 0) with peer 15eb2e    
+2025-10-21T17:35:55.785498Z DEBUG network::router::network_router: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/network_router.rs:105: Opening substream for protocol (303790697907795210078047774390766665400, 0) with peer b9d570    
+2025-10-21T17:35:55.785535Z DEBUG network::router::network_router: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/network_router.rs:105: Opening substream for protocol (303790697907795210078047774390766665400, 0) with peer cf7093    
+2025-10-21T17:35:55.785570Z DEBUG network::router::network_router: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/network_router.rs:105: Opening substream for protocol (303790697907795210078047774390766665400, 0) with peer d96e97    
+2025-10-21T17:35:55.795566Z  INFO network::router::state::substream_handlers: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/state/substream_handlers.rs:235: Registered incoming stream from address 172.20.0.101:8001.    
+2025-10-21T17:35:55.796198Z  INFO network::router::state::substream_handlers: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/state/substream_handlers.rs:50: New substream successfully established.    
+2025-10-21T17:35:55.798639Z  INFO network::router::state::substream_handlers: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/state/substream_handlers.rs:235: Registered incoming stream from address 172.20.0.102:8001.    
+2025-10-21T17:35:55.798704Z  INFO network::router::state::substream_handlers: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/state/substream_handlers.rs:50: New substream successfully established.    
+2025-10-21T17:35:55.801388Z  INFO network::router::state::substream_handlers: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/state/substream_handlers.rs:235: Registered incoming stream from address 172.20.0.104:8001.    
+2025-10-21T17:35:55.801513Z  INFO network::router::state::substream_handlers: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/state/substream_handlers.rs:50: New substream successfully established.    
+2025-10-21T17:35:55.801485Z  INFO network::router::state::substream_handlers: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/state/substream_handlers.rs:235: Registered incoming stream from address 172.20.0.103:8001.    
+2025-10-21T17:35:55.801636Z  INFO network::router::state::substream_handlers: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/state/substream_handlers.rs:50: New substream successfully established.    
+2025-10-21T17:35:55.801797Z  INFO network::router::network_router: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/network_router.rs:273: Opened substreams for protocol 303790697907795210078047774390766665400    
+2025-10-21T17:35:56.234615Z  INFO network::labeled_interface::handlers: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/labeled_interface/handlers.rs:86: Interface 0461a5 dropped.    
+2025-10-21T17:35:56.234648Z  INFO network::labeled_interface::handlers: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/labeled_interface/handlers.rs:86: Interface 0461a5 dropped.    
+2025-10-21T17:35:56.234648Z DEBUG arx::units::online_phase_unit: arx/src/units/online_phase_unit.rs:255: Output of computation is: ArxComputationOutput { computation: ArxComputation 303790697907795210078047774390766665400 (cluster: GgSqqAyH7AVY3Umcv8NvncrjFaNJuQLmxzxFxPoPW2Yd, mxe: CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm), outputs: Success([[234, 191, 86, 99, 142, 238, 220, 135, 52, 2, 66, 242, 239, 184, 187, 230, 202, 82, 8, 16, 220, 158, 113, 99, 114, 194, 154, 139, 160, 189, 244, 126]]) } (303790697907795210078047774390766665400)
+2025-10-21T17:35:56.236283Z DEBUG arx::coordinator: arx/src/coordinator.rs:364: Coordinator received online unit output: ArxComputationOutput { computation: ArxComputation 303790697907795210078047774390766665400 (cluster: GgSqqAyH7AVY3Umcv8NvncrjFaNJuQLmxzxFxPoPW2Yd, mxe: CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm), outputs: Success([[234, 191, 86, 99, 142, 238, 220, 135, 52, 2, 66, 242, 239, 184, 187, 230, 202, 82, 8, 16, 220, 158, 113, 99, 114, 194, 154, 139, 160, 189, 244, 126]]) }
+2025-10-21T17:35:56.234733Z  INFO network::labeled_interface::handlers: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/labeled_interface/handlers.rs:86: Interface 0461a5 dropped.    
+2025-10-21T17:35:56.237056Z DEBUG arx::units::computation_transaction_unit: arx/src/units/computation_transaction_unit.rs:162: Processing callback for computation ArxComputation 303790697907795210078047774390766665400 (cluster: GgSqqAyH7AVY3Umcv8NvncrjFaNJuQLmxzxFxPoPW2Yd, mxe: CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm)
+2025-10-21T17:35:56.234764Z  INFO network::labeled_interface::handlers: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/labeled_interface/handlers.rs:86: Interface 0461a5 dropped.    
+2025-10-21T17:35:56.235514Z  INFO network::labeled_interface::handlers: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/labeled_interface/handlers.rs:53: Router closed interface 0461a5.    
+2025-10-21T17:35:56.236382Z  INFO network::labeled_interface::handlers: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/labeled_interface/handlers.rs:53: Router closed interface 0461a5.    
+2025-10-21T17:35:56.236440Z  INFO network::labeled_interface::interface: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/labeled_interface/interface.rs:415: Interface 0461a5 dropped.    
+2025-10-21T17:35:56.236819Z  INFO network::labeled_interface::handlers: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/labeled_interface/handlers.rs:53: Router closed interface 0461a5.    
+2025-10-21T17:35:56.237373Z  INFO network::labeled_interface::handlers: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/labeled_interface/handlers.rs:53: Router closed interface 0461a5.    
+2025-10-21T17:35:56.240469Z  INFO network::router::state::substream_handlers: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/state/substream_handlers.rs:197: Removed protocol ID (303790697907795210078047774390766665400, 0) for peer cf7093.    
+2025-10-21T17:35:56.767678Z DEBUG arx::program: arx/src/program.rs:312: Received update for account: GgSqqAyH7AVY3Umcv8NvncrjFaNJuQLmxzxFxPoPW2Yd
+2025-10-21T17:35:56.768323Z DEBUG arx::units::mxe_unit: arx/src/units/mxe_unit.rs:129: Processing cluster update for account: GgSqqAyH7AVY3Umcv8NvncrjFaNJuQLmxzxFxPoPW2Yd
+2025-10-21T17:35:57.253723Z DEBUG arx::units::computation_transaction_unit: arx/src/units/computation_transaction_unit.rs:219: Sent set_mxe_keys tx for mxe CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm with sig 2o1CCHSV2YmvRRT95n9SM54kx66HA6yTw7YE9xWxvnkxiUDaJ87oqUj7aVdshRgGQtL8CZxjKaEfGQCX1t4QbgF4
+2025-10-21T17:35:57.657040Z DEBUG arx::program: arx/src/program.rs:312: Received update for account: GgSqqAyH7AVY3Umcv8NvncrjFaNJuQLmxzxFxPoPW2Yd
+2025-10-21T17:35:57.658008Z DEBUG arx::units::mxe_unit: arx/src/units/mxe_unit.rs:129: Processing cluster update for account: GgSqqAyH7AVY3Umcv8NvncrjFaNJuQLmxzxFxPoPW2Yd
+2025-10-21T17:35:57.657356Z DEBUG arx::program: arx/src/program.rs:312: Received update for account: CQF2VydaWEk5ZkVRi5q3LxoQTkJNHsRSc2yuUAMS1qUc
+2025-10-21T17:35:57.658870Z DEBUG arx::program: arx/src/program.rs:312: Received update for account: Eii8e5feybZsNs1xJcmktof6LkWNGrAdTk179oL3ZZyv
+2025-10-21T17:35:57.660452Z DEBUG arx::coordinator: arx/src/coordinator.rs:288: Coordinator received execpool unit message: computations ids: []
+2025-10-21T17:35:57.660757Z DEBUG arx::units::state_unit: arx/src/units/state_unit.rs:231: Processing execpool update
+2025-10-21T17:35:57.661592Z DEBUG arx::units::mempool_unit: arx/src/units/mempool_unit.rs:136: Processing new mempool update for account: Eii8e5feybZsNs1xJcmktof6LkWNGrAdTk179oL3ZZyv
+2025-10-21T17:35:57.661810Z DEBUG arx::units::mempool_unit: arx/src/units/mempool_unit.rs:175: Mempool account Eii8e5feybZsNs1xJcmktof6LkWNGrAdTk179oL3ZZyv contains the same computations, skipping update
+2025-10-21T17:35:57.661837Z DEBUG arx::units::state_unit: arx/src/units/state_unit.rs:255: Removing computation from execpool: ArxComputationReference (1,1) (cluster: GgSqqAyH7AVY3Umcv8NvncrjFaNJuQLmxzxFxPoPW2Yd, mxe: CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm)
+2025-10-21T17:35:57.663135Z DEBUG arx::coordinator: arx/src/coordinator.rs:423: Coordinator received state unit message: executed computation: ArxComputationReference (1,1) (cluster: GgSqqAyH7AVY3Umcv8NvncrjFaNJuQLmxzxFxPoPW2Yd, mxe: CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm)
+2025-10-21T17:35:57.663590Z DEBUG arx::units::cache_unit: arx/src/units/cache_unit.rs:278: Processing executed computation: ArxComputationReference (1,1) (cluster: GgSqqAyH7AVY3Umcv8NvncrjFaNJuQLmxzxFxPoPW2Yd, mxe: CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm)
+2025-10-21T17:35:57.663984Z DEBUG arx::units::cache_unit: arx/src/units/cache_unit.rs:282: Computation executed and removed from cache: ArxComputationReference (1,1) (cluster: GgSqqAyH7AVY3Umcv8NvncrjFaNJuQLmxzxFxPoPW2Yd, mxe: CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm)
+2025-10-21T17:35:57.765131Z DEBUG arx::units::computation_transaction_unit: arx/src/units/computation_transaction_unit.rs:342: Callback computation tx for mxe CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm already sent
+2025-10-21T17:35:57.767196Z DEBUG arx::coordinator: arx/src/coordinator.rs:265: Coordinator received computation transaction unit callback computation: ArxComputationReference (1,1) (cluster: GgSqqAyH7AVY3Umcv8NvncrjFaNJuQLmxzxFxPoPW2Yd, mxe: CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm)
+2025-10-21T17:35:57.767385Z DEBUG arx::units::cache_unit: arx/src/units/cache_unit.rs:278: Processing executed computation: ArxComputationReference (1,1) (cluster: GgSqqAyH7AVY3Umcv8NvncrjFaNJuQLmxzxFxPoPW2Yd, mxe: CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm)
+2025-10-21T17:35:57.767717Z DEBUG arx::units::state_unit: arx/src/units/state_unit.rs:311: Processing executed computation
+2025-10-21T17:35:57.767733Z  WARN arx::units::cache_unit: arx/src/units/cache_unit.rs:289: Computation info not found in cache: ArxComputationReference (1,1) (cluster: GgSqqAyH7AVY3Umcv8NvncrjFaNJuQLmxzxFxPoPW2Yd, mxe: CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm)
+2025-10-21T17:35:58.286331Z  WARN arx::program: arx/src/program.rs:322: Pub/sub connection closed or error occurred, reconnecting...
+2025-10-21T17:35:58.286573Z  WARN arx::program: arx/src/program.rs:322: Pub/sub connection closed or error occurred, reconnecting...
+2025-10-21T17:35:58.286804Z  WARN arx::program: arx/src/program.rs:322: Pub/sub connection closed or error occurred, reconnecting...
+2025-10-21T17:35:58.287147Z  WARN arx::program: arx/src/program.rs:322: Pub/sub connection closed or error occurred, reconnecting...
+2025-10-21T17:35:58.296955Z  INFO arx::program: arx/src/program.rs:327: Reconnecting pub/sub client
+2025-10-21T17:35:58.297050Z  INFO arx::program: arx/src/program.rs:327: Reconnecting pub/sub client
+2025-10-21T17:35:58.297095Z  INFO arx::program: arx/src/program.rs:327: Reconnecting pub/sub client
+2025-10-21T17:35:58.297130Z  INFO arx::program: arx/src/program.rs:327: Reconnecting pub/sub client
+2025-10-21T17:35:58.298707Z  WARN arx::program: arx/src/program.rs:375: Attempt 1/5: Failed to create new pub/sub: unable to connect to server
+2025-10-21T17:35:58.299017Z  WARN arx::program: arx/src/program.rs:375: Attempt 1/5: Failed to create new pub/sub: unable to connect to server
+2025-10-21T17:35:58.299183Z  WARN arx::program: arx/src/program.rs:375: Attempt 1/5: Failed to create new pub/sub: unable to connect to server
+2025-10-21T17:35:58.299322Z  WARN arx::program: arx/src/program.rs:375: Attempt 1/5: Failed to create new pub/sub: unable to connect to server
+2025-10-21T17:35:59.304273Z  WARN arx::program: arx/src/program.rs:375: Attempt 2/5: Failed to create new pub/sub: unable to connect to server
+2025-10-21T17:35:59.305899Z  WARN arx::program: arx/src/program.rs:375: Attempt 2/5: Failed to create new pub/sub: unable to connect to server
+2025-10-21T17:35:59.308082Z  WARN arx::program: arx/src/program.rs:375: Attempt 2/5: Failed to create new pub/sub: unable to connect to server
+2025-10-21T17:35:59.308188Z  WARN arx::program: arx/src/program.rs:375: Attempt 2/5: Failed to create new pub/sub: unable to connect to server

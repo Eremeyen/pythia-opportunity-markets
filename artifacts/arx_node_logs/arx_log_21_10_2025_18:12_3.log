@@ -1,0 +1,138 @@
+2025-10-21T18:12:32.026255Z DEBUG arx: arx/src/main.rs:53: Checking Solana is up and running
+2025-10-21T18:12:32.114373Z  WARN arx::utils: arx/src/utils.rs:66: Attempt 1/5: RPC error while calling client.get_version().map_err(|e|
+ArxError::RpcError(format!("Failed to check cluster status: {}", e))): RPC error: Failed to check cluster status: error sending request for url (http://host.docker.internal:8899/): error trying to connect: tcp connect error: Connection refused (os error 111)
+2025-10-21T18:12:33.121641Z  WARN arx::utils: arx/src/utils.rs:66: Attempt 2/5: RPC error while calling client.get_version().map_err(|e|
+ArxError::RpcError(format!("Failed to check cluster status: {}", e))): RPC error: Failed to check cluster status: error sending request for url (http://host.docker.internal:8899/): error trying to connect: tcp connect error: Connection refused (os error 111)
+2025-10-21T18:12:35.127193Z  WARN arx::utils: arx/src/utils.rs:66: Attempt 3/5: RPC error while calling client.get_version().map_err(|e|
+ArxError::RpcError(format!("Failed to check cluster status: {}", e))): RPC error: Failed to check cluster status: error sending request for url (http://host.docker.internal:8899/): error trying to connect: tcp connect error: Connection refused (os error 111)
+2025-10-21T18:12:39.148098Z  INFO arx: arx/src/main.rs:58: Running ARX
+2025-10-21T18:12:39.149962Z DEBUG arx: arx/src/main.rs:60: Reading node keypair, callback authority keypair, and identity files from env
+2025-10-21T18:12:39.150057Z DEBUG arx: arx/src/main.rs:68: Reading node keypair, callback authority keypair, and identity files
+2025-10-21T18:12:39.156877Z DEBUG arx: arx/src/main.rs:78: Installing AWS LC crypto provider
+2025-10-21T18:12:39.157464Z  INFO arx: arx/src/main.rs:83: Creating ARX coordinator
+2025-10-21T18:12:39.290272Z DEBUG arx::units::online_phase_unit: arx/src/units/online_phase_unit.rs:121: Loaded MXE private shares for CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm
+2025-10-21T18:12:39.292369Z  INFO arx::units::cache_unit: arx/src/units/cache_unit.rs:88: Cache unit started
+2025-10-21T18:12:39.292843Z  INFO arx::units::circuit_unit: arx/src/units/circuit_unit.rs:107: Circuit unit started
+2025-10-21T18:12:39.295035Z  INFO arx::units::cluster_unit: arx/src/units/cluster_unit.rs:66: Cluster unit started
+2025-10-21T18:12:39.295615Z DEBUG arx::units::cluster_unit: arx/src/units/cluster_unit.rs:68: Running pub/sub for arx node account
+2025-10-21T18:12:39.297078Z  INFO arx::units::computation_transaction_unit: arx/src/units/computation_transaction_unit.rs:89: Computation transaction unit started
+2025-10-21T18:12:39.299217Z  INFO arx::units::execpool_unit: arx/src/units/execpool_unit.rs:80: Execpool unit started
+2025-10-21T18:12:39.299372Z DEBUG arx::units::execpool_unit: arx/src/units/execpool_unit.rs:82: Running pub/sub for mempools accounts
+2025-10-21T18:12:39.301035Z  INFO arx::units::computation_unit: arx/src/units/computation_unit.rs:74: Inputs unit started
+2025-10-21T18:12:39.301189Z DEBUG arx::units::cluster_unit: arx/src/units/cluster_unit.rs:78: Subscribing to arx node account
+2025-10-21T18:12:39.302443Z  INFO arx::units::mempool_unit: arx/src/units/mempool_unit.rs:77: Mempool unit started
+2025-10-21T18:12:39.302546Z DEBUG arx::units::mempool_unit: arx/src/units/mempool_unit.rs:79: Running pub/sub for mempools accounts
+2025-10-21T18:12:39.305997Z  INFO arx::units::mxe_unit: arx/src/units/mxe_unit.rs:75: MXE unit started
+2025-10-21T18:12:39.306859Z  INFO arx::units::node_transaction_unit: arx/src/units/node_transaction_unit.rs:65: Node transaction unit started
+2025-10-21T18:12:39.307354Z  INFO arx::units::node_transaction_unit: arx/src/units/node_transaction_unit.rs:67: Activating node
+2025-10-21T18:12:39.307239Z DEBUG arx::units::mxe_unit: arx/src/units/mxe_unit.rs:77: Running pub/sub for clusters accounts
+2025-10-21T18:12:39.308287Z  INFO arx::units::online_phase_unit: arx/src/units/online_phase_unit.rs:152: Online phase unit started
+2025-10-21T18:12:39.309860Z  INFO arx::units::peers_unit: arx/src/units/peers_unit.rs:76: Peers unit started
+2025-10-21T18:12:39.310552Z  INFO arx: arx/src/main.rs:93: Coordinator created successfully
+2025-10-21T18:12:39.310788Z  INFO arx::units::state_unit: arx/src/units/state_unit.rs:109: State unit started
+2025-10-21T18:12:39.311673Z  INFO arx: arx/src/main.rs:102: Starting ARX coordinator
+2025-10-21T18:12:39.314042Z  INFO arx::program: arx/src/program.rs:242: Pub/sub client started
+2025-10-21T18:12:39.314588Z  INFO arx::program: arx/src/program.rs:244: Connecting initial pub/sub
+2025-10-21T18:12:39.315566Z  INFO arx: arx/src/main.rs:105: Waiting for Ctrl+C
+2025-10-21T18:12:39.317482Z  INFO arx::coordinator: arx/src/coordinator.rs:198: Coordinator started
+2025-10-21T18:12:39.317612Z  INFO arx::program: arx/src/program.rs:242: Pub/sub client started
+2025-10-21T18:12:39.317704Z  INFO arx::program: arx/src/program.rs:244: Connecting initial pub/sub
+2025-10-21T18:12:39.318938Z  INFO arx::program: arx/src/program.rs:242: Pub/sub client started
+2025-10-21T18:12:39.319051Z  INFO arx::program: arx/src/program.rs:244: Connecting initial pub/sub
+2025-10-21T18:12:39.321637Z  INFO arx::program: arx/src/program.rs:242: Pub/sub client started
+2025-10-21T18:12:39.321917Z  INFO arx::program: arx/src/program.rs:244: Connecting initial pub/sub
+2025-10-21T18:12:39.341128Z  WARN arx::program: arx/src/program.rs:144: Attempt 1/5: Failed to fetch account CRGqVGabHcGms6kVD7A1KsgNwLsFS8oEkyeGpvioBBKh: Account not found
+2025-10-21T18:12:39.364941Z  INFO arx::program: arx/src/program.rs:267: Fetching initial state for account: CRGqVGabHcGms6kVD7A1KsgNwLsFS8oEkyeGpvioBBKh
+2025-10-21T18:12:39.367470Z  WARN arx::program: arx/src/program.rs:144: Attempt 1/5: Failed to fetch account CRGqVGabHcGms6kVD7A1KsgNwLsFS8oEkyeGpvioBBKh: Account not found
+2025-10-21T18:12:40.347333Z  WARN arx::program: arx/src/program.rs:144: Attempt 2/5: Failed to fetch account CRGqVGabHcGms6kVD7A1KsgNwLsFS8oEkyeGpvioBBKh: Account not found
+2025-10-21T18:12:40.370318Z  WARN arx::program: arx/src/program.rs:144: Attempt 2/5: Failed to fetch account CRGqVGabHcGms6kVD7A1KsgNwLsFS8oEkyeGpvioBBKh: Account not found
+2025-10-21T18:12:42.351698Z  WARN arx::program: arx/src/program.rs:144: Attempt 3/5: Failed to fetch account CRGqVGabHcGms6kVD7A1KsgNwLsFS8oEkyeGpvioBBKh: Account not found
+2025-10-21T18:12:42.374136Z  WARN arx::program: arx/src/program.rs:144: Attempt 3/5: Failed to fetch account CRGqVGabHcGms6kVD7A1KsgNwLsFS8oEkyeGpvioBBKh: Account not found
+2025-10-21T18:12:46.355441Z  WARN arx::program: arx/src/program.rs:144: Attempt 4/5: Failed to fetch account CRGqVGabHcGms6kVD7A1KsgNwLsFS8oEkyeGpvioBBKh: Account not found
+2025-10-21T18:12:46.377569Z  WARN arx::program: arx/src/program.rs:144: Attempt 4/5: Failed to fetch account CRGqVGabHcGms6kVD7A1KsgNwLsFS8oEkyeGpvioBBKh: Account not found
+2025-10-21T18:12:54.363274Z  WARN arx::program: arx/src/program.rs:144: Attempt 5/5: Failed to fetch account CRGqVGabHcGms6kVD7A1KsgNwLsFS8oEkyeGpvioBBKh: Account not found
+2025-10-21T18:12:54.364028Z  WARN arx::units::node_transaction_unit: arx/src/units/node_transaction_unit.rs:68: Attempt 1/5: RPC error while calling self.activate_node(): RPC error: Attempt 5/5: Failed to fetch account CRGqVGabHcGms6kVD7A1KsgNwLsFS8oEkyeGpvioBBKh: Account not found
+2025-10-21T18:12:54.384886Z  WARN arx::program: arx/src/program.rs:144: Attempt 5/5: Failed to fetch account CRGqVGabHcGms6kVD7A1KsgNwLsFS8oEkyeGpvioBBKh: Account not found
+2025-10-21T18:12:54.385210Z ERROR arx::program: arx/src/program.rs:276: Failed to fetch initial state for account CRGqVGabHcGms6kVD7A1KsgNwLsFS8oEkyeGpvioBBKh: RPC error: Attempt 5/5: Failed to fetch account CRGqVGabHcGms6kVD7A1KsgNwLsFS8oEkyeGpvioBBKh: Account not found
+2025-10-21T18:12:54.385339Z  INFO arx::program: arx/src/program.rs:279: Subscribing to account: CRGqVGabHcGms6kVD7A1KsgNwLsFS8oEkyeGpvioBBKh
+2025-10-21T18:12:55.367363Z  WARN arx::program: arx/src/program.rs:144: Attempt 1/5: Failed to fetch account CRGqVGabHcGms6kVD7A1KsgNwLsFS8oEkyeGpvioBBKh: Account not found
+2025-10-21T18:12:56.375595Z  WARN arx::program: arx/src/program.rs:144: Attempt 2/5: Failed to fetch account CRGqVGabHcGms6kVD7A1KsgNwLsFS8oEkyeGpvioBBKh: Account not found
+2025-10-21T18:12:58.379885Z  WARN arx::program: arx/src/program.rs:144: Attempt 3/5: Failed to fetch account CRGqVGabHcGms6kVD7A1KsgNwLsFS8oEkyeGpvioBBKh: Account not found
+2025-10-21T18:13:02.383280Z  WARN arx::program: arx/src/program.rs:144: Attempt 4/5: Failed to fetch account CRGqVGabHcGms6kVD7A1KsgNwLsFS8oEkyeGpvioBBKh: Account not found
+2025-10-21T18:13:10.388262Z  WARN arx::program: arx/src/program.rs:144: Attempt 5/5: Failed to fetch account CRGqVGabHcGms6kVD7A1KsgNwLsFS8oEkyeGpvioBBKh: Account not found
+2025-10-21T18:13:10.388465Z  WARN arx::units::node_transaction_unit: arx/src/units/node_transaction_unit.rs:68: Attempt 2/5: RPC error while calling self.activate_node(): RPC error: Attempt 5/5: Failed to fetch account CRGqVGabHcGms6kVD7A1KsgNwLsFS8oEkyeGpvioBBKh: Account not found
+2025-10-21T18:13:12.391945Z  WARN arx::program: arx/src/program.rs:144: Attempt 1/5: Failed to fetch account CRGqVGabHcGms6kVD7A1KsgNwLsFS8oEkyeGpvioBBKh: Account not found
+2025-10-21T18:13:13.400271Z  WARN arx::program: arx/src/program.rs:144: Attempt 2/5: Failed to fetch account CRGqVGabHcGms6kVD7A1KsgNwLsFS8oEkyeGpvioBBKh: Account not found
+2025-10-21T18:13:15.404503Z  WARN arx::program: arx/src/program.rs:144: Attempt 3/5: Failed to fetch account CRGqVGabHcGms6kVD7A1KsgNwLsFS8oEkyeGpvioBBKh: Account not found
+2025-10-21T18:13:19.410417Z  WARN arx::program: arx/src/program.rs:144: Attempt 4/5: Failed to fetch account CRGqVGabHcGms6kVD7A1KsgNwLsFS8oEkyeGpvioBBKh: Account not found
+2025-10-21T18:13:27.418156Z  WARN arx::program: arx/src/program.rs:144: Attempt 5/5: Failed to fetch account CRGqVGabHcGms6kVD7A1KsgNwLsFS8oEkyeGpvioBBKh: Account not found
+2025-10-21T18:13:27.418675Z  WARN arx::units::node_transaction_unit: arx/src/units/node_transaction_unit.rs:68: Attempt 3/5: RPC error while calling self.activate_node(): RPC error: Attempt 5/5: Failed to fetch account CRGqVGabHcGms6kVD7A1KsgNwLsFS8oEkyeGpvioBBKh: Account not found
+2025-10-21T18:13:31.422796Z  WARN arx::program: arx/src/program.rs:144: Attempt 1/5: Failed to fetch account CRGqVGabHcGms6kVD7A1KsgNwLsFS8oEkyeGpvioBBKh: Account not found
+2025-10-21T18:13:32.426898Z  WARN arx::program: arx/src/program.rs:144: Attempt 2/5: Failed to fetch account CRGqVGabHcGms6kVD7A1KsgNwLsFS8oEkyeGpvioBBKh: Account not found
+2025-10-21T18:13:34.432781Z  WARN arx::program: arx/src/program.rs:144: Attempt 3/5: Failed to fetch account CRGqVGabHcGms6kVD7A1KsgNwLsFS8oEkyeGpvioBBKh: Account not found
+2025-10-21T18:13:38.435007Z  WARN arx::program: arx/src/program.rs:144: Attempt 4/5: Failed to fetch account CRGqVGabHcGms6kVD7A1KsgNwLsFS8oEkyeGpvioBBKh: Account not found
+2025-10-21T18:13:46.376807Z  WARN arx::program: arx/src/program.rs:322: Pub/sub connection closed or error occurred, reconnecting...
+2025-10-21T18:13:46.377979Z  INFO arx::program: arx/src/program.rs:327: Reconnecting pub/sub client
+2025-10-21T18:13:46.379632Z  WARN arx::program: arx/src/program.rs:375: Attempt 1/5: Failed to create new pub/sub: unable to connect to server
+2025-10-21T18:13:46.438154Z  WARN arx::program: arx/src/program.rs:144: Attempt 5/5: Failed to fetch account CRGqVGabHcGms6kVD7A1KsgNwLsFS8oEkyeGpvioBBKh: AccountNotFound: pubkey=CRGqVGabHcGms6kVD7A1KsgNwLsFS8oEkyeGpvioBBKh: error sending request for url (http://host.docker.internal:8899/): error trying to connect: tcp connect error: Connection refused (os error 111)
+2025-10-21T18:13:46.438493Z  WARN arx::units::node_transaction_unit: arx/src/units/node_transaction_unit.rs:68: Attempt 4/5: RPC error while calling self.activate_node(): RPC error: Attempt 5/5: Failed to fetch account CRGqVGabHcGms6kVD7A1KsgNwLsFS8oEkyeGpvioBBKh: AccountNotFound: pubkey=CRGqVGabHcGms6kVD7A1KsgNwLsFS8oEkyeGpvioBBKh: error sending request for url (http://host.docker.internal:8899/): error trying to connect: tcp connect error: Connection refused (os error 111)
+2025-10-21T18:13:47.384799Z  WARN arx::program: arx/src/program.rs:375: Attempt 2/5: Failed to create new pub/sub: unable to connect to server
+2025-10-21T18:13:49.390079Z  WARN arx::program: arx/src/program.rs:375: Attempt 3/5: Failed to create new pub/sub: unable to connect to server
+2025-10-21T18:13:53.399137Z  WARN arx::program: arx/src/program.rs:375: Attempt 4/5: Failed to create new pub/sub: unable to connect to server
+2025-10-21T18:13:54.442584Z  WARN arx::program: arx/src/program.rs:144: Attempt 1/5: Failed to fetch account CRGqVGabHcGms6kVD7A1KsgNwLsFS8oEkyeGpvioBBKh: AccountNotFound: pubkey=CRGqVGabHcGms6kVD7A1KsgNwLsFS8oEkyeGpvioBBKh: error sending request for url (http://host.docker.internal:8899/): error trying to connect: tcp connect error: Connection refused (os error 111)
+2025-10-21T18:13:55.447145Z  WARN arx::program: arx/src/program.rs:144: Attempt 2/5: Failed to fetch account CRGqVGabHcGms6kVD7A1KsgNwLsFS8oEkyeGpvioBBKh: AccountNotFound: pubkey=CRGqVGabHcGms6kVD7A1KsgNwLsFS8oEkyeGpvioBBKh: error sending request for url (http://host.docker.internal:8899/): error trying to connect: tcp connect error: Connection refused (os error 111)
+2025-10-21T18:13:57.451158Z  WARN arx::program: arx/src/program.rs:144: Attempt 3/5: Failed to fetch account CRGqVGabHcGms6kVD7A1KsgNwLsFS8oEkyeGpvioBBKh: AccountNotFound: pubkey=CRGqVGabHcGms6kVD7A1KsgNwLsFS8oEkyeGpvioBBKh: error sending request for url (http://host.docker.internal:8899/): error trying to connect: tcp connect error: Connection refused (os error 111)
+2025-10-21T18:14:01.406551Z  WARN arx::program: arx/src/program.rs:375: Attempt 5/5: Failed to create new pub/sub: unable to connect to server
+2025-10-21T18:14:01.407140Z ERROR arx::program: arx/src/program.rs:331: Failed to reconnect pub/sub client: RPC error: Failed to create new pub/sub: unable to connect to server, shutting down pub/sub
+2025-10-21T18:14:01.407376Z  INFO arx::program: arx/src/program.rs:365: Pub/sub client stopped
+2025-10-21T18:14:01.409409Z  INFO arx::units::cluster_unit: arx/src/units/cluster_unit.rs:95: Account channel closed, shutting down
+2025-10-21T18:14:01.409707Z  INFO arx::units::cluster_unit: arx/src/units/cluster_unit.rs:121: Cluster unit stopped
+2025-10-21T18:14:01.456378Z  WARN arx::program: arx/src/program.rs:144: Attempt 4/5: Failed to fetch account CRGqVGabHcGms6kVD7A1KsgNwLsFS8oEkyeGpvioBBKh: AccountNotFound: pubkey=CRGqVGabHcGms6kVD7A1KsgNwLsFS8oEkyeGpvioBBKh: error sending request for url (http://host.docker.internal:8899/): error trying to connect: tcp connect error: Connection refused (os error 111)
+2025-10-21T18:14:09.460283Z  WARN arx::program: arx/src/program.rs:144: Attempt 5/5: Failed to fetch account CRGqVGabHcGms6kVD7A1KsgNwLsFS8oEkyeGpvioBBKh: AccountNotFound: pubkey=CRGqVGabHcGms6kVD7A1KsgNwLsFS8oEkyeGpvioBBKh: error sending request for url (http://host.docker.internal:8899/): error trying to connect: tcp connect error: Connection refused (os error 111)
+2025-10-21T18:14:09.460869Z  WARN arx::units::node_transaction_unit: arx/src/units/node_transaction_unit.rs:68: Attempt 5/5: RPC error while calling self.activate_node(): RPC error: Attempt 5/5: Failed to fetch account CRGqVGabHcGms6kVD7A1KsgNwLsFS8oEkyeGpvioBBKh: AccountNotFound: pubkey=CRGqVGabHcGms6kVD7A1KsgNwLsFS8oEkyeGpvioBBKh: error sending request for url (http://host.docker.internal:8899/): error trying to connect: tcp connect error: Connection refused (os error 111)
+2025-10-21T18:14:09.461300Z ERROR arx::units::node_transaction_unit: arx/src/units/node_transaction_unit.rs:73: Failed to activate node: RPC error: Attempt 5/5: RPC error: Attempt 5/5: Failed to fetch account CRGqVGabHcGms6kVD7A1KsgNwLsFS8oEkyeGpvioBBKh: AccountNotFound: pubkey=CRGqVGabHcGms6kVD7A1KsgNwLsFS8oEkyeGpvioBBKh: error sending request for url (http://host.docker.internal:8899/): error trying to connect: tcp connect error: Connection refused (os error 111), shutting down
+2025-10-21T18:14:09.462224Z ERROR arx::coordinator: arx/src/coordinator.rs:208: Activation unit channel dropped without activation
+2025-10-21T18:14:09.462457Z  INFO arx::coordinator: arx/src/coordinator.rs:437: Coordinator stopped
+2025-10-21T18:14:09.465270Z  INFO arx::units::cache_unit: arx/src/units/cache_unit.rs:94: Coordinator channel closed, shutting down
+2025-10-21T18:14:09.466184Z  INFO arx::units::cache_unit: arx/src/units/cache_unit.rs:138: Cache unit stopped
+2025-10-21T18:14:09.465724Z  INFO arx: arx/src/main.rs:112: Shutdown channel closed, initiating shutdown
+2025-10-21T18:14:09.467927Z  INFO arx::units::circuit_unit: arx/src/units/circuit_unit.rs:113: Coordinator channel closed, shutting down
+2025-10-21T18:14:09.468513Z  INFO arx::units::circuit_unit: arx/src/units/circuit_unit.rs:139: Circuit unit stopped
+2025-10-21T18:14:09.469923Z  INFO arx::units::computation_transaction_unit: arx/src/units/computation_transaction_unit.rs:95: Coordinator channel closed, shutting down
+2025-10-21T18:14:09.470021Z  INFO arx::units::computation_transaction_unit: arx/src/units/computation_transaction_unit.rs:132: Computations transaction unit stopped
+2025-10-21T18:14:09.470352Z  INFO arx::units::execpool_unit: arx/src/units/execpool_unit.rs:96: Coordinator channel closed, shutting down
+2025-10-21T18:14:09.470462Z  INFO arx::units::execpool_unit: arx/src/units/execpool_unit.rs:164: Execpool unit stopped
+2025-10-21T18:14:09.471210Z  INFO arx::units::computation_unit: arx/src/units/computation_unit.rs:80: Coordinator channel closed, shutting down
+2025-10-21T18:14:09.472141Z  INFO arx::units::computation_unit: arx/src/units/computation_unit.rs:153: Computation unit stopped
+2025-10-21T18:14:09.472351Z  INFO arx::units::mempool_unit: arx/src/units/mempool_unit.rs:93: Coordinator channel closed, shutting down
+2025-10-21T18:14:09.472574Z  INFO arx::units::mempool_unit: arx/src/units/mempool_unit.rs:155: Mempool unit stopped
+2025-10-21T18:14:09.473493Z  INFO arx::units::mxe_unit: arx/src/units/mxe_unit.rs:91: Coordinator channel closed, shutting down
+2025-10-21T18:14:09.473667Z  INFO arx::units::peers_unit: arx/src/units/peers_unit.rs:82: Coordinator channel closed, shutting down
+2025-10-21T18:14:09.474485Z  INFO arx::units::peers_unit: arx/src/units/peers_unit.rs:105: Peers unit stopped
+2025-10-21T18:14:09.474695Z  INFO arx::units::mxe_unit: arx/src/units/mxe_unit.rs:149: MXE unit stopped
+2025-10-21T18:14:09.474930Z  INFO arx::units::online_phase_unit: arx/src/units/online_phase_unit.rs:158: Coordinator channel closed, shutting down
+2025-10-21T18:14:09.475959Z  INFO arx::units::online_phase_unit: arx/src/units/online_phase_unit.rs:300: Waiting for computations to finish...
+2025-10-21T18:14:09.476112Z  INFO arx::units::online_phase_unit: arx/src/units/online_phase_unit.rs:307: Online phase unit stopped
+2025-10-21T18:14:09.476638Z  INFO arx::units::state_unit: arx/src/units/state_unit.rs:115: Coordinator channel closed, shutting down
+2025-10-21T18:14:09.476700Z  INFO arx::units::state_unit: arx/src/units/state_unit.rs:149: State unit stopped
+2025-10-21T18:14:09.477017Z  INFO arx: arx/src/main.rs:117: Coordinator completed successfully
+2025-10-21T18:14:09.477833Z  INFO arx::program: arx/src/program.rs:260: T channel closed, shutting down pub/sub
+2025-10-21T18:14:09.478539Z  INFO arx::program: arx/src/program.rs:365: Pub/sub client stopped
+2025-10-21T18:14:09.479761Z  INFO arx::program: arx/src/program.rs:260: T channel closed, shutting down pub/sub
+2025-10-21T18:14:09.480402Z  INFO arx::program: arx/src/program.rs:365: Pub/sub client stopped
+2025-10-21T18:14:09.480668Z  INFO arx::program: arx/src/program.rs:305: Account subscription channel closed, shutting down pub/sub
+2025-10-21T18:14:09.480722Z  INFO arx::program: arx/src/program.rs:365: Pub/sub client stopped
+2025-10-21T18:14:09.482811Z  INFO network::router::network_router: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/network_router.rs:323: Router dropped.    
+2025-10-21T18:14:09.485353Z  WARN network::router::network_router: /home/runner/.cargo/git/checkouts/async-mpc-1dbbf554a14e7a32/b307074/network/src/router/network_router.rs:114: Router dropped.    
+2025-10-21T18:14:09.486281Z  INFO arx: arx/src/main.rs:123: Unit completed successfully
+2025-10-21T18:14:09.486337Z  INFO arx: arx/src/main.rs:123: Unit completed successfully
+2025-10-21T18:14:09.486381Z  INFO arx: arx/src/main.rs:123: Unit completed successfully
+2025-10-21T18:14:09.486456Z  INFO arx: arx/src/main.rs:123: Unit completed successfully
+2025-10-21T18:14:09.486487Z  INFO arx: arx/src/main.rs:123: Unit completed successfully
+2025-10-21T18:14:09.486517Z  INFO arx: arx/src/main.rs:123: Unit completed successfully
+2025-10-21T18:14:09.486558Z  INFO arx: arx/src/main.rs:123: Unit completed successfully
+2025-10-21T18:14:09.486618Z  INFO arx: arx/src/main.rs:123: Unit completed successfully
+2025-10-21T18:14:09.486664Z  INFO arx: arx/src/main.rs:123: Unit completed successfully
+2025-10-21T18:14:09.486715Z  INFO arx: arx/src/main.rs:123: Unit completed successfully
+2025-10-21T18:14:09.486760Z  INFO arx: arx/src/main.rs:123: Unit completed successfully
+2025-10-21T18:14:09.486823Z  INFO arx: arx/src/main.rs:123: Unit completed successfully

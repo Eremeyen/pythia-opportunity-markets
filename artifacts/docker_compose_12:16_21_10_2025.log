@@ -1,0 +1,7 @@
+[stdout] Attaching to arx-node-0-1, arx-node-1-1
+[stdout] Gracefully Stopping... press Ctrl+C again to force
+[stderr]  Container artifacts-arx-node-0-1  Stopping
+[stderr]  Container artifacts-arx-node-1-1  Stopping
+[stderr]  Container artifacts-arx-node-1-1  Stopped
+[stderr]  Container artifacts-arx-node-0-1  Stopped
+[stderr] 

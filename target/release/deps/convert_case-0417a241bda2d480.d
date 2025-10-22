@@ -1,0 +1,11 @@
+/Users/soham/Documents/GitHub/pythia-opportunity-markets/target/release/deps/libconvert_case-0417a241bda2d480.rmeta: /Users/soham/.cargo/registry/src/index.crates.io-6f17d22bba15001f/convert_case-0.8.0/src/lib.rs /Users/soham/.cargo/registry/src/index.crates.io-6f17d22bba15001f/convert_case-0.8.0/src/boundary.rs /Users/soham/.cargo/registry/src/index.crates.io-6f17d22bba15001f/convert_case-0.8.0/src/case.rs /Users/soham/.cargo/registry/src/index.crates.io-6f17d22bba15001f/convert_case-0.8.0/src/converter.rs /Users/soham/.cargo/registry/src/index.crates.io-6f17d22bba15001f/convert_case-0.8.0/src/pattern.rs
+
+/Users/soham/Documents/GitHub/pythia-opportunity-markets/target/release/deps/libconvert_case-0417a241bda2d480.rlib: /Users/soham/.cargo/registry/src/index.crates.io-6f17d22bba15001f/convert_case-0.8.0/src/lib.rs /Users/soham/.cargo/registry/src/index.crates.io-6f17d22bba15001f/convert_case-0.8.0/src/boundary.rs /Users/soham/.cargo/registry/src/index.crates.io-6f17d22bba15001f/convert_case-0.8.0/src/case.rs /Users/soham/.cargo/registry/src/index.crates.io-6f17d22bba15001f/convert_case-0.8.0/src/converter.rs /Users/soham/.cargo/registry/src/index.crates.io-6f17d22bba15001f/convert_case-0.8.0/src/pattern.rs
+
+/Users/soham/Documents/GitHub/pythia-opportunity-markets/target/release/deps/convert_case-0417a241bda2d480.d: /Users/soham/.cargo/registry/src/index.crates.io-6f17d22bba15001f/convert_case-0.8.0/src/lib.rs /Users/soham/.cargo/registry/src/index.crates.io-6f17d22bba15001f/convert_case-0.8.0/src/boundary.rs /Users/soham/.cargo/registry/src/index.crates.io-6f17d22bba15001f/convert_case-0.8.0/src/case.rs /Users/soham/.cargo/registry/src/index.crates.io-6f17d22bba15001f/convert_case-0.8.0/src/converter.rs /Users/soham/.cargo/registry/src/index.crates.io-6f17d22bba15001f/convert_case-0.8.0/src/pattern.rs
+
+/Users/soham/.cargo/registry/src/index.crates.io-6f17d22bba15001f/convert_case-0.8.0/src/lib.rs:
+/Users/soham/.cargo/registry/src/index.crates.io-6f17d22bba15001f/convert_case-0.8.0/src/boundary.rs:
+/Users/soham/.cargo/registry/src/index.crates.io-6f17d22bba15001f/convert_case-0.8.0/src/case.rs:
+/Users/soham/.cargo/registry/src/index.crates.io-6f17d22bba15001f/convert_case-0.8.0/src/converter.rs:
+/Users/soham/.cargo/registry/src/index.crates.io-6f17d22bba15001f/convert_case-0.8.0/src/pattern.rs:

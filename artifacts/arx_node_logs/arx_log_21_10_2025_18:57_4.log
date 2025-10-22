@@ -1,0 +1,44 @@
+2025-10-21T18:57:46.357817Z DEBUG arx: arx/src/main.rs:53: Checking Solana is up and running
+2025-10-21T18:57:46.456453Z  INFO arx: arx/src/main.rs:58: Running ARX
+2025-10-21T18:57:46.456631Z DEBUG arx: arx/src/main.rs:60: Reading node keypair, callback authority keypair, and identity files from env
+2025-10-21T18:57:46.456941Z DEBUG arx: arx/src/main.rs:68: Reading node keypair, callback authority keypair, and identity files
+2025-10-21T18:57:46.462278Z DEBUG arx: arx/src/main.rs:78: Installing AWS LC crypto provider
+2025-10-21T18:57:46.462394Z  INFO arx: arx/src/main.rs:83: Creating ARX coordinator
+2025-10-21T18:57:46.573229Z DEBUG arx::units::online_phase_unit: arx/src/units/online_phase_unit.rs:121: Loaded MXE private shares for CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm
+2025-10-21T18:57:46.574911Z  INFO arx::units::cache_unit: arx/src/units/cache_unit.rs:88: Cache unit started
+2025-10-21T18:57:46.575515Z  INFO arx::units::circuit_unit: arx/src/units/circuit_unit.rs:107: Circuit unit started
+2025-10-21T18:57:46.576942Z  INFO arx::units::cluster_unit: arx/src/units/cluster_unit.rs:66: Cluster unit started
+2025-10-21T18:57:46.577340Z DEBUG arx::units::cluster_unit: arx/src/units/cluster_unit.rs:68: Running pub/sub for arx node account
+2025-10-21T18:57:46.578292Z  INFO arx::units::computation_transaction_unit: arx/src/units/computation_transaction_unit.rs:89: Computation transaction unit started
+2025-10-21T18:57:46.579818Z  INFO arx::units::execpool_unit: arx/src/units/execpool_unit.rs:80: Execpool unit started
+2025-10-21T18:57:46.579865Z DEBUG arx::units::execpool_unit: arx/src/units/execpool_unit.rs:82: Running pub/sub for mempools accounts
+2025-10-21T18:57:46.580676Z DEBUG arx::units::cluster_unit: arx/src/units/cluster_unit.rs:78: Subscribing to arx node account
+2025-10-21T18:57:46.580935Z  INFO arx::units::computation_unit: arx/src/units/computation_unit.rs:74: Inputs unit started
+2025-10-21T18:57:46.581723Z  INFO arx::units::mempool_unit: arx/src/units/mempool_unit.rs:77: Mempool unit started
+2025-10-21T18:57:46.581831Z DEBUG arx::units::mempool_unit: arx/src/units/mempool_unit.rs:79: Running pub/sub for mempools accounts
+2025-10-21T18:57:46.583765Z  INFO arx::units::mxe_unit: arx/src/units/mxe_unit.rs:75: MXE unit started
+2025-10-21T18:57:46.584135Z  INFO arx::units::node_transaction_unit: arx/src/units/node_transaction_unit.rs:65: Node transaction unit started
+2025-10-21T18:57:46.584177Z  INFO arx::units::node_transaction_unit: arx/src/units/node_transaction_unit.rs:67: Activating node
+2025-10-21T18:57:46.584683Z DEBUG arx::units::mxe_unit: arx/src/units/mxe_unit.rs:77: Running pub/sub for clusters accounts
+2025-10-21T18:57:46.585582Z  INFO arx::units::online_phase_unit: arx/src/units/online_phase_unit.rs:152: Online phase unit started
+2025-10-21T18:57:46.586974Z  INFO arx::units::peers_unit: arx/src/units/peers_unit.rs:76: Peers unit started
+2025-10-21T18:57:46.587168Z  INFO arx: arx/src/main.rs:93: Coordinator created successfully
+2025-10-21T18:57:46.587228Z  INFO arx::units::state_unit: arx/src/units/state_unit.rs:109: State unit started
+2025-10-21T18:57:46.588062Z  INFO arx: arx/src/main.rs:102: Starting ARX coordinator
+2025-10-21T18:57:46.589111Z  INFO arx::program: arx/src/program.rs:242: Pub/sub client started
+2025-10-21T18:57:46.589582Z  INFO arx::program: arx/src/program.rs:244: Connecting initial pub/sub
+2025-10-21T18:57:46.590520Z  INFO arx: arx/src/main.rs:105: Waiting for Ctrl+C
+2025-10-21T18:57:46.591173Z  INFO arx::program: arx/src/program.rs:242: Pub/sub client started
+2025-10-21T18:57:46.591210Z  INFO arx::program: arx/src/program.rs:244: Connecting initial pub/sub
+2025-10-21T18:57:46.591536Z  INFO arx::coordinator: arx/src/coordinator.rs:198: Coordinator started
+2025-10-21T18:57:46.592294Z  INFO arx::program: arx/src/program.rs:242: Pub/sub client started
+2025-10-21T18:57:46.592382Z  INFO arx::program: arx/src/program.rs:244: Connecting initial pub/sub
+2025-10-21T18:57:46.594276Z  INFO arx::program: arx/src/program.rs:242: Pub/sub client started
+2025-10-21T18:57:46.594422Z  INFO arx::program: arx/src/program.rs:244: Connecting initial pub/sub
+2025-10-21T18:57:46.606100Z  WARN arx::program: arx/src/program.rs:144: Attempt 1/5: Failed to fetch account GqK4PKX5EP7anZJUid8YFnGyCtdF9Dx9iTVCs1jyECsb: Account not found
+2025-10-21T18:57:46.612779Z  INFO arx::program: arx/src/program.rs:267: Fetching initial state for account: GqK4PKX5EP7anZJUid8YFnGyCtdF9Dx9iTVCs1jyECsb
+2025-10-21T18:57:46.613921Z  WARN arx::program: arx/src/program.rs:144: Attempt 1/5: Failed to fetch account GqK4PKX5EP7anZJUid8YFnGyCtdF9Dx9iTVCs1jyECsb: Account not found
+2025-10-21T18:57:47.610415Z  WARN arx::program: arx/src/program.rs:144: Attempt 2/5: Failed to fetch account GqK4PKX5EP7anZJUid8YFnGyCtdF9Dx9iTVCs1jyECsb: Account not found
+2025-10-21T18:57:47.616804Z  WARN arx::program: arx/src/program.rs:144: Attempt 2/5: Failed to fetch account GqK4PKX5EP7anZJUid8YFnGyCtdF9Dx9iTVCs1jyECsb: Account not found
+2025-10-21T18:57:49.613195Z  WARN arx::program: arx/src/program.rs:144: Attempt 3/5: Failed to fetch account GqK4PKX5EP7anZJUid8YFnGyCtdF9Dx9iTVCs1jyECsb: Account not found
+2025-10-21T18:57:49.624230Z  WARN arx::program: arx/src/program.rs:144: Attempt 3/5: Failed to fetch account GqK4PKX5EP7anZJUid8YFnGyCtdF9Dx9iTVCs1jyECsb: Account not found

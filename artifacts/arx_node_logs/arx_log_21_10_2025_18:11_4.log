@@ -1,0 +1,11 @@
+2025-10-21T18:11:45.235124Z DEBUG arx: arx/src/main.rs:53: Checking Solana is up and running
+2025-10-21T18:11:45.336147Z  WARN arx::utils: arx/src/utils.rs:66: Attempt 1/5: RPC error while calling client.get_version().map_err(|e|
+ArxError::RpcError(format!("Failed to check cluster status: {}", e))): RPC error: Failed to check cluster status: error sending request for url (http://host.docker.internal:8899/): error trying to connect: tcp connect error: Connection refused (os error 111)
+2025-10-21T18:11:46.340591Z  WARN arx::utils: arx/src/utils.rs:66: Attempt 2/5: RPC error while calling client.get_version().map_err(|e|
+ArxError::RpcError(format!("Failed to check cluster status: {}", e))): RPC error: Failed to check cluster status: error sending request for url (http://host.docker.internal:8899/): error trying to connect: tcp connect error: Connection refused (os error 111)
+2025-10-21T18:11:48.348817Z  WARN arx::utils: arx/src/utils.rs:66: Attempt 3/5: RPC error while calling client.get_version().map_err(|e|
+ArxError::RpcError(format!("Failed to check cluster status: {}", e))): RPC error: Failed to check cluster status: error sending request for url (http://host.docker.internal:8899/): error trying to connect: tcp connect error: Connection refused (os error 111)
+2025-10-21T18:11:52.354064Z  WARN arx::utils: arx/src/utils.rs:66: Attempt 4/5: RPC error while calling client.get_version().map_err(|e|
+ArxError::RpcError(format!("Failed to check cluster status: {}", e))): RPC error: Failed to check cluster status: error sending request for url (http://host.docker.internal:8899/): error trying to connect: tcp connect error: Connection refused (os error 111)
+2025-10-21T18:12:00.360689Z  WARN arx::utils: arx/src/utils.rs:66: Attempt 5/5: RPC error while calling client.get_version().map_err(|e|
+ArxError::RpcError(format!("Failed to check cluster status: {}", e))): RPC error: Failed to check cluster status: error sending request for url (http://host.docker.internal:8899/): error trying to connect: tcp connect error: Connection refused (os error 111)

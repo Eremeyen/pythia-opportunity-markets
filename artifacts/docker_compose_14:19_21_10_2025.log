@@ -1,0 +1,16 @@
+[stderr]  Network artifacts_arx_network  Creating
+[stderr]  Network artifacts_arx_network  Created
+[stderr] time="2025-10-21T14:19:09-05:00" level=warning msg="Found orphan containers ([artifacts-arx-node-3-1 artifacts-arx-node-2-1 artifacts-arx-node-4-1]) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+[stderr]  Container artifacts-arx-node-1-1  Creating
+[stderr]  Container artifacts-arx-node-0-1  Creating
+[stderr]  arx-node-1 The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested 
+[stderr]  Container artifacts-arx-node-1-1  Created
+[stderr]  arx-node-0 The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested 
+[stderr]  Container artifacts-arx-node-0-1  Created
+[stdout] Attaching to arx-node-0-1, arx-node-1-1
+[stdout] Gracefully Stopping... press Ctrl+C again to force
+[stderr]  Container artifacts-arx-node-0-1  Stopping
+[stderr]  Container artifacts-arx-node-1-1  Stopping
+[stderr]  Container artifacts-arx-node-0-1  Stopped
+[stderr]  Container artifacts-arx-node-1-1  Stopped
+[stderr] 

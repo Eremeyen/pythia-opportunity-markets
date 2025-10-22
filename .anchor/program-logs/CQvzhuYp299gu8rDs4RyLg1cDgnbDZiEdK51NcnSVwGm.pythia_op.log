@@ -1,0 +1,234 @@
+Streaming transaction logs mentioning CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm. Confirmed commitment
+Transaction executed in slot 8:
+  Signature: 5ZecLu2moy4jUrZRYhza57CuWoon5NUnJvebveqVm3cPsMumDxvRULrhG7EMCKyr3Rb1wbteRPoQh7infg4tzsQH
+  Status: Ok
+  Log Messages:
+    Program CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm invoke [1]
+    Program log: Instruction: InitInitializeMarketCompDef
+    Program BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6 invoke [2]
+    Program log: Instruction: InitComputationDefinition
+    Program 11111111111111111111111111111111 invoke [3]
+    Program 11111111111111111111111111111111 success
+    Program BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6 consumed 14959 of 191157 compute units
+    Program BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6 success
+    Program CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm consumed 24225 of 200000 compute units
+    Program CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm success
+Transaction executed in slot 10:
+  Signature: iyY6phTfwKje5Ybo5Kp8xnDhwx9eC3pcPafd5EeY4Bf4HiFpSKd4g8qjiMtvhaA71vW8WhEBJTqD6Uoui9D4hqC
+  Status: Ok
+  Log Messages:
+    Program CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm invoke [1]
+    Program log: Instruction: InitInitializeUserPositionCompDef
+    Program BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6 invoke [2]
+    Program log: Instruction: InitComputationDefinition
+    Program 11111111111111111111111111111111 invoke [3]
+    Program 11111111111111111111111111111111 success
+    Program BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6 consumed 19075 of 191183 compute units
+    Program BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6 success
+    Program CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm consumed 28315 of 200000 compute units
+    Program CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm success
+Transaction executed in slot 12:
+  Signature: 4d22yMMqiAqc2z9sZEaizJiH6QwdLxnYpnzjv3HEJ7GDykUtogCxtNTrE8BTzDA95sDW9SaCTSH7RgctqRoRb3hT
+  Status: Ok
+  Log Messages:
+    Program CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm invoke [1]
+    Program log: Instruction: InitProcessPrivateTradeCompDef
+    Program BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6 invoke [2]
+    Program log: Instruction: InitComputationDefinition
+    Program 11111111111111111111111111111111 invoke [3]
+    Program 11111111111111111111111111111111 success
+    Program BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6 consumed 15942 of 191029 compute units
+    Program BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6 success
+    Program CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm consumed 25336 of 200000 compute units
+    Program CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm success
+Transaction executed in slot 14:
+  Signature: 7kcXA585hVMW4CsRrajYY8HD3McRZf4eRwu9aw44HxBJkSh1rN9T2CCJ68U37auaFwgDF37WZdh3hsHy1CeYjcm
+  Status: Ok
+  Log Messages:
+    Program CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm invoke [1]
+    Program log: Instruction: InitUpdateUserPositionCompDef
+    Program BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6 invoke [2]
+    Program log: Instruction: InitComputationDefinition
+    Program 11111111111111111111111111111111 invoke [3]
+    Program 11111111111111111111111111111111 success
+    Program BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6 consumed 15558 of 191050 compute units
+    Program BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6 success
+    Program CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm consumed 24931 of 200000 compute units
+    Program CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm success
+Transaction executed in slot 16:
+  Signature: 8wpSg45MsHLQYLQPututruPuPPNc5tw1ET7qMYBqeegbHuxJ4GbL9mRnVs6YcCYWxW1k8VucoorVg63hyeoTjqw
+  Status: Ok
+  Log Messages:
+    Program CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm invoke [1]
+    Program log: Instruction: InitRevealMarketStateCompDef
+    Program BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6 invoke [2]
+    Program log: Instruction: InitComputationDefinition
+    Program 11111111111111111111111111111111 invoke [3]
+    Program 11111111111111111111111111111111 success
+    Program BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6 consumed 15438 of 191049 compute units
+    Program BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6 success
+    Program CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm consumed 24812 of 200000 compute units
+    Program CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm success
+Transaction executed in slot 18:
+  Signature: 2ckQqPiQxBE8RbXwJznsRVTuL3YWf2fvAXTo4aYAQzLxQvqqSaZXSdbMLiPf8wmuaQYuwGEWMBRgwnQKyg5HWvHo
+  Status: Ok
+  Log Messages:
+    Program CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm invoke [1]
+    Program log: Instruction: InitHideMarketStateCompDef
+    Program BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6 invoke [2]
+    Program log: Instruction: InitComputationDefinition
+    Program 11111111111111111111111111111111 invoke [3]
+    Program 11111111111111111111111111111111 success
+    Program BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6 consumed 18608 of 191013 compute units
+    Program BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6 success
+    Program CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm consumed 28018 of 200000 compute units
+    Program CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm success
+Transaction executed in slot 20:
+  Signature: 5eEJXHVaDFfzocuFGUtkj7EJB485d5LrFSBef1r2LqL3nJurGRrSd9k7htf9jU5NRCr9FYeceUyWVXgugQZvFV2U
+  Status: Ok
+  Log Messages:
+    Program CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm invoke [1]
+    Program log: Instruction: InitViewMarketStateCompDef
+    Program BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6 invoke [2]
+    Program log: Instruction: InitComputationDefinition
+    Program 11111111111111111111111111111111 invoke [3]
+    Program 11111111111111111111111111111111 success
+    Program BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6 consumed 16063 of 190955 compute units
+    Program BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6 success
+    Program CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm consumed 25531 of 200000 compute units
+    Program CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm success
+Transaction executed in slot 22:
+  Signature: 5b2KWsCvSFMfPwH9FkBw8ci3ivDm4i6GpSkXAe3NJsLb7hr14t5cdFKgh1zy6Mv4pYKCyzAHABmxHKSfD86c9D5S
+  Status: Ok
+  Log Messages:
+    Program CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm invoke [1]
+    Program log: Instruction: InitViewUserPositionCompDef
+    Program BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6 invoke [2]
+    Program log: Instruction: InitComputationDefinition
+    Program 11111111111111111111111111111111 invoke [3]
+    Program 11111111111111111111111111111111 success
+    Program BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6 consumed 17179 of 190977 compute units
+    Program BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6 success
+    Program CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm consumed 26625 of 200000 compute units
+    Program CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm success
+Transaction executed in slot 24:
+  Signature: 4gbbAj8T8j8P567hx56RnxB4JtmUYvW6iPqPo7GdauNAdwzk8fyZ2p3gt59s4gKSG2KGmUwsm1Z6KzmSycEpLEVS
+  Status: Ok
+  Log Messages:
+    Program CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm invoke [1]
+    Program log: Instruction: InitMarket
+    Program 11111111111111111111111111111111 invoke [2]
+    Program 11111111111111111111111111111111 success
+    Program CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm consumed 9467 of 200000 compute units
+    Program CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm success
+Transaction executed in slot 25:
+  Signature: 31MsSaKsKJn2wgJdXvYfeEw4NNjTgXr8BYydhYN1miBpcRCRFdWQzhPRQzNneJFziRBErvKSkResDWrNNHdghjLh
+  Status: Ok
+  Log Messages:
+    Program CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm invoke [1]
+    Program log: Instruction: InitMarketEncrypted
+    Program 11111111111111111111111111111111 invoke [2]
+    Program 11111111111111111111111111111111 success
+    Program BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6 invoke [2]
+    Program log: Instruction: QueueComputation
+    Program 11111111111111111111111111111111 invoke [3]
+    Program 11111111111111111111111111111111 success
+    Program 11111111111111111111111111111111 invoke [3]
+    Program 11111111111111111111111111111111 success
+    Program data: djUhqSAOxZPLwBWO7Rjds6mR95BvPks37J0G4eFvSACVJpCVJnL9Bl+veZYj1jB6
+    Program data: ETN84kZhOrrLwBWO7Rjds6mR95BvPks37J0G4eFvSACVJpCVJnL9Bl+veZYj1jB6
+    Program BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6 consumed 54012 of 150010 compute units
+    Program BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6 success
+    Program CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm consumed 106319 of 200000 compute units
+    Program CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm success
+Transaction executed in slot 26:
+  Signature: 2ipYda9wuxRMcPMagAW8vuVD94y2nCGqFXuXZmBNt6rFGuxkLeLL3UeFCkmyv7oLYEd2JsYT8RFnwCHp5q3pp5JM
+  Status: Ok
+  Log Messages:
+    Program BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6 invoke [1]
+    Program log: Instruction: CallbackComputation
+    Program data: m9Xun/BMpxPLwBWO7Rjds6mR95BvPks37J0G4eFvSACVJpCVJnL9Bl+veZYj1jB6
+    Program data: G0t13b/V/fnLwBWO7Rjds6mR95BvPks37J0G4eFvSACVJpCVJnL9Bl+veZYj1jB6
+    Program BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6 consumed 30942 of 400000 compute units
+    Program BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6 success
+    Program CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm invoke [1]
+    Program log: Instruction: InitializeMarketCallback
+    Program CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm consumed 8336 of 369058 compute units
+    Program CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm success
+Transaction executed in slot 26:
+  Signature: 233k6pjxZq8tmz81W88xFNboQu9hdAvF1GNpk2oCtYmkYmgH6Cf4DcRXqow1dvFQmKNdntqboFuWhedSbnFQQZRB
+  Status: Error processing Instruction 0: custom program error: 0x183c
+  Log Messages:
+    Program BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6 invoke [1]
+    Program log: Instruction: CallbackComputation
+    Program log: AnchorError occurred. Error Code: AlreadyCallbackedComputation. Error Number: 6204. Error Message: Callback computation already called.
+    Program BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6 consumed 23460 of 400000 compute units
+    Program BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6 failed: custom program error: 0x183c
+Transaction executed in slot 27:
+  Signature: 5hJUqKjn28nmCFnVCk9tXTiEkPqWf8G6avTsW65rwZ6kJa68MdThbDaU4w1eaqcj7RkSv1RWuXWtoUzptwybmyKF
+  Status: Ok
+  Log Messages:
+    Program CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm invoke [1]
+    Program log: Instruction: InitUserPosition
+    Program 11111111111111111111111111111111 invoke [2]
+    Program 11111111111111111111111111111111 success
+    Program BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6 invoke [2]
+    Program log: Instruction: QueueComputation
+    Program 11111111111111111111111111111111 invoke [3]
+    Program 11111111111111111111111111111111 success
+    Program 11111111111111111111111111111111 invoke [3]
+    Program 11111111111111111111111111111111 success
+    Program data: djUhqSAOxZPo5MSdBu8miamR95BvPks37J0G4eFvSACVJpCVJnL9Bl+veZYj1jB6
+    Program data: ETN84kZhOrro5MSdBu8miamR95BvPks37J0G4eFvSACVJpCVJnL9Bl+veZYj1jB6
+    Program BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6 consumed 52672 of 138199 compute units
+    Program BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6 success
+    Program CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm consumed 115997 of 200000 compute units
+    Program CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm success
+Transaction executed in slot 28:
+  Signature: 2WrF78EE49YchUCEQCgzn8SnmXWVmZXZQWNBtRdd1NNtPuqVF7j1SARcKWU2VjQkTCw7fyoFxRJBWfd3KFRbqxKW
+  Status: Ok
+  Log Messages:
+    Program BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6 invoke [1]
+    Program log: Instruction: CallbackComputation
+    Program data: m9Xun/BMpxPo5MSdBu8miamR95BvPks37J0G4eFvSACVJpCVJnL9Bl+veZYj1jB6
+    Program data: G0t13b/V/fno5MSdBu8miamR95BvPks37J0G4eFvSACVJpCVJnL9Bl+veZYj1jB6
+    Program BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6 consumed 30557 of 400000 compute units
+    Program BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6 success
+    Program CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm invoke [1]
+    Program log: Instruction: InitializeUserPositionCallback
+    Program CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm consumed 11206 of 369443 compute units
+    Program CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm success
+Transaction executed in slot 28:
+  Signature: 4SwqodRdVBFNyVc567wocQqNiEbkW8tepfdPJe5SvMsU7yWz8vp8DdWkprpAWDDhFFf1T9iBmtYJEYyc6NG4GtYf
+  Status: Error processing Instruction 0: custom program error: 0x183c
+  Log Messages:
+    Program BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6 invoke [1]
+    Program log: Instruction: CallbackComputation
+    Program log: AnchorError occurred. Error Code: AlreadyCallbackedComputation. Error Number: 6204. Error Message: Callback computation already called.
+    Program BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6 consumed 23281 of 400000 compute units
+    Program BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6 failed: custom program error: 0x183c
+Transaction executed in slot 29:
+  Signature: 3a1ZYSM5q6UoqRPHesoUUL4gsVHB5ALcotRijUqgp7BUjnHb7Sbqa6uFyeZB3DLr93BUivsfvaLEJtc8ZWdwWuPF
+  Status: Error processing Instruction 0: custom program error: 0x189d
+  Log Messages:
+    Program CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm invoke [1]
+    Program log: Instruction: TradePrivate
+    Program BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6 invoke [2]
+    Program log: Instruction: QueueComputation
+    Program 11111111111111111111111111111111 invoke [3]
+    Program 11111111111111111111111111111111 success
+    Program log: Invalid argument ArcisPubkey([29, 255, 14, 13, 252, 244, 252, 34, 98, 195, 224, 177, 64, 250, 242, 227, 8, 215, 103, 198, 211, 242, 107, 87, 190, 231, 73, 142, 206, 179, 254, 10]) for parameter Ciphertext
+    Program log: AnchorError thrown in programs/arcium/src/instructions/computation.rs:289. Error Code: InvalidArguments. Error Number: 6301. Error Message: Arguments supplied are invalid.
+    Program BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6 consumed 41371 of 152522 compute units
+    Program BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6 failed: custom program error: 0x189d
+    Program CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm consumed 88849 of 200000 compute units
+    Program CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm failed: custom program error: 0x189d
+Transaction executed in slot 40:
+  Signature: 63ZexTu8J293yk8kAr7kDn9K5FEbLJAkwQJ2Esr7GATNP8Vy6RBWdgqGejgN8MEehkR5zNjaAgR7EkJJ5jqiBPQV
+  Status: Error processing Instruction 0: custom program error: 0x1772
+  Log Messages:
+    Program CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm invoke [1]
+    Program log: Instruction: SwitchToPublic
+    Program log: AnchorError thrown in programs/pythia_op/src/lib.rs:326. Error Code: WindowNotExpired. Error Number: 6002. Error Message: Window duration has not expired yet.
+    Program CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm consumed 33553 of 200000 compute units
+    Program CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm failed: custom program error: 0x1772
