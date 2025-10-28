@@ -31,7 +31,7 @@ describe("PythiaOp", () => {
   const CLUSTER_OFFSET = 1078779259;
 
   const connection = new anchor.web3.Connection(
-    "https://devnet.helius-rpc.com/?api-key=a149fae2-6a52-4725-af62-1726c8e2cf9d",
+    "https://api.devnet.solana.com",
     "confirmed"
   );
   
