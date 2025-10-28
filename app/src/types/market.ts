@@ -27,5 +27,3 @@ export type Market = {
   sponsor: Sponsor;
   company: Company;
 };
-
-

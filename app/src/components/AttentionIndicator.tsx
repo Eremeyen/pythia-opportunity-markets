@@ -7,7 +7,10 @@ export type AttentionIndicatorProps = {
   className?: string;
 };
 
-export default function AttentionIndicator({ score, className }: AttentionIndicatorProps) {
+export default function AttentionIndicator({
+  score,
+  className,
+}: AttentionIndicatorProps) {
   const label = bucketAttention(score);
   const level = label === "Low" ? 1 : label === "Medium" ? 2 : 3;
 
@@ -25,10 +28,10 @@ export default function AttentionIndicator({ score, className }: AttentionIndica
             />
           ))}
         </div>
-        <span className="text-xs font-bold text-[#0b1f3a]">Attention: {label}</span>
+        <span className="text-xs font-bold text-[#0b1f3a]">
+          Attention: {label}
+        </span>
       </div>
     </div>
   );
 }
-
-
