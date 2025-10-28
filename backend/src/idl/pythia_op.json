@@ -1,5 +1,5 @@
 {
-  "address": "CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm",
+  "address": "92hgxDDhAPgWYXZez4Y7J9A2YCiDzkPDSzKhikuKaGyE",
   "metadata": {
     "name": "pythia_op",
     "version": "0.1.0",
@@ -101,7 +101,7 @@
           "type": "u64"
         },
         {
-          "name": "sponsor_pub_key",
+          "name": "pub_key",
           "type": {
             "array": [
               "u8",
@@ -125,9 +125,12 @@
       ],
       "accounts": [
         {
-          "name": "sponsor",
+          "name": "user",
           "writable": true,
-          "signer": true
+          "signer": true,
+          "relations": [
+            "user_position"
+          ]
         },
         {
           "name": "market",
@@ -136,7 +139,37 @@
           ]
         },
         {
-          "name": "user_position"
+          "name": "user_position",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114,
+                  95,
+                  112,
+                  111,
+                  115,
+                  105,
+                  116,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              },
+              {
+                "kind": "account",
+                "path": "user"
+              }
+            ]
+          }
         },
         {
           "name": "sign_pda_account",
@@ -210,7 +243,7 @@
           "type": "u64"
         },
         {
-          "name": "sponsor_pub_key",
+          "name": "pub_key",
           "type": {
             "array": [
               "u8",
@@ -554,10 +587,6 @@
         {
           "name": "initial_no",
           "type": "u64"
-        },
-        {
-          "name": "mxe_nonce",
-          "type": "u128"
         }
       ]
     },
@@ -797,10 +826,6 @@
         {
           "name": "computation_offset",
           "type": "u64"
-        },
-        {
-          "name": "mxe_nonce",
-          "type": "u128"
         }
       ]
     },
@@ -1200,10 +1225,6 @@
         {
           "name": "computation_offset",
           "type": "u64"
-        },
-        {
-          "name": "mxe_nonce",
-          "type": "u128"
         }
       ]
     },
@@ -1936,38 +1957,13 @@
   "errors": [
     {
       "code": 6000,
-      "name": "AbortedComputation",
-      "msg": "The computation was aborted"
+      "name": "InvalidFinalizeTx",
+      "msg": "Invalid finalize transaction"
     },
     {
       "code": 6001,
-      "name": "WrongWindowState",
-      "msg": "Wrong window state for this operation"
-    },
-    {
-      "code": 6002,
-      "name": "WindowNotExpired",
-      "msg": "Window duration has not expired yet"
-    },
-    {
-      "code": 6003,
-      "name": "Unauthorized",
-      "msg": "Unauthorized"
-    },
-    {
-      "code": 6004,
-      "name": "NotYetResolvable",
-      "msg": "Market cannot be resolved yet"
-    },
-    {
-      "code": 6005,
-      "name": "Overflow",
-      "msg": "Arithmetic overflow"
-    },
-    {
-      "code": 6006,
-      "name": "ClusterNotSet",
-      "msg": "Cluster not set"
+      "name": "InvalidAccount",
+      "msg": "Invalid account"
     }
   ],
   "types": [
