@@ -34,11 +34,15 @@ export function useCountdown(targetMs: number): {
     tick();
     intervalRef.current = window.setInterval(tick, tickMs);
     return () => {
-      if (intervalRef.current != null) window.clearInterval(intervalRef.current);
+      if (intervalRef.current != null)
+        window.clearInterval(intervalRef.current);
     };
   }, [prefersReducedMotion]);
 
-  const remainingMs = useMemo(() => Math.max(0, targetMs - nowMs), [targetMs, nowMs]);
+  const remainingMs = useMemo(
+    () => Math.max(0, targetMs - nowMs),
+    [targetMs, nowMs]
+  );
   const isPast = remainingMs === 0 && nowMs >= targetMs;
   return { nowMs, remainingMs, isPast };
 }
@@ -53,5 +57,3 @@ export function useNow(): number {
   }, [prefersReducedMotion]);
   return nowMs;
 }
-
-

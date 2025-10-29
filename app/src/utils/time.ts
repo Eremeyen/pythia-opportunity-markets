@@ -30,5 +30,3 @@ export function bucketAttention(score?: number): "Low" | "Medium" | "High" {
   if (s < 0.66) return "Medium";
   return "High";
 }
-
-
