@@ -6,7 +6,7 @@ resolution = true
 skip-lint = false
 
 [programs.devnet]
-pythia_op = "CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm"
+pythia_op = "2qjYCKDKngH2rcnPwpxKgZTdbjvvxq71u7FVChU1541U"
 
 [programs.localnet]
 pythia_op = "CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm"

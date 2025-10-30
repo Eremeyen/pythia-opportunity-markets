@@ -1,5 +1,4 @@
 use anchor_lang::prelude::*;
-use arcium_anchor::prelude::*;
 
 use crate::state::*;
 
@@ -13,7 +12,7 @@ pub struct SponsorViewMarketEvent {
 #[event]
 pub struct UserPositionViewEvent {
     pub user_position: Pubkey,
-    pub encrypted_state: [[u8; 32]; 2],
+    pub encrypted_state: [[u8; 32]; 4],
     pub nonce: u128,
 }
 
@@ -35,4 +34,6 @@ pub struct WindowSwitchEvent {
     pub new_window: MarketWindow,
     pub yes_pool: u64,
     pub no_pool: u64,
+    pub yes_price: u64,  // In thousandths (0-1000)
+    pub no_price: u64,   // In thousandths (0-1000)
 }

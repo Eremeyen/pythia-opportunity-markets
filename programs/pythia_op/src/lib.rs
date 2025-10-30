@@ -12,16 +12,42 @@ const COMP_DEF_OFFSET_INITIALIZE_MARKET: u32 = comp_def_offset("initialize_marke
 const COMP_DEF_OFFSET_INITIALIZE_USER_POSITION: u32 = comp_def_offset("initialize_user_position");
 const COMP_DEF_OFFSET_PROCESS_PRIVATE_TRADE: u32 = comp_def_offset("process_private_trade");
 const COMP_DEF_OFFSET_UPDATE_USER_POSITION: u32 = comp_def_offset("update_user_position");
+const COMP_DEF_OFFSET_CLOSE_POSITION: u32 = comp_def_offset("close_position");
 const COMP_DEF_OFFSET_REVEAL_MARKET_STATE: u32 = comp_def_offset("reveal_market_state");
 const COMP_DEF_OFFSET_HIDE_MARKET_STATE: u32 = comp_def_offset("hide_market_state");
 const COMP_DEF_OFFSET_VIEW_MARKET_STATE: u32 = comp_def_offset("view_market_state");
 const COMP_DEF_OFFSET_VIEW_USER_POSITION: u32 = comp_def_offset("view_user_position");
 
-declare_id!("CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm");
+declare_id!("2qjYCKDKngH2rcnPwpxKgZTdbjvvxq71u7FVChU1541U");
 
 #[arcium_program]
 pub mod pythia_op {
     use super::*;
+
+    pub fn init_sponsor(
+        ctx: Context<InitSponsor>,
+        name: String,
+    ) -> Result<()> {
+        let sponsor = &mut ctx.accounts.sponsor;
+        let clock = Clock::get()?;
+
+        sponsor.bump = ctx.bumps.sponsor;
+        sponsor.authority = ctx.accounts.authority.key();
+        sponsor.name = name;
+        sponsor.is_whitelisted = false; 
+        sponsor.creation_date = clock.unix_timestamp;
+        sponsor.total_markets_created = 0;
+
+        Ok(())
+    }
+
+    pub fn whitelist_sponsor(
+        ctx: Context<WhitelistSponsor>,
+    ) -> Result<()> {
+        // TODO: Add proper admin authority check
+        ctx.accounts.sponsor.is_whitelisted = true;
+        Ok(())
+    }
 
     pub fn init_initialize_market_comp_def(ctx: Context<InitInitializeMarketCompDef>) -> Result<()> {
         init_comp_def(ctx.accounts, true, 0, None, None)?;
@@ -43,7 +69,17 @@ pub mod pythia_op {
         Ok(())
     }
 
+    pub fn init_close_position_comp_def(ctx: Context<InitClosePositionCompDef>) -> Result<()> {
+        init_comp_def(ctx.accounts, true, 0, None, None)?;
+        Ok(())
+    }
+
     pub fn init_reveal_market_state_comp_def(ctx: Context<InitRevealMarketStateCompDef>) -> Result<()> {
+        init_comp_def(ctx.accounts, true, 0, None, None)?;
+        Ok(())
+    }
+
+    pub fn init_reveal_user_position_comp_def(ctx: Context<InitRevealUserPositionCompDef>) -> Result<()> {
         init_comp_def(ctx.accounts, true, 0, None, None)?;
         Ok(())
     }
@@ -68,19 +104,31 @@ pub mod pythia_op {
         question: String,
         resolution_date: i64,
         liquidity_cap: u64,
+        initial_liquidity_usdc: u64,
         opp_window_duration: u64,
         pub_window_duration: u64,
     ) -> Result<()> {
         let market = &mut ctx.accounts.market;
         let clock = Clock::get()?;
 
+        // Verify sponsor is whitelisted
+        require!(
+            ctx.accounts.sponsor_account.is_whitelisted,
+            ErrorCode::SponsorNotWhitelisted
+        );
+
+        // Get sponsor key before mutable borrow
+        let sponsor_key = ctx.accounts.sponsor_account.key();
+        let sponsor_account = &mut ctx.accounts.sponsor_account;
+
         market.bump = ctx.bumps.market;
-        market.sponsor = ctx.accounts.sponsor.key();
-        market.authority = ctx.accounts.sponsor.key(); // Sponsor is initial authority
+        market.sponsor = sponsor_key;
+        market.authority = ctx.accounts.sponsor.key(); // Sponsor authority is initial authority
         market.question = question;
         market.resolution_date = resolution_date;
         market.window_state = MarketWindow::Private;
         market.liquidity_cap = liquidity_cap;
+        market.initial_liquidity_usdc = initial_liquidity_usdc;
         market.nonce = 0;
         market.opp_window_duration = opp_window_duration;
         market.pub_window_duration = pub_window_duration;
@@ -90,14 +138,16 @@ pub mod pythia_op {
         // Encrypted market state: [yes_pool, no_pool, last_price, total_trades] as 32-byte ciphertexts
         market.market_state = [[0; 32]; 4];
 
+        // Increment sponsor's market counter
+        sponsor_account.total_markets_created += 1;
+
         Ok(())
     }
 
     pub fn init_market_encrypted(
         ctx: Context<InitMarketEncrypted>,
         computation_offset: u64,
-        initial_yes: u64,
-        initial_no: u64,
+        initial_liquidity_usdc: u64,
         mxe_nonce: u128,
     ) -> Result<()> {
         use arcium_client::idl::arcium::types::CallbackAccount;
@@ -107,8 +157,7 @@ pub mod pythia_op {
         // Queue the initialization computation with plaintext inputs
         let args = vec![
             Argument::PlaintextU128(mxe_nonce),
-            Argument::PlaintextU64(initial_yes),
-            Argument::PlaintextU64(initial_no),
+            Argument::PlaintextU64(initial_liquidity_usdc),
         ];
 
         queue_computation(
@@ -151,7 +200,7 @@ pub mod pythia_op {
         ctx.accounts.user_position.user = ctx.accounts.user.key();
         ctx.accounts.user_position.market = ctx.accounts.market.key();
         ctx.accounts.user_position.nonce = 0;
-        ctx.accounts.user_position.position_state = [[0; 32]; 2];
+        ctx.accounts.user_position.position_state = [[0; 32]; 4];
         
         ctx.accounts.sign_pda_account.bump = ctx.bumps.sign_pda_account;
         
@@ -309,6 +358,71 @@ pub mod pythia_op {
         Ok(())
     }
 
+    pub fn close_position_private(
+        ctx: Context<ClosePositionPrivate>,
+        computation_offset: u64,
+        close_ciphertext: [u8; 32],
+        close_pub_key: [u8; 32],
+        close_nonce: u128,
+    ) -> Result<()> {
+        use arcium_client::idl::arcium::types::CallbackAccount;
+        
+        ctx.accounts.sign_pda_account.bump = ctx.bumps.sign_pda_account;
+        
+        let args = vec![
+            Argument::PlaintextU128(ctx.accounts.user_position.nonce),
+            Argument::Account(
+                ctx.accounts.user_position.key(),
+                // Offset: 8 (discriminator) + 1 (bump) + 32 (user) + 32 (market)
+                8 + 1 + 32 + 32,
+                32 * 4, // 4 encrypted fields (yes_tokens, no_tokens, yes_tokens_closed, no_tokens_closed)
+            ),
+            Argument::ArcisPubkey(close_pub_key),
+            Argument::PlaintextU128(close_nonce),
+            Argument::EncryptedU8(close_ciphertext),
+        ];
+
+        queue_computation(
+            ctx.accounts,
+            computation_offset,
+            args,
+            None,
+            vec![ClosePositionCallback::callback_ix(&[CallbackAccount {
+                pubkey: ctx.accounts.user_position.key(),
+                is_writable: true,
+            }])],
+        )?;
+
+        Ok(())
+    }
+
+    #[arcium_callback(encrypted_ix = "close_position")]
+    pub fn close_position_callback(
+        ctx: Context<ClosePositionCallback>,
+        output: ComputationOutputs<ClosePositionOutput>,
+    ) -> Result<()> {
+        let o = match output {
+            ComputationOutputs::Success(ClosePositionOutput { field_0 }) => field_0,
+            _ => return Err(ErrorCode::AbortedComputation.into()),
+        };
+        
+        let clock = Clock::get()?;
+        let user_position = &mut ctx.accounts.user_position;
+        
+        user_position.position_state = o.ciphertexts;
+        user_position.nonce = o.nonce;
+        
+        // Add close record (price will be updated during window switch)
+        user_position.close_records.push(CloseRecord {
+            timestamp: clock.unix_timestamp,
+            yes_shares_closed: 0,  // Will be revealed in public window
+            no_shares_closed: 0,   // Will be revealed in public window
+            market_price_at_close: 0,  // Will be set during window switch
+        });
+        
+        Ok(())
+    }
+
     pub fn switch_to_public(
         ctx: Context<SwitchToPublic>,
         computation_offset: u64,
@@ -372,11 +486,13 @@ pub mod pythia_op {
         let clock = Clock::get()?;
         let market = &mut ctx.accounts.market;
         
-        // Store revealed state - o is a struct with field_0, field_1, field_2, field_3
+        // Store revealed state: yes_pool, no_pool, yes_price, no_price
+        // Note: total_trades is missing from current circuit output - circuits need rebuilding
         market.public_yes_pool = o.field_0;
         market.public_no_pool = o.field_1;
-        market.public_last_price = o.field_2;
-        market.public_total_trades = o.field_3;
+        market.public_yes_price = o.field_2;
+        market.public_no_price = o.field_3;
+        market.public_total_trades = 0; // TODO: Rebuild circuits to include this field
         market.window_state = MarketWindow::Public;
         market.last_switch_ts = clock.unix_timestamp;
         market.market_state = [[0; 32]; 4]; // Clear encrypted state
@@ -386,6 +502,8 @@ pub mod pythia_op {
             new_window: MarketWindow::Public,
             yes_pool: o.field_0,
             no_pool: o.field_1,
+            yes_price: o.field_2,
+            no_price: o.field_3,
         });
         
         Ok(())
@@ -393,7 +511,7 @@ pub mod pythia_op {
 
     pub fn trade_public(
         ctx: Context<TradePublic>,
-        amount: u64,
+        usdc_amount: u64,
         is_buy_yes: bool,
     ) -> Result<()> {
         let market = &mut ctx.accounts.market;
@@ -404,17 +522,36 @@ pub mod pythia_op {
             ErrorCode::WrongWindowState
         );
         
-        // Simple constant-product AMM logic
-        let yes_pool = market.public_yes_pool;
-        let no_pool = market.public_no_pool;
+        // Convert USDC to shares (1 USDC = 1000 shares)
+        let shares_input = usdc_amount.checked_mul(1000)
+            .ok_or(ErrorCode::Overflow)?;
+        
+        let k = market.public_yes_pool.checked_mul(market.public_no_pool)
+            .ok_or(ErrorCode::Overflow)?;
+        let k_scaled = k / 1000000; // Scale down to prevent overflow
         
         if is_buy_yes {
-            market.public_yes_pool = yes_pool.checked_add(amount)
+            // Buying YES: add to no_pool, take from yes_pool
+            let new_no_pool = market.public_no_pool.checked_add(shares_input)
                 .ok_or(ErrorCode::Overflow)?;
+            let new_yes_pool = (k_scaled * 1000000) / new_no_pool;
+            
+            market.public_yes_pool = new_yes_pool;
+            market.public_no_pool = new_no_pool;
         } else {
-            market.public_no_pool = no_pool.checked_add(amount)
+            // Buying NO: add to yes_pool, take from no_pool
+            let new_yes_pool = market.public_yes_pool.checked_add(shares_input)
                 .ok_or(ErrorCode::Overflow)?;
+            let new_no_pool = (k_scaled * 1000000) / new_yes_pool;
+            
+            market.public_yes_pool = new_yes_pool;
+            market.public_no_pool = new_no_pool;
         }
+        
+        // Update prices
+        let total_pool = market.public_yes_pool + market.public_no_pool;
+        market.public_yes_price = (market.public_no_pool * 1000) / total_pool;
+        market.public_no_price = (market.public_yes_pool * 1000) / total_pool;
         
         emit!(TradeEvent {
             market: market.key(),
@@ -453,7 +590,6 @@ pub mod pythia_op {
             Argument::PlaintextU128(mxe_nonce),
             Argument::PlaintextU64(market.public_yes_pool),
             Argument::PlaintextU64(market.public_no_pool),
-            Argument::PlaintextU64(market.public_last_price),
             Argument::PlaintextU64(market.public_total_trades),
         ];
 
@@ -490,7 +626,8 @@ pub mod pythia_op {
         market.last_switch_ts = clock.unix_timestamp;
         market.public_yes_pool = 0;
         market.public_no_pool = 0;
-        market.public_last_price = 0;
+        market.public_yes_price = 0;
+        market.public_no_price = 0;
         market.public_total_trades = 0;
         
         emit!(WindowSwitchEvent {
@@ -498,6 +635,8 @@ pub mod pythia_op {
             new_window: MarketWindow::Private,
             yes_pool: 0,
             no_pool: 0,
+            yes_price: 0,
+            no_price: 0,
         });
         
         Ok(())
@@ -657,6 +796,32 @@ pub mod pythia_op {
 }
 
 
+#[derive(Accounts)]
+#[instruction(name: String)]
+pub struct InitSponsor<'info> {
+    #[account(mut)]
+    pub authority: Signer<'info>,
+    
+    #[account(
+        init,
+        payer = authority,
+        space = 8 + 1 + 32 + (4 + 100) + 1 + 8 + 8,
+        seeds = [b"sponsor", authority.key().as_ref()],
+        bump
+    )]
+    pub sponsor: Account<'info, Sponsor>,
+    
+    pub system_program: Program<'info, System>,
+}
+
+#[derive(Accounts)]
+pub struct WhitelistSponsor<'info> {
+    #[account(mut)]
+    pub admin: Signer<'info>,  // TODO: Add proper admin authority check
+    
+    #[account(mut)]
+    pub sponsor: Account<'info, Sponsor>,
+}
 
 #[derive(Accounts)]
 #[instruction(question: String)]
@@ -664,11 +829,14 @@ pub struct InitMarket<'info> {
     #[account(mut)]
     pub sponsor: Signer<'info>,
     
+    #[account(mut)]
+    pub sponsor_account: Account<'info, Sponsor>,
+    
     #[account(
         init,
         payer = sponsor,
-        space = 8 + 1 + 32 + 32 + (4 + 200) + 8 + 1 + 8 + (32 * 4) + 8 + 8 + 8 + 8 + 16 + 8 + 8 + 8 + 1 + 2,
-        seeds = [b"market", sponsor.key().as_ref(), question.as_bytes()],
+        space = 8 + 1 + 32 + 32 + (4 + 200) + 8 + 1 + 8 + 8 + (32 * 4) + 8 + 8 + 8 + 8 + 8 + 16 + 8 + 8 + 8 + 1 + 2,
+        seeds = [b"market", sponsor_account.key().as_ref(), question.as_bytes()],
         bump
     )]
     pub market: Account<'info, Market>,
@@ -752,7 +920,7 @@ pub struct InitUserPosition<'info> {
     #[account(
         init,
         payer = user,
-        space = 8 + 1 + 32 + 32 + (32 * 2) + 16,
+        space = 8 + 1 + 32 + 32 + (32 * 4) + 16 + 4 + (32 * 10), // Added space for close_records Vec (initial capacity for 10 records)
         seeds = [b"user_position", market.key().as_ref(), user.key().as_ref()],
         bump
     )]
@@ -942,6 +1110,78 @@ pub struct UpdateUserPositionCallback<'info> {
     pub user_position: Account<'info, UserPosition>,
     pub arcium_program: Program<'info, Arcium>,
     #[account(address = derive_comp_def_pda!(COMP_DEF_OFFSET_UPDATE_USER_POSITION))]
+    pub comp_def_account: Account<'info, ComputationDefinitionAccount>,
+    #[account(address = ::anchor_lang::solana_program::sysvar::instructions::ID)]
+    /// CHECK: instructions_sysvar, checked by the account constraint
+    pub instructions_sysvar: AccountInfo<'info>,
+}
+
+#[queue_computation_accounts("close_position", user)]
+#[derive(Accounts)]
+#[instruction(computation_offset: u64)]
+pub struct ClosePositionPrivate<'info> {
+    #[account(mut)]
+    pub user: Signer<'info>,
+    
+    pub market: Account<'info, Market>,
+    
+    #[account(
+        mut,
+        seeds = [b"user_position", market.key().as_ref(), user.key().as_ref()],
+        bump = user_position.bump,
+        has_one = user,
+        has_one = market
+    )]
+    pub user_position: Account<'info, UserPosition>,
+    
+    #[account(
+        init_if_needed,
+        space = 9,
+        payer = user,
+        seeds = [&SIGN_PDA_SEED],
+        bump,
+        address = derive_sign_pda!(),
+    )]
+    pub sign_pda_account: Account<'info, SignerAccount>,
+    
+    #[account(address = derive_mxe_pda!())]
+    pub mxe_account: Account<'info, MXEAccount>,
+    
+    #[account(mut, address = derive_mempool_pda!())]
+    /// CHECK: mempool_account, checked by the arcium program.
+    pub mempool_account: UncheckedAccount<'info>,
+    
+    #[account(mut, address = derive_execpool_pda!())]
+    /// CHECK: executing_pool, checked by the arcium program.
+    pub executing_pool: UncheckedAccount<'info>,
+    
+    #[account(mut, address = derive_comp_pda!(computation_offset))]
+    /// CHECK: computation_account, checked by the arcium program.
+    pub computation_account: UncheckedAccount<'info>,
+    
+    #[account(address = derive_comp_def_pda!(COMP_DEF_OFFSET_CLOSE_POSITION))]
+    pub comp_def_account: Account<'info, ComputationDefinitionAccount>,
+    
+    #[account(mut, address = derive_cluster_pda!(mxe_account))]
+    pub cluster_account: Account<'info, Cluster>,
+    
+    #[account(mut, address = ARCIUM_FEE_POOL_ACCOUNT_ADDRESS)]
+    pub pool_account: Account<'info, FeePool>,
+    
+    #[account(address = ARCIUM_CLOCK_ACCOUNT_ADDRESS)]
+    pub clock_account: Account<'info, ClockAccount>,
+    
+    pub system_program: Program<'info, System>,
+    pub arcium_program: Program<'info, Arcium>,
+}
+
+#[callback_accounts("close_position")]
+#[derive(Accounts)]
+pub struct ClosePositionCallback<'info> {
+    #[account(mut)]
+    pub user_position: Account<'info, UserPosition>,
+    pub arcium_program: Program<'info, Arcium>,
+    #[account(address = derive_comp_def_pda!(COMP_DEF_OFFSET_CLOSE_POSITION))]
     pub comp_def_account: Account<'info, ComputationDefinitionAccount>,
     #[account(address = ::anchor_lang::solana_program::sysvar::instructions::ID)]
     /// CHECK: instructions_sysvar, checked by the account constraint
@@ -1293,9 +1533,37 @@ pub struct InitUpdateUserPositionCompDef<'info> {
     pub system_program: Program<'info, System>,
 }
 
+#[init_computation_definition_accounts("close_position", payer)]
+#[derive(Accounts)]
+pub struct InitClosePositionCompDef<'info> {
+    #[account(mut)]
+    pub payer: Signer<'info>,
+    #[account(mut, address = derive_mxe_pda!())]
+    pub mxe_account: Box<Account<'info, MXEAccount>>,
+    #[account(mut)]
+    /// CHECK: comp_def_account, checked by arcium program.
+    pub comp_def_account: UncheckedAccount<'info>,
+    pub arcium_program: Program<'info, Arcium>,
+    pub system_program: Program<'info, System>,
+}
+
 #[init_computation_definition_accounts("reveal_market_state", payer)]
 #[derive(Accounts)]
 pub struct InitRevealMarketStateCompDef<'info> {
+    #[account(mut)]
+    pub payer: Signer<'info>,
+    #[account(mut, address = derive_mxe_pda!())]
+    pub mxe_account: Box<Account<'info, MXEAccount>>,
+    #[account(mut)]
+    /// CHECK: comp_def_account, checked by arcium program.
+    pub comp_def_account: UncheckedAccount<'info>,
+    pub arcium_program: Program<'info, Arcium>,
+    pub system_program: Program<'info, System>,
+}
+
+#[init_computation_definition_accounts("reveal_user_position", payer)]
+#[derive(Accounts)]
+pub struct InitRevealUserPositionCompDef<'info> {
     #[account(mut)]
     pub payer: Signer<'info>,
     #[account(mut, address = derive_mxe_pda!())]
@@ -1366,4 +1634,6 @@ pub enum ErrorCode {
     Overflow,
     #[msg("Cluster not set")]
     ClusterNotSet,
+    #[msg("Sponsor is not whitelisted")]
+    SponsorNotWhitelisted,
 }
