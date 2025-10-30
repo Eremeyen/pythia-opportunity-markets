@@ -38,9 +38,7 @@ export default function Sparkline({
 
   const path = `M ${points}`;
 
-  const areaPath = fill
-    ? `${path} L ${width},${height} L 0,${height} Z`
-    : null;
+  const areaPath = fill ? `${path} L ${width},${height} L 0,${height} Z` : null;
 
   return (
     <svg
@@ -56,5 +54,3 @@ export default function Sparkline({
     </svg>
   );
 }
-
-
