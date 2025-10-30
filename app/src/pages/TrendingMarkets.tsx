@@ -1,5 +1,5 @@
 import MarketPreviewCard from "../components/MarketPreviewCard";
-import { getMarketsFiltered } from "../config/mockMarkets.ts";
+import { getSponsorMarketsFiltered } from "../config/mockSponsorMarkets.ts";
 
 type Scope = "trending" | "public" | "private";
 
@@ -8,20 +8,21 @@ export default function TrendingMarketsPage({
 }: {
   scope?: Scope;
 }) {
-  // @TODO: GET ITEMS FROM HOOK
-  const items = getMarketsFiltered(scope);
+  const items = getSponsorMarketsFiltered(scope);
 
   return (
     <div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-        {items.map((m) => (
+        {items.map((m) => {
+          const opportunityStartMs = m.opportunityEndMs - 24 * 3600_000; // mock start time
+          return (
           <MarketPreviewCard
             key={m.id}
             id={m.id}
-            logoUrl={m.logoUrl}
+            logoUrl={m.company?.logoUrl ?? ""}
             title={m.title}
-            description={m.description}
-            opportunityStartMs={m.opportunityStartMs}
+            description={m.description ?? ""}
+            opportunityStartMs={opportunityStartMs}
             opportunityEndMs={m.opportunityEndMs}
             resultsEndMs={m.resultsEndMs}
             nextOpportunityStartMs={m.nextOpportunityStartMs}
@@ -29,7 +30,8 @@ export default function TrendingMarketsPage({
             attentionScore={m.attentionScore}
             priceSeries={m.priceSeries}
           />
-        ))}
+          );
+        })}
       </div>
     </div>
   );

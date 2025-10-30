@@ -45,4 +45,12 @@ export const MOCK_SPONSOR_MARKETS: SponsorMarket[] = (() => {
   return seeded;
 })();
 
+export function getSponsorMarketsFiltered(
+  scope: "trending" | "public" | "private"
+): SponsorMarket[] {
+  if (scope === "public") return MOCK_SPONSOR_MARKETS.filter((m) => !m.isPrivate);
+  if (scope === "private") return MOCK_SPONSOR_MARKETS.filter((m) => m.isPrivate);
+  return MOCK_SPONSOR_MARKETS;
+}
+
 

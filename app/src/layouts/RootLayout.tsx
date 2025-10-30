@@ -11,7 +11,7 @@ export default function RootLayout() {
           <CategoryNav />
         </div>
       </header>
-      <main className="mx-auto max-w-[1200px] pl-2 md:pl-4 pr-4 md:pr-6 pt-4">
+      <main className="mx-auto max-w-[1200px] pl-2 md:pl-4 pr-4 md:pr-6 pt-4 pb-10">
         <Outlet />
       </main>
     </div>

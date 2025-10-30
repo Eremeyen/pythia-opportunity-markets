@@ -5,18 +5,20 @@ export default function SponsorMarketList({
   selectedId,
   onSelect,
   onCreateClick,
+  title = "Your markets",
   showCreate = true,
 }: {
   markets: SponsorMarket[];
   selectedId: string | null;
   onSelect: (id: string) => void;
   onCreateClick: () => void;
+  title?: string;
   showCreate?: boolean;
 }) {
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
-        <h3 className="text-lg md:text-xl font-extrabold text-[#0b1f3a]">Your markets</h3>
+        <h3 className="text-lg md:text-xl font-extrabold text-[#0b1f3a]">{title}</h3>
         {showCreate && (
           <button
             type="button"

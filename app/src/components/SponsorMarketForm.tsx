@@ -38,7 +38,7 @@ export default function SponsorMarketForm({
   }
 
   return (
-    <div className="fixed inset-0 bg-black/20 flex items-end md:items-center justify-center p-4">
+    <div className="fixed inset-0 z-[100] bg-black/50 backdrop-blur-sm md:backdrop-blur flex items-end md:items-center justify-center p-4">
       <div className="w-full max-w-2xl bg-white rounded-2xl border-4 border-black p-4 md:p-6 shadow-lg">
         <div className="flex items-center justify-between">
           <h3 className="text-xl md:text-2xl font-extrabold text-[#0b1f3a]">Create Market</h3>

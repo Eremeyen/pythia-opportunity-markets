@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SponsorModeOverrideSwitch from "../components/SponsorModeOverrideSwitch";
 import NonSponsorEmptyState from "../components/NonSponsorEmptyState";
 import SponsorMarketList from "../components/SponsorMarketList";
@@ -17,11 +17,12 @@ export default function ForSponsorsPage() {
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [resolveOpen, setResolveOpen] = useState(false);
 
+  // Clear any sponsor selection when switching to viewer mode to avoid showing stale details
+  useEffect(() => {
+    if (!isSponsor) setSelectedId(null);
+  }, [isSponsor, setSelectedId]);
+
   if (!isSponsor) {
-    const now = Date.now();
-    const publicMarkets = markets.filter(
-      (m) => !m.isPrivate && m.status === "open" && now >= m.opportunityEndMs && (m.resultsEndMs ? now < m.resultsEndMs : true)
-    );
     return (
       <div className="max-w-6xl w-full">
         <div className="flex items-center justify-between">
@@ -29,38 +30,6 @@ export default function ForSponsorsPage() {
           <SponsorModeOverrideSwitch />
         </div>
         <NonSponsorEmptyState />
-        <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="md:col-span-1">
-            <SponsorMarketList
-              markets={publicMarkets}
-              selectedId={selectedId}
-              onSelect={(id) => setSelectedId(id)}
-              onCreateClick={() => {}}
-              showCreate={false}
-            />
-          </div>
-          <div className="md:col-span-2 space-y-4">
-            {selectedMarket && publicMarkets.find((m) => m.id === selectedMarket.id) ? (
-              <>
-                <SponsorMarketDetails
-                  market={selectedMarket}
-                  sponsorMode={false}
-                  onResolveClick={() => {}}
-                />
-                <TradeFeed
-                  trades={trades}
-                  marketId={selectedMarket.id}
-                  sponsorMode={false}
-                  onTick={() => {}}
-                />
-              </>
-            ) : (
-              <div className="p-6 rounded-xl border-2 border-black bg-white text-sm text-[#0b1f3a] opacity-80">
-                Browse public markets. Select one to view details.
-              </div>
-            )}
-          </div>
-        </div>
       </div>
     );
   }
