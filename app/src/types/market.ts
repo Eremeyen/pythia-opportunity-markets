@@ -4,6 +4,14 @@ export type Sponsor = {
   url?: string;
   avatarUrl?: string;
   org?: string;
+  // Optional richer profile fields for UI
+  logoUrl?: string;
+  description?: string;
+  focusSectors?: string[];
+  stageFocus?: string[];
+  hq?: string;
+  checkSizeRange?: string;
+  thesisUrl?: string;
 };
 
 export type Company = {
@@ -12,6 +20,16 @@ export type Company = {
   logoUrl?: string;
   website?: string;
   summary?: string;
+  // Optional richer company details for UI
+  hq?: string;
+  founder?: string;
+  founderBackground?: string;
+  sectors?: string[];
+  foundedYear?: number;
+  totalRaisedUsd?: number;
+  stage?: string;
+  employees?: number;
+  notableInvestors?: string[];
 };
 
 // CHANGE TIME FIELDS
@@ -26,4 +44,7 @@ export type Market = {
   attentionScore?: number;
   sponsor: Sponsor;
   company: Company;
+  resolutionCriteria: string;
+  nextOpportunityStartMs?: number;
+  nextOpportunityEndMs?: number;
 };

@@ -39,7 +39,17 @@ export function useMockSponsorData() {
         isPrivate: input.isPrivate,
         opportunityEndMs: now + 7 * 24 * 3600_000,
         resultsEndMs: input.resolutionDateMs,
-        priceSeries: [...Array(24)].map((_, i) => 100 + Math.sin(i / 3) * 2 + i * 0.3),
+        priceSeries: ((): number[] => {
+          const out: number[] = [];
+          let value = 50 + (Math.random() * 40 - 20);
+          for (let i = 0; i < 24; i++) {
+            const jump = Math.random() < 0.25 ? (Math.random() * 40 - 20) : 0;
+            const noise = Math.random() * 14 - 7;
+            value = Math.max(0, Math.min(100, value + noise + jump));
+            out.push(value);
+          }
+          return out;
+        })(),
         attentionScore: 0.1,
         sponsor: { id: "sp-dev", name: "You" },
         company: { id: `c-${id}`, name: input.title },

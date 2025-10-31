@@ -1,3 +1,15 @@
+// Helper to create a zigzaggy random-walk series in [0, 100]
+function generateZigZagSeries(length: number): number[] {
+  const out: number[] = [];
+  let value = 50 + (Math.random() * 40 - 20);
+  for (let i = 0; i < length; i++) {
+    const jump = Math.random() < 0.25 ? (Math.random() * 40 - 20) : 0; // occasional bigger move
+    const noise = Math.random() * 14 - 7; // small step
+    value = Math.max(0, Math.min(100, value + noise + jump));
+    out.push(value);
+  }
+  return out;
+}
 // Mock markets for UI. Temporary dev data until backend integration.
 // Notes:
 // - visibility: indicates whether a market is public or private for simple filtering.
@@ -31,9 +43,7 @@ export const MOCK_MARKETS: MockMarketPreview[] = [
     resultsEndMs: Date.now() + 30 * 24 * 3600_000,
     nextOpportunityStartMs: Date.now() + 45 * 24 * 3600_000,
     attentionScore: 0.7,
-    priceSeries: [...Array(24)].map(
-      (_, idx) => 100 + Math.sin(idx / 3) * 2 + idx * 0.3
-    ),
+    priceSeries: generateZigZagSeries(24),
     visibility: "public",
   },
   {
@@ -47,9 +57,7 @@ export const MOCK_MARKETS: MockMarketPreview[] = [
     resultsEndMs: Date.now() + 30 * 24 * 3600_000,
     nextOpportunityStartMs: Date.now() + 45 * 24 * 3600_000,
     attentionScore: 0.5,
-    priceSeries: [...Array(24)].map(
-      (_, idx) => 100 + Math.sin(idx / 3) * 2 + idx * 0.3
-    ),
+    priceSeries: generateZigZagSeries(24),
     visibility: "private",
   },
   {
@@ -63,9 +71,7 @@ export const MOCK_MARKETS: MockMarketPreview[] = [
     resultsEndMs: Date.now() + 30 * 24 * 3600_000,
     nextOpportunityStartMs: Date.now() + 45 * 24 * 3600_000,
     attentionScore: 0.4,
-    priceSeries: [...Array(24)].map(
-      (_, idx) => 100 + Math.sin(idx / 3) * 2 + idx * 0.3
-    ),
+    priceSeries: generateZigZagSeries(24),
     visibility: "public",
   },
   {
@@ -79,9 +85,7 @@ export const MOCK_MARKETS: MockMarketPreview[] = [
     resultsEndMs: Date.now() + 30 * 24 * 3600_000,
     nextOpportunityStartMs: Date.now() + 45 * 24 * 3600_000,
     attentionScore: 0.55,
-    priceSeries: [...Array(24)].map(
-      (_, idx) => 100 + Math.sin(idx / 3) * 2 + idx * 0.3
-    ),
+    priceSeries: generateZigZagSeries(24),
     visibility: "private",
   },
   {
@@ -95,9 +99,7 @@ export const MOCK_MARKETS: MockMarketPreview[] = [
     resultsEndMs: Date.now() + 30 * 24 * 3600_000,
     nextOpportunityStartMs: Date.now() + 45 * 24 * 3600_000,
     attentionScore: 0.66,
-    priceSeries: [...Array(24)].map(
-      (_, idx) => 100 + Math.sin(idx / 3) * 2 + idx * 0.3
-    ),
+    priceSeries: generateZigZagSeries(24),
     visibility: "public",
   },
   {
@@ -111,9 +113,7 @@ export const MOCK_MARKETS: MockMarketPreview[] = [
     resultsEndMs: Date.now() + 30 * 24 * 3600_000,
     nextOpportunityStartMs: Date.now() + 45 * 24 * 3600_000,
     attentionScore: 0.35,
-    priceSeries: [...Array(24)].map(
-      (_, idx) => 100 + Math.sin(idx / 3) * 2 + idx * 0.3
-    ),
+    priceSeries: generateZigZagSeries(24),
     visibility: "private",
   },
 ];

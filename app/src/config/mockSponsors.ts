@@ -1,3 +1,15 @@
+// Helper to create a zigzaggy random-walk series in [0, 100]
+function generateZigZagSeries(length: number): number[] {
+  const out: number[] = [];
+  let value = 50 + (Math.random() * 40 - 20);
+  for (let i = 0; i < length; i++) {
+    const jump = Math.random() < 0.25 ? (Math.random() * 40 - 20) : 0;
+    const noise = Math.random() * 14 - 7;
+    value = Math.max(0, Math.min(100, value + noise + jump));
+    out.push(value);
+  }
+  return out;
+}
 // Mock sponsor profiles and markets for UI prototyping.
 // Temporary roles (dev-only):
 // - SponsorProfile: lightweight profile data used to render sponsor sections.
@@ -31,14 +43,21 @@ export const MOCK_SPONSORS: SponsorProfile[] = [
         isPriceHidden: true,
         opportunityEndMs: Date.now() + 48 * 3600_000,
         resultsEndMs: Date.now() + 30 * 24 * 3600_000,
-        priceSeries: [...Array(24)].map(
-          (_, i) => 100 + Math.sin(i / 3) * 2 + i * 0.3
-        ),
+        priceSeries: generateZigZagSeries(24),
         attentionScore: 0.6,
+        resolutionCriteria:
+          "Resolve to YES if AllianceDAO signs a term sheet with Orchard AI within the stated window.",
         sponsor: {
           id: "sp-1",
           name: "AllianceDAO",
           url: "https://alliance.xyz",
+          logoUrl: "/logos/google.svg",
+          description: "Early-stage accelerator partnering with top founders.",
+          focusSectors: ["AI", "DeFi", "Infra"],
+          stageFocus: ["Pre-seed", "Seed"],
+          hq: "Remote / Global",
+          checkSizeRange: "$100k–$500k",
+          thesisUrl: "https://alliance.xyz#thesis",
         },
         company: {
           id: "c-1",
@@ -46,6 +65,15 @@ export const MOCK_SPONSORS: SponsorProfile[] = [
           logoUrl: "/logos/apple.svg",
           website: "https://example.com",
           summary: "Applied AI company with strong early traction.",
+          hq: "San Francisco, CA",
+          founder: "Alex Park",
+          founderBackground: "Ex-Google Brain, led ML platform at a unicorn.",
+          sectors: ["AI", "Productivity"],
+          foundedYear: 2024,
+          totalRaisedUsd: 2500000,
+          stage: "Pre-seed",
+          employees: 8,
+          notableInvestors: ["AngelList Syndicate"],
         },
       },
       {
@@ -55,14 +83,21 @@ export const MOCK_SPONSORS: SponsorProfile[] = [
         isPriceHidden: false,
         opportunityEndMs: Date.now() + 72 * 3600_000,
         resultsEndMs: Date.now() + 40 * 24 * 3600_000,
-        priceSeries: [...Array(24)].map(
-          (_, i) => 102 + Math.sin(i / 5) * 1.8 + i * 0.22
-        ),
+        priceSeries: generateZigZagSeries(24),
         attentionScore: 0.72,
+        resolutionCriteria:
+          "Resolve to YES if AllianceDAO commits funding to TensorMesh before the resolution date.",
         sponsor: {
           id: "sp-1",
           name: "AllianceDAO",
           url: "https://alliance.xyz",
+          logoUrl: "/logos/google.svg",
+          description: "Early-stage accelerator partnering with top founders.",
+          focusSectors: ["AI", "Infra", "DevTools"],
+          stageFocus: ["Pre-seed", "Seed"],
+          hq: "Remote / Global",
+          checkSizeRange: "$100k–$500k",
+          thesisUrl: "https://alliance.xyz#thesis",
         },
         company: {
           id: "c-2",
@@ -70,6 +105,15 @@ export const MOCK_SPONSORS: SponsorProfile[] = [
           logoUrl: "/logos/nvidia.svg",
           website: "https://example.com",
           summary: "Infra startup exploring high-throughput compute meshes.",
+          hq: "New York, NY",
+          founder: "Priya Nair",
+          founderBackground: "Ex-NVIDIA systems engineer, distributed systems PhD.",
+          sectors: ["Infrastructure", "HPC"],
+          foundedYear: 2023,
+          totalRaisedUsd: 4200000,
+          stage: "Seed",
+          employees: 12,
+          notableInvestors: ["Acme Capital"],
         },
       },
       {
@@ -79,14 +123,21 @@ export const MOCK_SPONSORS: SponsorProfile[] = [
         isPriceHidden: true,
         opportunityEndMs: Date.now() + 24 * 3600_000,
         resultsEndMs: Date.now() + 25 * 24 * 3600_000,
-        priceSeries: [...Array(24)].map(
-          (_, i) => 98 + Math.sin(i / 4) * 2.5 + i * 0.18
-        ),
+        priceSeries: generateZigZagSeries(24),
         attentionScore: 0.5,
+        resolutionCriteria:
+          "Resolve to YES if AllianceDAO allocates capital to CursorForge during the current cycle.",
         sponsor: {
           id: "sp-1",
           name: "AllianceDAO",
           url: "https://alliance.xyz",
+          logoUrl: "/logos/google.svg",
+          description: "Early-stage accelerator partnering with top founders.",
+          focusSectors: ["DevTools", "AI"],
+          stageFocus: ["Pre-seed", "Seed"],
+          hq: "Remote / Global",
+          checkSizeRange: "$100k–$500k",
+          thesisUrl: "https://alliance.xyz#thesis",
         },
         company: {
           id: "c-3",
@@ -94,6 +145,15 @@ export const MOCK_SPONSORS: SponsorProfile[] = [
           logoUrl: "/logos/microsoft.svg",
           website: "https://example.com",
           summary: "Developer productivity suite for AI-augmented workflows.",
+          hq: "Austin, TX",
+          founder: "Mina Chen",
+          founderBackground: "Former Staff Engineer at GitHub Copilot team.",
+          sectors: ["Developer Tools", "AI"],
+          foundedYear: 2024,
+          totalRaisedUsd: 1800000,
+          stage: "Pre-seed",
+          employees: 6,
+          notableInvestors: ["Operator Angels"],
         },
       },
     ],
@@ -112,14 +172,21 @@ export const MOCK_SPONSORS: SponsorProfile[] = [
         isPriceHidden: false,
         opportunityEndMs: Date.now() + 24 * 3600_000,
         resultsEndMs: Date.now() + 20 * 24 * 3600_000,
-        priceSeries: [...Array(24)].map(
-          (_, i) => 100 + Math.sin(i / 4) * 1.5 + i * 0.25
-        ),
+        priceSeries: generateZigZagSeries(24),
         attentionScore: 0.45,
+        resolutionCriteria:
+          "Resolve to YES if OrangeDAO sponsors RiverCart prior to the resolution deadline.",
         sponsor: {
           id: "sp-2",
           name: "OrangeDAO",
           url: "https://orangedao.xyz",
+          logoUrl: "/logos/microsoft.svg",
+          description: "Founder community supporting startups globally.",
+          focusSectors: ["Fintech", "AI", "Consumer"],
+          stageFocus: ["Pre-seed", "Seed"],
+          hq: "Remote / Global",
+          checkSizeRange: "$50k–$250k",
+          thesisUrl: "https://orangedao.xyz#thesis",
         },
         company: {
           id: "c-4",
@@ -127,6 +194,15 @@ export const MOCK_SPONSORS: SponsorProfile[] = [
           logoUrl: "/logos/amazon.svg",
           website: "https://example.com",
           summary: "E-commerce infra for next-gen logistics.",
+          hq: "Seattle, WA",
+          founder: "Diego Martinez",
+          founderBackground: "Ex-Amazon logistics PM, robotics background.",
+          sectors: ["E-commerce", "Logistics"],
+          foundedYear: 2022,
+          totalRaisedUsd: 5200000,
+          stage: "Seed",
+          employees: 20,
+          notableInvestors: ["OrangeDAO", "SeedCamp"],
         },
       },
       {
@@ -136,14 +212,21 @@ export const MOCK_SPONSORS: SponsorProfile[] = [
         isPriceHidden: true,
         opportunityEndMs: Date.now() + 36 * 3600_000,
         resultsEndMs: Date.now() + 22 * 24 * 3600_000,
-        priceSeries: [...Array(24)].map(
-          (_, i) => 101 + Math.sin(i / 6) * 2.2 + i * 0.2
-        ),
+        priceSeries: generateZigZagSeries(24),
         attentionScore: 0.58,
+        resolutionCriteria:
+          "Resolve to YES if OrangeDAO formalizes an investment in AtlasDB before the window closes.",
         sponsor: {
           id: "sp-2",
           name: "OrangeDAO",
           url: "https://orangedao.xyz",
+          logoUrl: "/logos/microsoft.svg",
+          description: "Founder community supporting startups globally.",
+          focusSectors: ["Infra", "Data"],
+          stageFocus: ["Seed", "Series A"],
+          hq: "Remote / Global",
+          checkSizeRange: "$100k–$300k",
+          thesisUrl: "https://orangedao.xyz#thesis",
         },
         company: {
           id: "c-5",
@@ -151,6 +234,15 @@ export const MOCK_SPONSORS: SponsorProfile[] = [
           logoUrl: "/logos/google.svg",
           website: "https://example.com",
           summary: "Cloud-native database optimized for analytical workloads.",
+          hq: "Boston, MA",
+          founder: "Sara O'Neill",
+          founderBackground: "Database kernel engineer, ex-Snowflake.",
+          sectors: ["Data", "Infrastructure"],
+          foundedYear: 2023,
+          totalRaisedUsd: 8000000,
+          stage: "Seed",
+          employees: 14,
+          notableInvestors: ["First Round Capital"],
         },
       },
       {
@@ -160,14 +252,21 @@ export const MOCK_SPONSORS: SponsorProfile[] = [
         isPriceHidden: false,
         opportunityEndMs: Date.now() + 60 * 3600_000,
         resultsEndMs: Date.now() + 26 * 24 * 3600_000,
-        priceSeries: [...Array(24)].map(
-          (_, i) => 99 + Math.sin(i / 3) * 1.2 + i * 0.27
-        ),
+        priceSeries: generateZigZagSeries(24),
         attentionScore: 0.64,
+        resolutionCriteria:
+          "Resolve to YES if OrangeDAO signs an agreement to fund Orchard AI in the stated window.",
         sponsor: {
           id: "sp-2",
           name: "OrangeDAO",
           url: "https://orangedao.xyz",
+          logoUrl: "/logos/microsoft.svg",
+          description: "Founder community supporting startups globally.",
+          focusSectors: ["AI", "SaaS"],
+          stageFocus: ["Pre-seed", "Seed"],
+          hq: "Remote / Global",
+          checkSizeRange: "$50k–$250k",
+          thesisUrl: "https://orangedao.xyz#thesis",
         },
         company: {
           id: "c-6",
@@ -175,6 +274,15 @@ export const MOCK_SPONSORS: SponsorProfile[] = [
           logoUrl: "/logos/apple.svg",
           website: "https://example.com",
           summary: "AI product suite targeting enterprise workflows.",
+          hq: "San Francisco, CA",
+          founder: "Alex Park",
+          founderBackground: "Ex-Google Brain, led ML platform at a unicorn.",
+          sectors: ["AI", "Enterprise"],
+          foundedYear: 2024,
+          totalRaisedUsd: 2500000,
+          stage: "Pre-seed",
+          employees: 8,
+          notableInvestors: ["AngelList Syndicate"],
         },
       },
     ],
