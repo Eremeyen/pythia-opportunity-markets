@@ -42,6 +42,46 @@ export const MOCK_SPONSOR_MARKETS: SponsorMarket[] = (() => {
       nextOpportunityEndMs: now + 3 * 24 * 3600_000, // lasts 1d
     } as SponsorMarket;
   }
+
+  // Lightly expand dataset to ensure minimum counts for public/private
+  const ensureMinCounts = (publicMin = 12, privateMin = 12) => {
+    const pubs = seeded.filter((m) => !m.isPrivate);
+    const privs = seeded.filter((m) => m.isPrivate);
+
+    const makeClone = (m: SponsorMarket, i: number): SponsorMarket => ({
+      ...m,
+      id: `${m.id}-alt-${i}`,
+      title: `${m.title} — ${String.fromCharCode(65 + (i % 26))}`,
+      priceSeries: (m.priceSeries ?? []).map((v) =>
+        Math.max(0, v + (Math.random() - 0.5) * 2)
+      ),
+      attentionScore: Math.max(
+        1,
+        Math.min(
+          100,
+          (m.attentionScore ?? 50) + Math.round((Math.random() - 0.5) * 10)
+        )
+      ),
+    });
+
+    if (pubs.length > 0) {
+      for (let i = 0; pubs.length < publicMin; i++) {
+        const clone = makeClone(pubs[i % pubs.length], i);
+        pubs.push(clone);
+        seeded.push(clone);
+      }
+    }
+
+    if (privs.length > 0) {
+      for (let i = 0; privs.length < privateMin; i++) {
+        const clone = makeClone(privs[i % privs.length], i);
+        privs.push(clone);
+        seeded.push(clone);
+      }
+    }
+  };
+
+  ensureMinCounts();
   return seeded;
 })();
 
