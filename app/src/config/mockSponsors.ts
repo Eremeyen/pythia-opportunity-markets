@@ -31,14 +31,14 @@ export type SponsorProfile = {
 export const MOCK_SPONSORS: SponsorProfile[] = [
   {
     id: "sp-1",
-    name: "AllianceDAO",
+    name: "Colleseum",
     description: "Early-stage accelerator partnering with top founders.",
     logoUrl: "/logos/google.svg",
-    url: "https://alliance.xyz",
+    url: "https://colleseum.example",
     sampleMarkets: [
       {
         id: "s1-m1",
-        title: "Will Alliance back Orchard AI this half?",
+        title: "Will Colleseum back Orchard AI this half?",
         description: "Mock market for development.",
         isPriceHidden: true,
         opportunityEndMs: Date.now() + 48 * 3600_000,
@@ -46,18 +46,18 @@ export const MOCK_SPONSORS: SponsorProfile[] = [
         priceSeries: generateZigZagSeries(24),
         attentionScore: 0.6,
         resolutionCriteria:
-          "Resolve to YES if AllianceDAO signs a term sheet with Orchard AI within the stated window.",
+          "Resolve to YES if Colleseum signs a term sheet with Orchard AI within the stated window.",
         sponsor: {
           id: "sp-1",
-          name: "AllianceDAO",
-          url: "https://alliance.xyz",
+          name: "Colleseum",
+          url: "https://colleseum.example",
           logoUrl: "/logos/google.svg",
           description: "Early-stage accelerator partnering with top founders.",
           focusSectors: ["AI", "DeFi", "Infra"],
           stageFocus: ["Pre-seed", "Seed"],
           hq: "Remote / Global",
           checkSizeRange: "$100k–$500k",
-          thesisUrl: "https://alliance.xyz#thesis",
+          thesisUrl: "https://colleseum.example#thesis",
         },
         company: {
           id: "c-1",
@@ -78,7 +78,7 @@ export const MOCK_SPONSORS: SponsorProfile[] = [
       },
       {
         id: "s1-m2",
-        title: "Will Alliance fund TensorMesh by Q3?",
+        title: "Will Colleseum fund TensorMesh by Q3?",
         description: "Signal-driven infra bet.",
         isPriceHidden: false,
         opportunityEndMs: Date.now() + 72 * 3600_000,
@@ -86,18 +86,18 @@ export const MOCK_SPONSORS: SponsorProfile[] = [
         priceSeries: generateZigZagSeries(24),
         attentionScore: 0.72,
         resolutionCriteria:
-          "Resolve to YES if AllianceDAO commits funding to TensorMesh before the resolution date.",
+          "Resolve to YES if Colleseum commits funding to TensorMesh before the resolution date.",
         sponsor: {
           id: "sp-1",
-          name: "AllianceDAO",
-          url: "https://alliance.xyz",
+          name: "Colleseum",
+          url: "https://colleseum.example",
           logoUrl: "/logos/google.svg",
           description: "Early-stage accelerator partnering with top founders.",
           focusSectors: ["AI", "Infra", "DevTools"],
           stageFocus: ["Pre-seed", "Seed"],
           hq: "Remote / Global",
           checkSizeRange: "$100k–$500k",
-          thesisUrl: "https://alliance.xyz#thesis",
+          thesisUrl: "https://colleseum.example#thesis",
         },
         company: {
           id: "c-2",
@@ -118,7 +118,7 @@ export const MOCK_SPONSORS: SponsorProfile[] = [
       },
       {
         id: "s1-m3",
-        title: "Will Alliance sponsor CursorForge this cycle?",
+        title: "Will Colleseum sponsor CursorForge this cycle?",
         description: "Dev-tools wedge.",
         isPriceHidden: true,
         opportunityEndMs: Date.now() + 24 * 3600_000,
@@ -126,18 +126,18 @@ export const MOCK_SPONSORS: SponsorProfile[] = [
         priceSeries: generateZigZagSeries(24),
         attentionScore: 0.5,
         resolutionCriteria:
-          "Resolve to YES if AllianceDAO allocates capital to CursorForge during the current cycle.",
+          "Resolve to YES if Colleseum allocates capital to CursorForge during the current cycle.",
         sponsor: {
           id: "sp-1",
-          name: "AllianceDAO",
-          url: "https://alliance.xyz",
+          name: "Colleseum",
+          url: "https://colleseum.example",
           logoUrl: "/logos/google.svg",
           description: "Early-stage accelerator partnering with top founders.",
           focusSectors: ["DevTools", "AI"],
           stageFocus: ["Pre-seed", "Seed"],
           hq: "Remote / Global",
           checkSizeRange: "$100k–$500k",
-          thesisUrl: "https://alliance.xyz#thesis",
+          thesisUrl: "https://colleseum.example#thesis",
         },
         company: {
           id: "c-3",

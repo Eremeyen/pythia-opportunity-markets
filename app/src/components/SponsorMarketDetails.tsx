@@ -53,7 +53,7 @@ export default function SponsorMarketDetails({
       <div className="border-2 border-black rounded-xl overflow-hidden bg-white">
         <div className="px-4 py-3 border-b-2 border-black bg-black text-white font-bold">Market</div>
         <div className="p-4 space-y-3">
-          <div className="flex items-start justify-between gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-[1fr_520px] items-start gap-6">
             <div>
               <div className="text-xl font-extrabold text-[#0b1f3a]">{market.title}</div>
               <div className="text-sm text-[#0b1f3a] opacity-80 mt-1">{market.description}</div>
@@ -61,12 +61,14 @@ export default function SponsorMarketDetails({
                 Liquidity {market.liquidity.toLocaleString(undefined, { maximumFractionDigits: 2 })} SOL · {market.isPrivate ? "Private" : "Public"}
               </div>
             </div>
-            {(inPublic || isResolved) && (
+            {(sponsorMode || inPublic || isResolved) && (
               <Sparkline
                 values={values}
-                height={80}
-                className="shrink-0"
+                height={160}
+                className="w-full"
                 showCurrentRefLine
+                showAxes
+                showTooltip
                 yStartAtZero
                 timestamps={timestamps}
               />
@@ -89,7 +91,7 @@ export default function SponsorMarketDetails({
                 onClick={onResolveClick}
                 className="px-5 py-2 rounded-xl bg-white text-black font-extrabold border-4 border-black hover:bg-neutral-100"
               >
-                Resolve…
+                Resolve
               </button>
             </div>
           )}

@@ -14,9 +14,10 @@ export default function TradeFeed({
 }) {
   useEffect(() => {
     if (!sponsorMode) return; // only simulate in sponsor mode
+    if (!trades || trades.length === 0) return; // don't auto-create the first trade
     const id = setInterval(() => onTick(marketId), 2000 + Math.random() * 1500);
     return () => clearInterval(id);
-  }, [marketId, sponsorMode, onTick]);
+  }, [marketId, sponsorMode, onTick, trades]);
 
   return (
     <div className="border-2 border-black rounded-xl overflow-hidden bg-white">

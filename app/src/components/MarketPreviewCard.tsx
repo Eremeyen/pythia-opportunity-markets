@@ -19,6 +19,7 @@ export type MarketPreviewCardProps = {
   attentionScore?: number;
   priceSeries?: number[];
   className?: string;
+  forceShowPrice?: boolean;
 };
 
 function Badge({
@@ -51,6 +52,7 @@ export default function MarketPreviewCard(props: MarketPreviewCardProps) {
     isPriceHidden,
     priceSeries,
     className,
+    forceShowPrice,
   } = props;
 
   const { remainingMs: oppRemainMs, isPast: oppPast } =
@@ -58,7 +60,7 @@ export default function MarketPreviewCard(props: MarketPreviewCardProps) {
   const now = useNow();
 
   const countdownSegments = useMemo(() => {
-    if (!isPriceHidden) return null;
+    if (!isPriceHidden) return [] as { label: string; value: string }[];
     const totalSeconds = Math.max(0, Math.floor(oppRemainMs / 1000));
     const days = Math.floor(totalSeconds / 86400);
     const hours = Math.floor((totalSeconds % 86400) / 3600);
@@ -71,7 +73,7 @@ export default function MarketPreviewCard(props: MarketPreviewCardProps) {
     ];
   }, [isPriceHidden, oppRemainMs]);
 
-  // No charts in private window; countdowns handled above
+  const showChart =  !isPriceHidden;
 
   const resolutionDateMs = resultsEndMs ?? opportunityEndMs;
   const resolutionBadge = {
@@ -120,7 +122,16 @@ export default function MarketPreviewCard(props: MarketPreviewCardProps) {
         </div>
 
         <div className="mt-4 h-24 w-full flex items-center">
-          {isPriceHidden && countdownSegments ? (
+          {showChart ? (
+            <Sparkline
+              values={priceSeries ?? []}
+              height={96}
+              className="w-full h-24"
+              showCurrentRefLine
+              yStartAtZero
+              timestamps={previewTimestamps}
+            />
+          ) : (
             <div className="w-full flex flex-col items-center gap-2">
               <div className="text-[11px] uppercase tracking-wide text-[#0b1f3a] opacity-70">
                 Opportunity period ends in
@@ -141,15 +152,6 @@ export default function MarketPreviewCard(props: MarketPreviewCardProps) {
                 ))}
               </div>
             </div>
-          ) : (
-            <Sparkline
-              values={priceSeries ?? []}
-              height={96}
-              className="w-full h-24"
-              showCurrentRefLine
-              yStartAtZero
-              timestamps={previewTimestamps}
-            />
           )}
         </div>
 

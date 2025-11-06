@@ -11,9 +11,12 @@ export default function ProfilePage() {
   const { positions, setPositions } = useUserPositions();
 
   const onClaim = (id: string) => {
-    setPositions((prev) =>
-      prev.map((p) => (p.id === id ? { ...p, claimed: true, hasPendingClaim: false } : p))
-    );
+    // Simulate onchain finality delay
+    setTimeout(() => {
+      setPositions((prev) =>
+        prev.map((p) => (p.id === id ? { ...p, claimed: true, hasPendingClaim: false } : p))
+      );
+    }, 1400);
   };
 
   return (

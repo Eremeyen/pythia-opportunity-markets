@@ -3,18 +3,22 @@ import { useMemo, useState } from "react";
 import Sparkline from "../components/Sparkline";
 import { useMarket } from "../hooks/useMarket";
 import { useUserPositions } from "../hooks/useUserPositions";
-import type { Position } from "../types/portfolio";
+import type { Position, MarketPhase } from "../types/portfolio";
 import { useMarketTiming } from "../hooks/useMarketTiming";
 import { getCountdownSegments } from "../utils/time";
+import { useDelayMount } from "../hooks/useDelayMount";
+ 
 
 export default function MarketDetails() {
   const { id } = useParams<{ id: string }>();
   const { market } = useMarket(id);
   const [amount, setAmount] = useState<string>("");
-  const { getPositionByMarketId } = useUserPositions();
+  const { getPositionByMarketId, setPositions } = useUserPositions();
+  const [isSubmittingYes, setIsSubmittingYes] = useState<boolean>(false);
+  const [isSubmittingNo, setIsSubmittingNo] = useState<boolean>(false);
+  
 
-  // LOADING STATE
-  // IMPROVE LOADING STATE
+  // Temporary simple loading placeholder
   if (!market) {
     return (
       <div className="max-w-3xl">
@@ -37,7 +41,6 @@ export default function MarketDetails() {
     opportunityEndMs: market.opportunityEndMs,
     resultsEndMs: market.resultsEndMs,
     nextOpportunityStartMs: market.nextOpportunityStartMs,
-    isPriceHidden: market.isPriceHidden,
   });
 
   const isPrivateWindow = timing.inOpportunityWindow;
@@ -45,6 +48,12 @@ export default function MarketDetails() {
     () => getCountdownSegments(timing.opportunity.remainingMs),
     [timing.opportunity.remainingMs]
   );
+  
+  // Staggered per-section mounts to avoid jarring full-page flash
+  const headerReady = useDelayMount(100);
+  const chartReady = useDelayMount(200);
+  const companyReady = useDelayMount(280);
+  const sponsorReady = useDelayMount(320);
 
   const position = getPositionByMarketId(market.id);
   const currentProbability = useMemo(() => {
@@ -53,6 +62,64 @@ export default function MarketDetails() {
     // TODO: replace with canonical pricing feed once backend surfaces it.
     return Math.max(0, Math.min(100, last));
   }, [market.priceSeries]);
+
+  const currentPriceUsd = useMemo(() => {
+    return (currentProbability ?? 50) / 100; // fallback to 0.5 if unknown
+  }, [currentProbability]);
+
+  function handleBuy(side: "YES" | "NO") {
+    if (!market) return;
+    const solAmount = parseFloat(amount);
+    if (!isFinite(solAmount) || solAmount <= 0) return;
+    if (side === "YES") setIsSubmittingYes(true);
+    if (side === "NO") setIsSubmittingNo(true);
+    window.setTimeout(() => {
+      setPositions((prev) => {
+        const existingIndex = prev.findIndex((p) => p.marketId === market.id);
+        const phase: MarketPhase = isPrivateWindow ? "private" : "public";
+        const SOL_USD = 185;
+        const priceUsd = currentPriceUsd; // already defaults via memo
+        const investedDeltaUsd = solAmount * SOL_USD;
+        const sharesBought = priceUsd > 0 ? investedDeltaUsd / priceUsd : 0;
+        if (existingIndex >= 0) {
+          const existing = prev[existingIndex];
+          const newQuantity = existing.quantity + sharesBought;
+          const newInvestedUsd = existing.investedUsd + investedDeltaUsd;
+          const newAvgEntry = newQuantity > 0 ? newInvestedUsd / newQuantity : existing.avgEntryPrice;
+          const updated: Position = {
+            ...existing,
+            side,
+            quantity: newQuantity,
+            investedUsd: newInvestedUsd,
+            avgEntryPrice: newAvgEntry,
+            phase,
+            marketTitle: market.title,
+            marketLogoUrl: market.company.logoUrl,
+          };
+          const copy = prev.slice();
+          copy[existingIndex] = updated;
+          return copy;
+        }
+        const newPosition: Position = {
+          id: `p-${Date.now()}`,
+          marketId: market.id,
+          marketTitle: market.title,
+          marketLogoUrl: market.company.logoUrl,
+          phase,
+          side,
+          quantity: sharesBought,
+          avgEntryPrice: priceUsd,
+          investedUsd: investedDeltaUsd,
+          hasPendingClaim: false,
+          claimed: false,
+        };
+        return [newPosition, ...prev];
+      });
+      if (side === "YES") setIsSubmittingYes(false);
+      if (side === "NO") setIsSubmittingNo(false);
+      setAmount("");
+    }, 2800);
+  }
 
   const chartTimestamps = useMemo(() => {
     const len = market.priceSeries?.length ?? 0;
@@ -68,33 +135,44 @@ export default function MarketDetails() {
       <div className={`${isPrivateWindow ? "" : "-mx-0.5 md:-mx-1"} grid grid-cols-1 md:grid-cols-[1fr_420px] gap-8 items-start`}>
         <div className="space-y-8">
           <header className="flex gap-4 items-start">
-            {market.company.logoUrl && (
-              <img
-                src={market.company.logoUrl}
-                alt="Company logo"
-                className="w-12 h-12 md:w-16 md:h-16"
-              />
-            )}
-            <div className="min-w-0 flex-1">
-              <h2 className="text-2xl md:text-3xl font-extrabold text-[#0b1f3a]">
-                {market.title}
-              </h2>
-              <div className="mt-2 flex items-center gap-2 text-xs md:text-sm text-[#0b1f3a] opacity-70">
-                <CalendarIcon className="w-4 h-4 md:w-5 md:h-5" />
-                <span className="font-bold">{estimatedDate}</span>
-              </div>
-              {!isPrivateWindow && (
-                <div className="mt-3 -ml-16 md:-ml-20">
-                  <div className="text-xs uppercase tracking-wide text-[#0b1f3a] opacity-60">
-                    Predicted
-                  </div>
-                  <div className="text-3xl md:text-5xl font-extrabold text-[#0b1f3a] tabular-nums">
-                    {currentProbability != null ? `${currentProbability.toFixed(1)}%` : "--"}
-                  </div>
+            {!headerReady ? (
+              <>
+                <div className="w-12 h-12 md:w-16 md:h-16 bg-neutral-200 rounded animate-pulse" />
+                <div className="min-w-0 flex-1">
+                  <div className="h-7 md:h-9 bg-neutral-200 rounded w-3/4 animate-pulse" />
+                  <div className="mt-2 h-4 bg-neutral-200 rounded w-32 animate-pulse" />
                 </div>
-              )}
-              
-            </div>
+              </>
+            ) : (
+              <>
+                {market.company.logoUrl && (
+                  <img
+                    src={market.company.logoUrl}
+                    alt="Company logo"
+                    className="w-12 h-12 md:w-16 md:h-16"
+                  />
+                )}
+                <div className="min-w-0 flex-1">
+                  <h2 className="text-2xl md:text-3xl font-extrabold text-[#0b1f3a]">
+                    {market.title}
+                  </h2>
+                  <div className="mt-2 flex items-center gap-2 text-xs md:text-sm text-[#0b1f3a] opacity-70">
+                    <CalendarIcon className="w-4 h-4 md:w-5 md:h-5" />
+                    <span className="font-bold">{estimatedDate}</span>
+                  </div>
+                  {!isPrivateWindow && (
+                    <div className="mt-3 -ml-16 md:-ml-20">
+                      <div className="text-xs uppercase tracking-wide text-[#0b1f3a] opacity-60">
+                        Predicted
+                      </div>
+                      <div className="text-3xl md:text-5xl font-extrabold text-[#0b1f3a] tabular-nums">
+                        {currentProbability != null ? `${currentProbability.toFixed(1)}%` : "--"}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </>
+            )}
           </header>
 
           <section className={isPrivateWindow ? "py-8" : ""}>
@@ -120,17 +198,21 @@ export default function MarketDetails() {
                 </div>
               </div>
             ) : (
-              <Sparkline
-                values={market.priceSeries ?? []}
-                height={320}
-                stroke="#000"
-                className="block w-full"
-                showAxes
-                showTooltip
-                showCurrentRefLine
-                yStartAtZero
-                timestamps={chartTimestamps}
-              />
+              !chartReady ? (
+                <div className="h-[320px] w-full bg-neutral-200 rounded-xl animate-pulse border-2 border-black" />
+              ) : (
+                <Sparkline
+                  values={market.priceSeries ?? []}
+                  height={320}
+                  stroke="#000"
+                  className="block w-full"
+                  showAxes
+                  showTooltip
+                  showCurrentRefLine
+                  yStartAtZero
+                  timestamps={chartTimestamps}
+                />
+              )
             )}
             <div className={`${isPrivateWindow ? "mt-4" : "mt-2"} border-4 border-black rounded-2xl p-4 bg-white`}>
               <div className="text-sm font-extrabold text-[#0b1f3a] uppercase tracking-wide">
@@ -147,20 +229,30 @@ export default function MarketDetails() {
               <h4 className="text-lg md:text-xl font-extrabold text-[#0b1f3a]">
                 Company
               </h4>
-              {market.company.summary && (
-                <p className="mt-2 text-sm md:text-base text-[#0b1f3a]">
-                  {market.company.summary}
-                </p>
-              )}
-              {market.company.website && (
-                <a
-                  href={market.company.website}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="mt-3 inline-block underline text-sm md:text-base"
-                >
-                  Website
-                </a>
+              {!companyReady ? (
+                <div className="mt-3 space-y-2">
+                  <div className="h-4 bg-neutral-200 rounded w-3/4 animate-pulse" />
+                  <div className="h-4 bg-neutral-200 rounded w-2/3 animate-pulse" />
+                  <div className="h-4 bg-neutral-200 rounded w-1/2 animate-pulse" />
+                </div>
+              ) : (
+                <>
+                  {market.company.summary && (
+                    <p className="mt-2 text-sm md:text-base text-[#0b1f3a]">
+                      {market.company.summary}
+                    </p>
+                  )}
+                  {market.company.website && (
+                    <a
+                      href={market.company.website}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="mt-3 inline-block underline text-sm md:text-base"
+                    >
+                      Website
+                    </a>
+                  )}
+                </>
               )}
               <dl className="mt-4 grid grid-cols-1 gap-3 text-sm md:text-base text-[#0b1f3a]">
                 {market.company.hq && (
@@ -263,16 +355,26 @@ export default function MarketDetails() {
               className="mt-2 w-full border-2 border-black rounded-xl px-4 py-3 text-base md:text-lg"
             />
             <div className="mt-4 grid grid-cols-2 gap-4">
-              <button className="px-5 py-3 rounded-xl border-2 border-black bg-green-500 text-white font-extrabold text-base md:text-lg">
-                Buy YES
+              <button
+                className="px-5 py-3 rounded-xl border-2 border-black bg-green-500 text-white font-extrabold text-base md:text-lg disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center"
+                onClick={() => handleBuy("YES")}
+                disabled={isSubmittingYes}
+                aria-busy={isSubmittingYes}
+                aria-label={isSubmittingYes ? "Submitting Yes order" : "Buy YES"}
+              >
+                {isSubmittingYes ? <SpinnerIcon className="w-5 h-5 text-white" /> : "Buy YES"}
               </button>
-              <button className="px-5 py-3 rounded-xl border-2 border-black bg-red-500 text-white font-extrabold text-base md:text-lg">
-                Buy NO
+              <button
+                className="px-5 py-3 rounded-xl border-2 border-black bg-red-500 text-white font-extrabold text-base md:text-lg disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center"
+                onClick={() => handleBuy("NO")}
+                disabled={isSubmittingNo}
+                aria-busy={isSubmittingNo}
+                aria-label={isSubmittingNo ? "Submitting No order" : "Buy NO"}
+              >
+                {isSubmittingNo ? <SpinnerIcon className="w-5 h-5 text-white" /> : "Buy NO"}
               </button>
             </div>
-            <p className="mt-3 text-xs md:text-sm text-[#0b1f3a] opacity-70">
-              Trading is mocked in v1.
-            </p>
+            {/* helper text removed per demo request */}
           </aside>
           <PositionSummary
             position={position}
@@ -283,78 +385,91 @@ export default function MarketDetails() {
             <div className="h-10 md:h-16" />
           )}
           <section className="border-4 border-black rounded-2xl bg-white p-5">
-            <div className="flex items-start gap-4">
-              {market.sponsor.logoUrl ? (
-                <img
-                  src={market.sponsor.logoUrl}
-                  alt="Sponsor logo"
-                  className="w-12 h-12 rounded-full border-2 border-black"
-                />
-              ) : (
-                <div className="w-12 h-12 rounded-full bg-neutral-200 border-2 border-black" />)
-              }
-              <div className="min-w-0 flex-1">
-                <div className="text-sm font-extrabold text-[#0b1f3a] uppercase tracking-wide">
-                  Sponsor
+            {!sponsorReady ? (
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 rounded-full bg-neutral-200 border-2 border-black animate-pulse" />
+                <div className="min-w-0 flex-1">
+                  <div className="h-4 bg-neutral-200 rounded w-20 animate-pulse" />
+                  <div className="mt-2 h-5 bg-neutral-200 rounded w-40 animate-pulse" />
+                  <div className="mt-1 h-3 bg-neutral-200 rounded w-24 animate-pulse" />
                 </div>
-                <div className="mt-1 font-extrabold text-[#0b1f3a] text-base md:text-lg">
-                  {market.sponsor.name}
-                </div>
-                {market.sponsor.url && (
-                  <a
-                    href={market.sponsor.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-xs md:text-sm underline text-[#0b1f3a]"
-                  >
-                    Sponsor site
-                  </a>
-                )}
               </div>
-            </div>
-            {market.sponsor.description && (
-              <p className="mt-3 text-sm md:text-base text-[#0b1f3a] opacity-80">
-                {market.sponsor.description}
-              </p>
+            ) : (
+              <>
+                <div className="flex items-start gap-4">
+                  {market.sponsor.logoUrl ? (
+                    <img
+                      src={market.sponsor.logoUrl}
+                      alt="Sponsor logo"
+                      className="w-12 h-12 rounded-full border-2 border-black"
+                    />
+                  ) : (
+                    <div className="w-12 h-12 rounded-full bg-neutral-200 border-2 border-black" />)
+                  }
+                  <div className="min-w-0 flex-1">
+                    <div className="text-sm font-extrabold text-[#0b1f3a] uppercase tracking-wide">
+                      Sponsor
+                    </div>
+                    <div className="mt-1 font-extrabold text-[#0b1f3a] text-base md:text-lg">
+                      {market.sponsor.name}
+                    </div>
+                    {market.sponsor.url && (
+                      <a
+                        href={market.sponsor.url}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-xs md:text-sm underline text-[#0b1f3a]"
+                      >
+                        Sponsor site
+                      </a>
+                    )}
+                  </div>
+                </div>
+                {market.sponsor.description && (
+                  <p className="mt-3 text-sm md:text-base text-[#0b1f3a] opacity-80">
+                    {market.sponsor.description}
+                  </p>
+                )}
+                <dl className="mt-4 grid grid-cols-1 gap-3 text-sm md:text-base text-[#0b1f3a]">
+                  {market.sponsor.focusSectors && market.sponsor.focusSectors.length > 0 && (
+                    <div className="flex items-baseline justify-between">
+                      <dt className="font-bold opacity-70 uppercase tracking-wide text-xs md:text-sm">
+                        Focus
+                      </dt>
+                      <dd className="font-extrabold text-right">
+                        {market.sponsor.focusSectors.join(", ")}
+                      </dd>
+                    </div>
+                  )}
+                  {market.sponsor.stageFocus && market.sponsor.stageFocus.length > 0 && (
+                    <div className="flex items-baseline justify-between">
+                      <dt className="font-bold opacity-70 uppercase tracking-wide text-xs md:text-sm">
+                        Stages
+                      </dt>
+                      <dd className="font-extrabold text-right">
+                        {market.sponsor.stageFocus.join(", ")}
+                      </dd>
+                    </div>
+                  )}
+                  {market.sponsor.hq && (
+                    <div className="flex items-baseline justify-between">
+                      <dt className="font-bold opacity-70 uppercase tracking-wide text-xs md:text-sm">
+                        HQ
+                      </dt>
+                      <dd className="font-extrabold tabular-nums">{market.sponsor.hq}</dd>
+                    </div>
+                  )}
+                  {market.sponsor.checkSizeRange && (
+                    <div className="flex items-baseline justify-between">
+                      <dt className="font-bold opacity-70 uppercase tracking-wide text-xs md:text-sm">
+                        Check size
+                      </dt>
+                      <dd className="font-extrabold">{market.sponsor.checkSizeRange}</dd>
+                    </div>
+                  )}
+                </dl>
+              </>
             )}
-            <dl className="mt-4 grid grid-cols-1 gap-3 text-sm md:text-base text-[#0b1f3a]">
-              {market.sponsor.focusSectors && market.sponsor.focusSectors.length > 0 && (
-                <div className="flex items-baseline justify-between">
-                  <dt className="font-bold opacity-70 uppercase tracking-wide text-xs md:text-sm">
-                    Focus
-                  </dt>
-                  <dd className="font-extrabold text-right">
-                    {market.sponsor.focusSectors.join(", ")}
-                  </dd>
-                </div>
-              )}
-              {market.sponsor.stageFocus && market.sponsor.stageFocus.length > 0 && (
-                <div className="flex items-baseline justify-between">
-                  <dt className="font-bold opacity-70 uppercase tracking-wide text-xs md:text-sm">
-                    Stages
-                  </dt>
-                  <dd className="font-extrabold text-right">
-                    {market.sponsor.stageFocus.join(", ")}
-                  </dd>
-                </div>
-              )}
-              {market.sponsor.hq && (
-                <div className="flex items-baseline justify-between">
-                  <dt className="font-bold opacity-70 uppercase tracking-wide text-xs md:text-sm">
-                    HQ
-                  </dt>
-                  <dd className="font-extrabold tabular-nums">{market.sponsor.hq}</dd>
-                </div>
-              )}
-              {market.sponsor.checkSizeRange && (
-                <div className="flex items-baseline justify-between">
-                  <dt className="font-bold opacity-70 uppercase tracking-wide text-xs md:text-sm">
-                    Check size
-                  </dt>
-                  <dd className="font-extrabold">{market.sponsor.checkSizeRange}</dd>
-                </div>
-              )}
-            </dl>
           </section>
         </div>
       </div>
@@ -372,7 +487,7 @@ function PositionSummary({
   currentProbability?: number;
 }) {
   const invested = position ? formatUsd(position.investedUsd) : "--";
-  const side = !isPrivateWindow && position ? position.side : "--";
+  const side = position ? position.side : "--";
   const quantity = !isPrivateWindow && position ? position.quantity.toLocaleString() : "--";
   const avgEntry = !isPrivateWindow && position ? position.avgEntryPrice.toFixed(2) : "--";
 
@@ -452,6 +567,33 @@ function CalendarIcon({ className }: { className?: string }) {
         strokeWidth="1.8"
         strokeLinecap="round"
         strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function SpinnerIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={`animate-spin ${className ?? ""}`}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <circle
+        cx="12"
+        cy="12"
+        r="10"
+        stroke="currentColor"
+        strokeOpacity="0.25"
+        strokeWidth="4"
+      />
+      <path
+        d="M22 12a10 10 0 0 1-10 10"
+        stroke="currentColor"
+        strokeWidth="4"
+        strokeLinecap="round"
       />
     </svg>
   );

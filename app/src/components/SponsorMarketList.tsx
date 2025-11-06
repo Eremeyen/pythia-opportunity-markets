@@ -35,7 +35,7 @@ export default function SponsorMarketList({
           const now = Date.now();
           const isResolved = m.status === "resolved";
           const inOpportunity = !isResolved && now < m.opportunityEndMs;
-          const windowLabel = isResolved ? (m.resolution ? `Resolved ${m.resolution}` : "Resolved") : (inOpportunity ? "Opportunity" : "Public");
+          const windowLabel = isResolved ? "Resolved" : (inOpportunity ? "Opportunity" : "Public");
           return (
             <button
               key={m.id}

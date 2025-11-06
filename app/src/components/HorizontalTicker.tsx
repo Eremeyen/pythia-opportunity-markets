@@ -7,6 +7,7 @@ type HorizontalTickerProps<T> = {
   renderItem: (item: T, index: number) => ReactNode;
   title?: string;
   reverse?: boolean;
+  paused?: boolean;
 };
 
 export default function HorizontalTicker<T>({
@@ -16,8 +17,10 @@ export default function HorizontalTicker<T>({
   renderItem,
   title,
   reverse,
+  paused,
 }: HorizontalTickerProps<T>) {
   const style = { ["--marquee-speed" as any]: `${speedMs}ms` } as CSSProperties;
+  const runnerClass = `${!paused ? "marquee-run" : ""} marquee-pause flex w-max${reverse ? " marquee-reverse" : ""}`;
 
   return (
     <section className={className} aria-label={title || undefined}>
@@ -27,7 +30,7 @@ export default function HorizontalTicker<T>({
         </div>
       )}
       <div className="overflow-hidden">
-        <div style={style} className={`marquee-run marquee-pause flex w-max${reverse ? " marquee-reverse" : ""}`}>
+        <div style={style} className={runnerClass}>
           <div className="flex gap-4 md:gap-6">
             {items.map((item, idx) => (
               <div key={`a-${idx}`} className="shrink-0">

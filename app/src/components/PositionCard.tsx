@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { type Position } from "../types/portfolio";
 import { getCurrentValueUsd, getNextPublicStartMs, isClaimEnabled, getClaimType } from "../config/mockPositions";
@@ -10,6 +10,7 @@ type Props = {
 };
 
 export default function PositionCard({ position, onClaim }: Props) {
+  const [isClaiming, setIsClaiming] = useState(false);
   const currentValue = getCurrentValueUsd(position);
   const pnl = useMemo(() => {
     if (currentValue == null) return undefined;
@@ -22,6 +23,12 @@ export default function PositionCard({ position, onClaim }: Props) {
 
   const claimable = isClaimEnabled(position);
   const claimType = getClaimType(position);
+
+  useEffect(() => {
+    if (position.claimed || !position.hasPendingClaim) {
+      setIsClaiming(false);
+    }
+  }, [position.claimed, position.hasPendingClaim]);
 
   return (
     <div className="w-full border-4 border-black rounded-2xl p-4 bg-white flex flex-col gap-3">
@@ -71,8 +78,10 @@ export default function PositionCard({ position, onClaim }: Props) {
 
   function renderClaimButton() {
     if (!position.hasPendingClaim && !position.claimed) return null;
-    const disabled = !claimable;
-    const label = position.claimed
+    const disabled = !claimable || isClaiming;
+    const label = isClaiming
+      ? "Claiming…"
+      : position.claimed
       ? "Claimed"
       : claimType === "resolution_payout"
       ? "Claim Payout"
@@ -81,15 +90,25 @@ export default function PositionCard({ position, onClaim }: Props) {
       <button
         type="button"
         disabled={disabled}
-        onClick={() => !disabled && onClaim(position.id)}
+        onClick={() => {
+          if (disabled) return;
+          setIsClaiming(true);
+          onClaim(position.id);
+        }}
         className={`px-4 py-2 rounded-xl border-2 font-bold ${
           disabled
             ? "bg-neutral-200 text-neutral-500 border-neutral-400 cursor-not-allowed"
             : "bg-white text-black border-black hover:bg-neutral-100"
         }`}
         aria-disabled={disabled}
+        aria-busy={isClaiming}
       >
-        {label}
+        <span className="inline-flex items-center gap-2">
+          {isClaiming ? (
+            <Spinner className="w-4 h-4" />
+          ) : null}
+          <span>{label}</span>
+        </span>
       </button>
     );
   }
@@ -125,6 +144,33 @@ function formatDuration(ms: number): string {
   if (h > 0) return `${h}h ${m}m`;
   if (m > 0) return `${m}m ${ss}s`;
   return `${ss}s`;
+}
+
+function Spinner({ className }: { className?: string }) {
+  return (
+    <svg
+      className={`animate-spin ${className ?? ""}`}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <circle
+        cx="12"
+        cy="12"
+        r="10"
+        stroke="currentColor"
+        strokeOpacity="0.25"
+        strokeWidth="4"
+      />
+      <path
+        d="M22 12a10 10 0 0 1-10 10"
+        stroke="currentColor"
+        strokeWidth="4"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
 }
 
 

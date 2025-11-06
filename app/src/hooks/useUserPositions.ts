@@ -1,6 +1,6 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import type { Position } from "../types/portfolio";
-import { getPositions } from "../config/mockPositions";
+import { getPositions, savePositions } from "../config/mockPositions";
 
 type UseUserPositionsResult = {
   positions: Position[];
@@ -27,6 +27,10 @@ export function useUserPositions(): UseUserPositionsResult {
       marketId ? positions.find((p) => p.marketId === marketId) : undefined,
     [positions]
   );
+
+  useEffect(() => {
+    savePositions(positions);
+  }, [positions]);
 
   return useMemo(
     () => ({ positions, setPositions, refresh, getPositionByMarketId }),

@@ -4,7 +4,6 @@ type UseMarketTimingInput = {
   opportunityEndMs: number;
   resultsEndMs?: number;
   nextOpportunityStartMs?: number;
-  isPriceHidden: boolean;
 };
 
 type Countdown = ReturnType<typeof useCountdown> & { targetMs: number };
@@ -21,7 +20,6 @@ export function useMarketTiming({
   opportunityEndMs,
   resultsEndMs,
   nextOpportunityStartMs,
-  isPriceHidden,
 }: UseMarketTimingInput): MarketTiming {
   const opportunity = {
     ...useCountdown(opportunityEndMs),
@@ -41,7 +39,8 @@ export function useMarketTiming({
       }
     : undefined;
 
-  const inOpportunityWindow = isPriceHidden && !opportunity.isPast;
+  // Treat the private window purely as the time before opportunityEndMs
+  const inOpportunityWindow = !opportunity.isPast;
   const inPublicWindow = !inOpportunityWindow && !resolution.isPast;
 
   return {

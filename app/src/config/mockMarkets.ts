@@ -35,7 +35,7 @@ export const MOCK_MARKETS: MockMarketPreview[] = [
   {
     id: "m-1",
     logoUrl: "/logos/apple.svg",
-    title: "Will Y Combinator fund Orchard AI in the next 6 months?",
+    title: "Will Y Combinator fund Kinetic Labs in the next 6 months?",
     description: "",
     isPriceHidden: true,
     opportunityStartMs: Date.now() - 60_000,
@@ -49,7 +49,7 @@ export const MOCK_MARKETS: MockMarketPreview[] = [
   {
     id: "m-2",
     logoUrl: "/logos/google.svg",
-    title: "Will a16z fund AtlasDB this quarter?",
+    title: "Will a16z fund VectorHub this quarter?",
     description: "",
     isPriceHidden: false,
     opportunityStartMs: Date.now() - 60_000,
@@ -63,7 +63,7 @@ export const MOCK_MARKETS: MockMarketPreview[] = [
   {
     id: "m-3",
     logoUrl: "/logos/amazon.svg",
-    title: "Will Sequoia fund RiverCart by Q2?",
+    title: "Will Sequoia fund DriftScale by Q2?",
     description: "",
     isPriceHidden: true,
     opportunityStartMs: Date.now() - 60_000,
@@ -77,7 +77,7 @@ export const MOCK_MARKETS: MockMarketPreview[] = [
   {
     id: "m-4",
     logoUrl: "/logos/microsoft.svg",
-    title: "Will Accel fund CursorForge by Q1?",
+    title: "Will Accel fund SynthOS by Q1?",
     description: "",
     isPriceHidden: false,
     opportunityStartMs: Date.now() - 60_000,
@@ -91,7 +91,7 @@ export const MOCK_MARKETS: MockMarketPreview[] = [
   {
     id: "m-5",
     logoUrl: "/logos/nvidia.svg",
-    title: "Will Greylock fund TensorMesh this cycle?",
+    title: "Will Greylock fund LumaGraph this cycle?",
     description: "",
     isPriceHidden: true,
     opportunityStartMs: Date.now() - 60_000,

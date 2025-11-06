@@ -21,20 +21,26 @@ export default function SponsorMarketForm({
   const [liquidity, setLiquidity] = useState<number>(100);
   const [resolutionDate, setResolutionDate] = useState<string>("");
   const [criteria, setCriteria] = useState("");
-  const [isPrivate, setIsPrivate] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   function submit(e: React.FormEvent) {
     e.preventDefault();
-    if (!title || !resolutionDate || !criteria || !liquidity) return;
-    onCreate({
+    if (!title || !resolutionDate || !criteria || !liquidity || isSubmitting) return;
+    setIsSubmitting(true);
+    const input: CreateMarketInput = {
       title,
       description: description || undefined,
       liquidity: Number(liquidity),
       resolutionDateMs: new Date(resolutionDate).getTime(),
       resolutionCriteria: criteria,
-      isPrivate,
-    });
-    onClose();
+      isPrivate: true,
+    };
+    // Simulate network delay for demo
+    setTimeout(() => {
+      onCreate(input);
+      setIsSubmitting(false);
+      onClose();
+    }, 2000);
   }
 
   return (
@@ -45,18 +51,20 @@ export default function SponsorMarketForm({
           <button
             type="button"
             onClick={onClose}
-            className="px-3 py-1 rounded-lg border-2 border-black bg-white text-black hover:bg-neutral-100"
+            disabled={isSubmitting}
+            className="px-3 py-1 rounded-lg border-2 border-black bg-white text-black hover:bg-neutral-100 disabled:opacity-60 disabled:cursor-not-allowed"
           >
             Close
           </button>
         </div>
-        <form className="mt-4 space-y-4" onSubmit={submit}>
+        <form className="mt-4 space-y-4" onSubmit={submit} aria-busy={isSubmitting}>
           <div>
             <label className="block text-sm font-bold mb-1">Market name</label>
             <input
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full px-3 py-2 rounded-lg border-2 border-black"
+              disabled={isSubmitting}
+              className="w-full px-3 py-2 rounded-lg border-2 border-black disabled:bg-neutral-100 disabled:cursor-not-allowed"
               placeholder="e.g. Will we fund Orchard AI by Q3?"
               required
             />
@@ -66,7 +74,8 @@ export default function SponsorMarketForm({
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="w-full px-3 py-2 rounded-lg border-2 border-black min-h-[80px]"
+              disabled={isSubmitting}
+              className="w-full px-3 py-2 rounded-lg border-2 border-black min-h-[80px] disabled:bg-neutral-100 disabled:cursor-not-allowed"
               placeholder="Short description"
             />
           </div>
@@ -79,7 +88,8 @@ export default function SponsorMarketForm({
                 step={0.1}
                 value={liquidity}
                 onChange={(e) => setLiquidity(Number(e.target.value))}
-                className="w-full px-3 py-2 rounded-lg border-2 border-black"
+                disabled={isSubmitting}
+                className="w-full px-3 py-2 rounded-lg border-2 border-black disabled:bg-neutral-100 disabled:cursor-not-allowed"
                 required
               />
             </div>
@@ -89,7 +99,8 @@ export default function SponsorMarketForm({
                 type="date"
                 value={resolutionDate}
                 onChange={(e) => setResolutionDate(e.target.value)}
-                className="w-full px-3 py-2 rounded-lg border-2 border-black"
+                disabled={isSubmitting}
+                className="w-full px-3 py-2 rounded-lg border-2 border-black disabled:bg-neutral-100 disabled:cursor-not-allowed"
                 required
               />
             </div>
@@ -99,21 +110,30 @@ export default function SponsorMarketForm({
             <textarea
               value={criteria}
               onChange={(e) => setCriteria(e.target.value)}
-              className="w-full px-3 py-2 rounded-lg border-2 border-black min-h-[100px]"
+              disabled={isSubmitting}
+              className="w-full px-3 py-2 rounded-lg border-2 border-black min-h-[100px] disabled:bg-neutral-100 disabled:cursor-not-allowed"
               placeholder="Define clear criteria for YES/NO"
               required
             />
           </div>
-          <div className="flex items-center gap-2">
-            <input id="private" type="checkbox" checked={isPrivate} onChange={(e) => setIsPrivate(e.target.checked)} />
-            <label htmlFor="private" className="text-sm">Private (hide prices publicly)</label>
-          </div>
+          {/* Markets are created private by default in v1 */}
           <div className="pt-2">
             <button
               type="submit"
-              className="px-5 py-2 rounded-xl bg-black text-white font-extrabold border-4 border-black hover:opacity-90"
+              disabled={isSubmitting}
+              className="px-5 py-2 rounded-xl bg-black text-white font-extrabold border-4 border-black hover:opacity-90 disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              Create market
+              {isSubmitting ? (
+                <span className="inline-flex items-center gap-2">
+                  <svg className="h-4 w-4 animate-spin text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                  </svg>
+                  Creating...
+                </span>
+              ) : (
+                "Create market"
+              )}
             </button>
           </div>
         </form>
