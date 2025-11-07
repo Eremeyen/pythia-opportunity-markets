@@ -45,6 +45,27 @@
 }
 
 @layer utilities {
+  /* Marquee animation for horizontal tickers */
+  @keyframes marquee-x {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .marquee-run {
+    animation: marquee-x var(--marquee-speed, 40s) linear infinite;
+  }
+
+  .marquee-pause:hover {
+    animation-play-state: paused;
+  }
+
+  .marquee-reverse {
+    animation-direction: reverse;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-run { animation: none; }
+  }
   .logo {
     height: 6em;
     padding: 1.5em;
