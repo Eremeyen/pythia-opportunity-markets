@@ -1,98 +1,104 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @layer base {
-  :root {
-    color-scheme: light;
-    color: #0b1f3a;
-    background-color: #ffffff;
-    font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-    line-height: 1.5;
-    font-weight: 400;
-    font-synthesis: none;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
+	:root {
+		color-scheme: light;
+		color: #0b1f3a;
+		background-color: #ffffff;
+		font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+		line-height: 1.5;
+		font-weight: 400;
+		font-synthesis: none;
+		text-rendering: optimizeLegibility;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+	}
 
-  body {
-    @apply m-0 min-w-[320px] min-h-screen;
-  }
+	body {
+		@apply m-0 min-w-[320px] min-h-screen;
+	}
 
-  a {
-    @apply font-medium no-underline;
-    color: #0b1f3a;
-  }
+	a {
+		@apply font-medium no-underline;
+		color: #0b1f3a;
+	}
 
-  a:hover {
-    color: #174a8c; /* slightly lighter blue on hover */
-  }
+	a:hover {
+		color: #174a8c; /* slightly lighter blue on hover */
+	}
 
-  /* Light theme is default; remove OS overrides for consistency */
+	/* Light theme is default; remove OS overrides for consistency */
 }
 
 @layer components {
-  #root {
-    @apply pt-0 text-left;
-  }
+	#root {
+		@apply pt-0 text-left;
+	}
 
-  .card {
-    @apply p-8;
-  }
+	.card {
+		@apply p-8;
+	}
 
-  .read-the-docs {
-    color: #888;
-  }
+	.read-the-docs {
+		color: #888;
+	}
 }
 
 @layer utilities {
-  /* Marquee animation for horizontal tickers */
-  @keyframes marquee-x {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-  }
+	/* Marquee animation for horizontal tickers */
+	@keyframes marquee-x {
+		0% {
+			transform: translateX(0);
+		}
+		100% {
+			transform: translateX(-50%);
+		}
+	}
 
-  .marquee-run {
-    animation: marquee-x var(--marquee-speed, 40s) linear infinite;
-  }
+	.marquee-run {
+		animation: marquee-x var(--marquee-speed, 40s) linear infinite;
+	}
 
-  .marquee-pause:hover {
-    animation-play-state: paused;
-  }
+	.marquee-pause:hover {
+		animation-play-state: paused;
+	}
 
-  .marquee-reverse {
-    animation-direction: reverse;
-  }
+	.marquee-reverse {
+		animation-direction: reverse;
+	}
 
-  @media (prefers-reduced-motion: reduce) {
-    .marquee-run { animation: none; }
-  }
-  .logo {
-    height: 6em;
-    padding: 1.5em;
-    will-change: filter;
-    transition: filter 300ms;
-  }
+	@media (prefers-reduced-motion: reduce) {
+		.marquee-run {
+			animation: none;
+		}
+	}
+	.logo {
+		height: 6em;
+		padding: 1.5em;
+		will-change: filter;
+		transition: filter 300ms;
+	}
 
-  .logo:hover {
-    filter: drop-shadow(0 0 2em #646cffaa);
-  }
+	.logo:hover {
+		filter: drop-shadow(0 0 2em #646cffaa);
+	}
 
-  .logo.react:hover {
-    filter: drop-shadow(0 0 2em #61dafbaa);
-  }
+	.logo.react:hover {
+		filter: drop-shadow(0 0 2em #61dafbaa);
+	}
 
-  @keyframes logo-spin {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
+	@keyframes logo-spin {
+		from {
+			transform: rotate(0deg);
+		}
+		to {
+			transform: rotate(360deg);
+		}
+	}
 
-  @media (prefers-reduced-motion: no-preference) {
-    a:nth-of-type(2) .logo {
-      animation: logo-spin infinite 20s linear;
-    }
-  }
+	@media (prefers-reduced-motion: no-preference) {
+		a:nth-of-type(2) .logo {
+			animation: logo-spin infinite 20s linear;
+		}
+	}
 }
