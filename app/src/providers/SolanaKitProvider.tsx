@@ -1,4 +1,4 @@
-import { createContext, useContext, useMemo } from 'react';
+import { createContext, useContext, useMemo, useEffect, useState } from 'react';
 import type { PropsWithChildren } from 'react';
 import { usePrivy } from '@privy-io/react-auth';
 import {
@@ -6,10 +6,10 @@ import {
 	useSignTransaction,
 	useSignAndSendTransaction,
 	type SolanaStandardWallet,
-    type UseSignTransaction,
-    type UseSignAndSendTransaction,
-    // type SignTransactionInput,
-    // type SignTransactionOutput,
+	type UseSignTransaction,
+	type UseSignAndSendTransaction,
+	// type SignTransactionInput,
+	// type SignTransactionOutput,
 } from '@privy-io/react-auth/solana';
 import {
 	createSolanaRpc,
@@ -19,14 +19,15 @@ import {
 	type SolanaRpcApi,
 	type SolanaRpcSubscriptionsApi,
 	type RpcSubscriptions,
+	type Blockhash,
 } from '@solana/kit';
 import { NETWORK } from '../config/config';
 
 export type SendAndConfirmTxFn = ReturnType<typeof sendAndConfirmTransactionFactory>;
-// export type SignTransactionFn = {
-//     (input: SignTransactionInput): Promise<SignTransactionOutput>;
-//     (...inputs: SignTransactionInput[]): Promise<SignTransactionOutput[]>;
-// }
+type LatestBlockhashInfo = Readonly<{
+	blockhash: Blockhash;
+	lastValidBlockHeight: bigint;
+}>;
 
 type SolanaKitContextValue = {
 	rpc: Rpc<SolanaRpcApi>;
@@ -36,6 +37,7 @@ type SolanaKitContextValue = {
 	signAndSendTransaction: UseSignAndSendTransaction['signAndSendTransaction'];
 	wallet: SolanaStandardWallet | null;
 	address?: string;
+	latestBlockhash?: LatestBlockhashInfo;
 	ready: boolean; // @todo would ready and authenticated change too often to be updated in a useMemo?
 	authenticated: boolean;
 };
@@ -81,12 +83,42 @@ export function SolanaKitProvider({ children }: PropsWithChildren) {
 	); // consider using useEffect instead
 	const address = useMemo(() => (wallet as any)?.address as string | undefined, [wallet]); // consider using useEffect instead
 
-    // FOR NOW WE DONT WRAP SIGN TRANSACTION. THIS COULD BE DONE IN COMPONENTS OR HERE LATER
+	// FOR NOW WE DONT WRAP SIGN TRANSACTION. THIS COULD BE DONE IN COMPONENTS OR HERE LATER
 	const { signTransaction } = useSignTransaction();
 
-    // FOR NOW WE DONT WRAP SIGN AND SEND TRANSACTION. THIS COULD BE DONE IN COMPONENTS OR HERE LATER
+	// FOR NOW WE DONT WRAP SIGN AND SEND TRANSACTION. THIS COULD BE DONE IN COMPONENTS OR HERE LATER
 	const { signAndSendTransaction } = useSignAndSendTransaction();
-	
+
+	// Poll latest blockhash every 45 seconds
+	const [latestBlockhash, setLatestBlockhash] = useState<LatestBlockhashInfo | undefined>(
+		undefined,
+	);
+	useEffect(() => {
+		let isCancelled = false;
+		let intervalId: ReturnType<typeof setInterval> | undefined;
+		const fetchLatest = async () => {
+			try {
+				const {
+					value: { blockhash, lastValidBlockHeight },
+				} = await rpc.getLatestBlockhash().send();
+				if (!isCancelled) {
+					setLatestBlockhash({
+						blockhash,
+						lastValidBlockHeight,
+					});
+				}
+			} catch {
+				// ignore transient errors; will retry on next tick
+			}
+		};
+		fetchLatest();
+		intervalId = setInterval(fetchLatest, 45_000);
+		return () => {
+			isCancelled = true;
+			if (intervalId) clearInterval(intervalId);
+		};
+	}, [rpc]);
+
 	const value: SolanaKitContextValue = useMemo(
 		() => ({
 			rpc,
@@ -96,6 +128,7 @@ export function SolanaKitProvider({ children }: PropsWithChildren) {
 			signAndSendTransaction,
 			wallet,
 			address,
+			latestBlockhash,
 			ready,
 			authenticated,
 		}),
@@ -107,6 +140,7 @@ export function SolanaKitProvider({ children }: PropsWithChildren) {
 			signAndSendTransaction,
 			wallet,
 			address,
+			latestBlockhash,
 			ready,
 			authenticated,
 		],

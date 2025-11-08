@@ -22,8 +22,8 @@
 ## Pages — mocked/placeholder behaviors and exact edits
 
 - Trending Markets — `app/src/pages/TrendingMarkets.tsx`
-    - Current: `getMarketsFiltered(scope)` from `config/mockMarkets` (TODO in file notes to use a hook)
-    - Edit: replace with `useMarkets(scope)` backed by backend/indexer; hydrate price, window state, attention
+    - Current: `getSponsorMarketsFiltered(scope)` from `config/mockSponsorMarkets` (filters by time-window)
+    - Edit: replace with `useMarkets(scope)` backed by backend/indexer (pending); hydrate price, window state, attention
     - Touchpoints: update `MarketPreviewCard` consumer to accept unified `MarketSummary`
 
 - Sponsors — `app/src/pages/Sponsors.tsx`
@@ -38,7 +38,7 @@
     - Also surface window switching status and disable actions appropriately
 
 - For Sponsors — `app/src/pages/ForSponsors.tsx`
-    - Current: `useMockSponsorData()` provides markets/trades/create/resolve; viewer path handlers are no-ops
+    - Current: `useSponsorMarkets()` wraps `useMockSponsorData` for markets/create/resolve/selection; `TradeFeed` uses `useMockTrades` to simulate trades; viewer path handlers are no-ops
     - Edit: replace with `useSponsorData()` that calls backend + on-chain:
         - Create → `init_market` then `init_market_encrypted`
         - Resolve → `resolve_market` (enforce resolution date)
@@ -64,7 +64,7 @@
     - Edit: call `resolve_market`; surface window timers from chain and disable as needed
 
 - `app/src/components/TradeFeed.tsx`
-    - Current: simulates trades via interval using `generateMockTrade`
+    - Current: simulates trades via interval (via `hooks/useMockTrades`)
     - Edit: subscribe to backend WS stream of `TradeEvent`/`WindowSwitchEvent` or RPC logs; stop local ticking
 
 - `app/src/components/PositionCard.tsx`
@@ -72,21 +72,27 @@
     - Edit: route to backend/chain claim endpoint; hide values during private window
 
 - `app/src/components/PageHeader.tsx`
-    - Current: TODO for toast on `!ready`; Privy auth only; no wallet adapter wiring
-    - Edit: ensure Solana wallet provider from Privy is accessible for Anchor client
+    - Current: Privy auth UI; TODO for toast on `!ready`. Wallet/tx context exists via `providers/SolanaKitProvider.tsx` (bridges Privy to Solana/Kit); PageHeader itself still uses Privy directly.
+    - Edit: ensure consumers use `useSolanaKit()` where tx signing is needed; surface toast on `!ready`
+
+## Provider — wallet/tx context
+
+- `app/src/providers/SolanaKitProvider.tsx`
+    - Current: exposes `rpc`, `rpcSubscriptions`, `sendAndConfirm`, `signTransaction`, `signAndSendTransaction`, `wallet`, `address`, `latestBlockhash`, `ready`, `authenticated` via `useSolanaKit()`. Configured by `NETWORK` and `VITE_SOLANA_*` envs and wired in `app/src/main.tsx`.
+    - Impact: hooks/pages that need tx signing should consume `useSolanaKit()` instead of accessing Privy directly.
 
 ## Hooks — usage map, current mocks, and replacements
 
 Hook usage matrix (where used → what it reads now → what to build):
 
 - useMockSponsorData — `app/src/hooks/useMockSponsorData.ts`
-    - Used by: `app/src/pages/ForSponsors.tsx`
+    - Used by: wrapped by `useSponsorMarkets` → `app/src/pages/ForSponsors.tsx`
     - Reads: `config/mockSponsorMarkets`, `config/mockTrades` (local in-memory)
     - Build: `useSponsorData` backed by backend + Anchor; remove simulated trades
 
 - useMarket — `app/src/hooks/useMarket.ts`
     - Used by: `app/src/pages/MarketDetails.tsx`
-    - Reads: synthesizes market from `id` (not from config)
+    - Reads: looks up `MOCK_SPONSOR_MARKETS` first; falls back to adapting from `config/mockMarkets`
     - Build: `useMarketById(id)` fetching from backend/indexer (PDA or backend id)
 
 - usePortfolioBalance — `app/src/hooks/usePortfolioBalance.ts`
@@ -99,6 +105,16 @@ Hook usage matrix (where used → what it reads now → what to build):
     - Reads: `config/mockPositions`
     - Build: compute from real positions/prices; enforce privacy rules
 
+- useSponsorMarkets — `app/src/hooks/useSponsorMarkets.ts`
+    - Used by: `app/src/pages/ForSponsors.tsx`
+    - Reads: wraps `useMockSponsorData` and filters by current sponsor; pairs with `useMockTrades`
+    - Build: replace with backend/Anchor-backed sponsor data and real trade/event streams
+
+- useUserPositions — `app/src/hooks/useUserPositions.ts`
+    - Used by: `app/src/pages/MarketDetails.tsx`, `app/src/pages/Profile.tsx`
+    - Reads: localStorage via `config/mockPositions`
+    - Build: fetch from backend/indexer; subscribe to on-chain/backend events
+
 - useSponsorMode — `app/src/hooks/useSponsorMode.ts`
     - Used by: `app/src/pages/ForSponsors.tsx`, `app/src/components/SponsorModeOverrideSwitch.tsx`
     - Reads: `SPONSOR_WHITELIST` and `SPONSOR_DEBUG_OVERRIDE` from `config/mockSponsors`
@@ -107,26 +123,25 @@ Hook usage matrix (where used → what it reads now → what to build):
 - useUserAddress — `app/src/hooks/useUserAddress.ts`
     - Used by: `app/src/pages/Profile.tsx`, and inside `useSponsorMode`
     - Reads: Privy user; not a mock but needs wallet exposure for tx signing
-    - Build: expose Solana wallet adapter/provider; gate txs on `ready`
+    - Build: expose Solana wallet adapter/provider; gate txs on `ready` (available via `useSolanaKit()`)
 
 - Utility: useCountdown — `app/src/hooks/useCountdown.ts`
     - Used widely; not tied to mocks
 
-New hooks (to replace call sites of mocks):
+New hooks (to replace call sites of mocks) — pending:
 
-- `useMarkets(scope)` → replaces `getMarketsFiltered` in `TrendingMarkets.tsx` and list sections of `Sponsors.tsx`
+- `useMarkets(scope)` → replaces ad hoc mock fetches in `TrendingMarkets.tsx` and list sections of `Sponsors.tsx`
+- `useMarketById(id)` → replaces `useMarket` in `MarketDetails.tsx`
 - `useSponsors()` → replaces `MOCK_SPONSORS` in `Sponsors.tsx`
-- `useSponsorData()` → replaces `useMockSponsorData` in `ForSponsors.tsx`
-- `usePositions(owner)` → replaces `getPositions` in `Profile.tsx`
 - `useTrades(marketId)` → replaces simulated ticking in `TradeFeed`
 
 ## Mock data sources — page/component map and redundancies
 
 - Pages
-    - Trending: `config/mockMarkets.getMarketsFiltered(scope)` → `MockMarketPreview[]`
+    - Trending: `config/mockSponsorMarkets.getSponsorMarketsFiltered(scope)` → `SponsorMarket[]`
     - Sponsors: `config/mockSponsors.MOCK_SPONSORS.sampleMarkets: Market[]`
-    - Market Details: `hooks/useMarket(id)` → synthetic `Market`
-    - For Sponsors: `hooks/useMockSponsorData` seeded by `config/mockSponsorMarkets` (derived from `MOCK_SPONSORS`); trades from `config/mockTrades`
+    - Market Details: `hooks/useMarket(id)` → synthetic `Market` (from sponsor markets or adapted from `mockMarkets`)
+    - For Sponsors: `hooks/useSponsorMarkets` wraps `useMockSponsorData` seeded by `config/mockSponsorMarkets` (derived from `MOCK_SPONSORS`); trades from `hooks/useMockTrades`
     - Profile: `config/mockPositions.getPositions()`; balance/PnL hooks also read `mockPositions`
 
 - Components
@@ -182,7 +197,7 @@ Interfaces to deprecate at call sites (keep mocks for tests):
 
 Client/repository façade:
 
-- Introduce a `PythiaClient` used by hooks to unify backend + Anchor calls. Enables swapping mocks with real services and keeps hook contracts stable.
+- Introduce a `PythiaClient` used by hooks to unify backend + Anchor calls (not yet implemented). Enables swapping mocks with real services and keeps hook contracts stable.
 
 ## Mock retention strategy (do not delete mocks)
 
@@ -190,7 +205,7 @@ Client/repository façade:
 - Add a client facade with drivers:
     - MockDriver: reads from existing mock files, simulates events
     - ProdDriver: calls backend APIs and on-chain via Anchor
-- Switch via environment/feature flag, e.g. `VITE_DATA_SOURCE=mock|prod` (default to `prod`), or per-route dev toggle.
+- Switch via environment/feature flag, e.g. `VITE_DATA_SOURCE=mock|prod` (default to `prod`) — not wired yet — or per-route dev toggle.
 - Hooks depend only on the facade; they don’t import mock files directly. Tests/storybook use MockDriver to seed deterministic data.
 - Replace interval-based `TradeFeed` ticking with event streams in ProdDriver; allow optional simulated ticking in MockDriver only.
 
@@ -231,10 +246,11 @@ Events to stream (backend WS or RPC): `TradeEvent`, `WindowSwitchEvent`, `Market
 
 ## High-impact file edits to start with
 
-- `pages/ForSponsors.tsx` → swap `useMockSponsorData` for real hook; add window switch actions
+- `pages/ForSponsors.tsx` → currently uses `useSponsorMarkets` (mock-backed); replace with real hook; add window switch actions
 - `pages/MarketDetails.tsx` → wire Buy YES/NO; replace `useMarket` with `useMarketById`
 - `pages/TrendingMarkets.tsx`, `pages/Sponsors.tsx` → replace mock fetches with hooks
-- New hooks: `hooks/useMarkets.ts`, `hooks/useSponsorData.ts`, `hooks/usePositions.ts`, `hooks/useTrades.ts`
+- New hooks to add: `hooks/useMarkets.ts`, `hooks/useMarketById.ts`, `hooks/useSponsors.ts`, `hooks/useTrades.ts` (WS-backed)
+- Existing interim hooks: `hooks/useSponsorMarkets.ts`, `hooks/useUserPositions.ts`
 
 ## Risks / notes
 
