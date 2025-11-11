@@ -125,10 +125,7 @@ export function makeCreateMarketInstructionPlan(params: CreateMarketPlanParams):
 		params.initializeMarketEncrypted.args,
 		params.initializeMarketEncrypted.accounts,
 	);
-	return sequentialInstructionPlan([
-		initMarketIx,
-		initMarketEncryptedIx,
-	]);
+	return sequentialInstructionPlan([initMarketIx, initMarketEncryptedIx]);
 }
 
 export function makeSwitchToPublicInstructionPlan(

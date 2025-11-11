@@ -29,7 +29,10 @@ import {
 	type BaseTransactionMessage,
 } from '@solana/kit';
 import { createTransactionPlanner, type TransactionPlanner } from '@solana/instruction-plans';
-import { createTransactionMessage, setTransactionMessageFeePayer } from '@solana/transaction-messages';
+import {
+	createTransactionMessage,
+	setTransactionMessageFeePayer,
+} from '@solana/transaction-messages';
 import { address as toAddress } from '@solana/addresses';
 import { pipe } from '@solana/functional';
 import {
@@ -150,7 +153,8 @@ export function SolanaKitProvider({ children }: PropsWithChildren) {
 
 		const connectedWallet = wallet as ConnectedStandardSolanaWallet;
 		const estimateCULimit = estimateComputeUnitLimitFactory({ rpc });
-		const estimateAndSetCULimit = estimateAndUpdateProvisoryComputeUnitLimitFactory(estimateCULimit);
+		const estimateAndSetCULimit =
+			estimateAndUpdateProvisoryComputeUnitLimitFactory(estimateCULimit);
 
 		return createTransactionPlanExecutor({
 			executeTransactionMessage: async (
