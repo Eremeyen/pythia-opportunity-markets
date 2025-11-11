@@ -26,19 +26,22 @@ export type MakeInitSponsorIxArguments = {
 type PythiaInstruction = Instruction<PythiaProgramAddressType>;
 
 export type MakeInitSponsorIxAccounts = readonly [
-	WritableSignerAccount,
-	WritableAccount,
-	ReadonlyAccount,
+	WritableSignerAccount, // authority
+	WritableAccount, // sponsor
+	ReadonlyAccount, // system_program
 ];
 
-export type MakeWhitelistSponsorIxAccounts = readonly [WritableSignerAccount, WritableAccount];
+export type MakeWhitelistSponsorIxAccounts = readonly [
+	WritableSignerAccount, // admin
+	WritableAccount, // sponsor
+];
 
 type InitCompDefAccountsTuple = readonly [
-	WritableSignerAccount,
-	WritableAccount,
-	WritableAccount,
-	ReadonlyAccount,
-	ReadonlyAccount,
+	WritableSignerAccount, // payer
+	WritableAccount, // mxe_account
+	WritableAccount, // comp_def_account
+	ReadonlyAccount, // arcium_program
+	ReadonlyAccount, // system_program
 ];
 
 export type MakeInitInitializeMarketCompDefIxAccounts = InitCompDefAccountsTuple;
@@ -62,10 +65,10 @@ export type MakeInitializeMarketIxArguments = {
 };
 
 export type MakeInitializeMarketIxAccounts = readonly [
-	WritableSignerAccount,
-	WritableAccount,
-	WritableAccount,
-	ReadonlyAccount,
+	WritableSignerAccount, // sponsor
+	WritableAccount, // sponsor_account
+	WritableAccount, // market
+	ReadonlyAccount, // system_program
 ];
 
 export type MakeInitializeMarketEncryptedIxArguments = {
@@ -75,19 +78,19 @@ export type MakeInitializeMarketEncryptedIxArguments = {
 };
 
 export type MakeInitializeMarketEncryptedIxAccounts = readonly [
-	WritableSignerAccount,
-	WritableAccount,
-	WritableAccount,
-	ReadonlyAccount,
-	WritableAccount,
-	WritableAccount,
-	WritableAccount,
-	ReadonlyAccount,
-	WritableAccount,
-	WritableAccount,
-	ReadonlyAccount,
-	ReadonlyAccount,
-	ReadonlyAccount,
+	WritableSignerAccount, // payer
+	WritableAccount, // market
+	WritableAccount, // sign_pda_account
+	ReadonlyAccount, // mxe_account
+	WritableAccount, // mempool_account
+	WritableAccount, // executing_pool
+	WritableAccount, // computation_account
+	ReadonlyAccount, // comp_def_account
+	WritableAccount, // cluster_account
+	WritableAccount, // pool_account
+	ReadonlyAccount, // clock_account
+	ReadonlyAccount, // system_program
+	ReadonlyAccount, // arcium_program
 ];
 
 export type MakeInitUserPositionIxArguments = {
@@ -96,20 +99,20 @@ export type MakeInitUserPositionIxArguments = {
 };
 
 export type MakeInitUserPositionIxAccounts = readonly [
-	WritableSignerAccount,
-	ReadonlyAccount,
-	WritableAccount,
-	WritableAccount,
-	ReadonlyAccount,
-	WritableAccount,
-	WritableAccount,
-	WritableAccount,
-	ReadonlyAccount,
-	WritableAccount,
-	WritableAccount,
-	ReadonlyAccount,
-	ReadonlyAccount,
-	ReadonlyAccount,
+	WritableSignerAccount, // user
+	ReadonlyAccount, // market
+	WritableAccount, // user_position
+	WritableAccount, // sign_pda_account
+	ReadonlyAccount, // mxe_account
+	WritableAccount, // mempool_account
+	WritableAccount, // executing_pool
+	WritableAccount, // computation_account
+	ReadonlyAccount, // comp_def_account
+	WritableAccount, // cluster_account
+	WritableAccount, // pool_account
+	ReadonlyAccount, // clock_account
+	ReadonlyAccount, // system_program
+	ReadonlyAccount, // arcium_program
 ];
 
 export type MakePrivateTradeIxArguments = {
@@ -120,19 +123,19 @@ export type MakePrivateTradeIxArguments = {
 };
 
 export type MakePrivateTradeIxAccounts = readonly [
-	WritableSignerAccount,
-	WritableAccount,
-	WritableAccount,
-	ReadonlyAccount,
-	WritableAccount,
-	WritableAccount,
-	WritableAccount,
-	ReadonlyAccount,
-	WritableAccount,
-	WritableAccount,
-	ReadonlyAccount,
-	ReadonlyAccount,
-	ReadonlyAccount,
+	WritableSignerAccount, // payer
+	WritableAccount, // market
+	WritableAccount, // sign_pda_account
+	ReadonlyAccount, // mxe_account
+	WritableAccount, // mempool_account
+	WritableAccount, // executing_pool
+	WritableAccount, // computation_account
+	ReadonlyAccount, // comp_def_account
+	WritableAccount, // cluster_account
+	WritableAccount, // pool_account
+	ReadonlyAccount, // clock_account
+	ReadonlyAccount, // system_program
+	ReadonlyAccount, // arcium_program
 ];
 
 export type MakeUpdateUserPositionPrivateIxArguments = {
@@ -143,20 +146,20 @@ export type MakeUpdateUserPositionPrivateIxArguments = {
 };
 
 export type MakeUpdateUserPositionPrivateIxAccounts = readonly [
-	WritableSignerAccount,
-	ReadonlyAccount,
-	WritableAccount,
-	WritableAccount,
-	ReadonlyAccount,
-	WritableAccount,
-	WritableAccount,
-	WritableAccount,
-	ReadonlyAccount,
-	WritableAccount,
-	WritableAccount,
-	ReadonlyAccount,
-	ReadonlyAccount,
-	ReadonlyAccount,
+	WritableSignerAccount, // user
+	ReadonlyAccount, // market
+	WritableAccount, // user_position
+	WritableAccount, // sign_pda_account
+	ReadonlyAccount, // mxe_account
+	WritableAccount, // mempool_account
+	WritableAccount, // executing_pool
+	WritableAccount, // computation_account
+	ReadonlyAccount, // comp_def_account
+	WritableAccount, // cluster_account
+	WritableAccount, // pool_account
+	ReadonlyAccount, // clock_account
+	ReadonlyAccount, // system_program
+	ReadonlyAccount, // arcium_program
 ];
 
 export type MakeClosePositionPrivateIxArguments = {
@@ -167,20 +170,20 @@ export type MakeClosePositionPrivateIxArguments = {
 };
 
 export type MakeClosePositionPrivateIxAccounts = readonly [
-	WritableSignerAccount,
-	ReadonlyAccount,
-	WritableAccount,
-	WritableAccount,
-	ReadonlyAccount,
-	WritableAccount,
-	WritableAccount,
-	WritableAccount,
-	ReadonlyAccount,
-	WritableAccount,
-	WritableAccount,
-	ReadonlyAccount,
-	ReadonlyAccount,
-	ReadonlyAccount,
+	WritableSignerAccount, // user
+	ReadonlyAccount, // market
+	WritableAccount, // user_position
+	WritableAccount, // sign_pda_account
+	ReadonlyAccount, // mxe_account
+	WritableAccount, // mempool_account
+	WritableAccount, // executing_pool
+	WritableAccount, // computation_account
+	ReadonlyAccount, // comp_def_account
+	WritableAccount, // cluster_account
+	WritableAccount, // pool_account
+	ReadonlyAccount, // clock_account
+	ReadonlyAccount, // system_program
+	ReadonlyAccount, // arcium_program
 ];
 
 export type MakeSwitchToPublicIxArguments = {
@@ -188,19 +191,19 @@ export type MakeSwitchToPublicIxArguments = {
 };
 
 export type MakeSwitchToPublicIxAccounts = readonly [
-	WritableSignerAccount,
-	WritableAccount,
-	WritableAccount,
-	ReadonlyAccount,
-	WritableAccount,
-	WritableAccount,
-	WritableAccount,
-	ReadonlyAccount,
-	WritableAccount,
-	WritableAccount,
-	ReadonlyAccount,
-	ReadonlyAccount,
-	ReadonlyAccount,
+	WritableSignerAccount, // payer
+	WritableAccount, // market
+	WritableAccount, // sign_pda_account
+	ReadonlyAccount, // mxe_account
+	WritableAccount, // mempool_account
+	WritableAccount, // executing_pool
+	WritableAccount, // computation_account
+	ReadonlyAccount, // comp_def_account
+	WritableAccount, // cluster_account
+	WritableAccount, // pool_account
+	ReadonlyAccount, // clock_account
+	ReadonlyAccount, // system_program
+	ReadonlyAccount, // arcium_program
 ];
 
 export type MakePublicTradeIxArguments = {
@@ -208,7 +211,10 @@ export type MakePublicTradeIxArguments = {
 	isBuyYes: boolean;
 };
 
-export type MakePublicTradeIxAccounts = readonly [WritableSignerAccount, WritableAccount];
+export type MakePublicTradeIxAccounts = readonly [
+	WritableSignerAccount, // trader
+	WritableAccount, // market
+];
 
 export type MakeSwitchToPrivateIxArguments = {
 	computationOffset: bigint;
@@ -216,19 +222,19 @@ export type MakeSwitchToPrivateIxArguments = {
 };
 
 export type MakeSwitchToPrivateIxAccounts = readonly [
-	WritableSignerAccount,
-	WritableAccount,
-	WritableAccount,
-	ReadonlyAccount,
-	WritableAccount,
-	WritableAccount,
-	WritableAccount,
-	ReadonlyAccount,
-	WritableAccount,
-	WritableAccount,
-	ReadonlyAccount,
-	ReadonlyAccount,
-	ReadonlyAccount,
+	WritableSignerAccount, // payer
+	WritableAccount, // market
+	WritableAccount, // sign_pda_account
+	ReadonlyAccount, // mxe_account
+	WritableAccount, // mempool_account
+	WritableAccount, // executing_pool
+	WritableAccount, // computation_account
+	ReadonlyAccount, // comp_def_account
+	WritableAccount, // cluster_account
+	WritableAccount, // pool_account
+	ReadonlyAccount, // clock_account
+	ReadonlyAccount, // system_program
+	ReadonlyAccount, // arcium_program
 ];
 
 export type MakeGetSponsorViewIxArguments = {
@@ -237,19 +243,19 @@ export type MakeGetSponsorViewIxArguments = {
 };
 
 export type MakeGetSponsorViewIxAccounts = readonly [
-	WritableSignerAccount,
-	WritableAccount,
-	WritableAccount,
-	ReadonlyAccount,
-	WritableAccount,
-	WritableAccount,
-	WritableAccount,
-	ReadonlyAccount,
-	WritableAccount,
-	WritableAccount,
-	ReadonlyAccount,
-	ReadonlyAccount,
-	ReadonlyAccount,
+	WritableSignerAccount, // sponsor
+	WritableAccount, // market
+	WritableAccount, // sign_pda_account
+	ReadonlyAccount, // mxe_account
+	WritableAccount, // mempool_account
+	WritableAccount, // executing_pool
+	WritableAccount, // computation_account
+	ReadonlyAccount, // comp_def_account
+	WritableAccount, // cluster_account
+	WritableAccount, // pool_account
+	ReadonlyAccount, // clock_account
+	ReadonlyAccount, // system_program
+	ReadonlyAccount, // arcium_program
 ];
 
 export type MakeGetUserPositionViewIxArguments = {
@@ -258,27 +264,30 @@ export type MakeGetUserPositionViewIxArguments = {
 };
 
 export type MakeGetUserPositionViewIxAccounts = readonly [
-	WritableSignerAccount,
-	ReadonlyAccount,
-	ReadonlyAccount,
-	WritableAccount,
-	ReadonlyAccount,
-	WritableAccount,
-	WritableAccount,
-	WritableAccount,
-	ReadonlyAccount,
-	WritableAccount,
-	WritableAccount,
-	ReadonlyAccount,
-	ReadonlyAccount,
-	ReadonlyAccount,
+	WritableSignerAccount, // sponsor
+	ReadonlyAccount, // market
+	ReadonlyAccount, // user_position
+	WritableAccount, // sign_pda_account
+	ReadonlyAccount, // mxe_account
+	WritableAccount, // mempool_account
+	WritableAccount, // executing_pool
+	WritableAccount, // computation_account
+	ReadonlyAccount, // comp_def_account
+	WritableAccount, // cluster_account
+	WritableAccount, // pool_account
+	ReadonlyAccount, // clock_account
+	ReadonlyAccount, // system_program
+	ReadonlyAccount, // arcium_program
 ];
 
 export type MakeResolveMarketIxArguments = {
 	outcome: boolean;
 };
 
-export type MakeResolveMarketIxAccounts = readonly [WritableSignerAccount, WritableAccount];
+export type MakeResolveMarketIxAccounts = readonly [
+	WritableSignerAccount, // authority
+	WritableAccount, // market
+];
 
 // TODO: tighten return types by modeling per-instruction account metas and data.
 
