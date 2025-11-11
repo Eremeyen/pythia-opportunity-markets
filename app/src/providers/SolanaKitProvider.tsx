@@ -4,12 +4,14 @@ import { usePrivy } from '@privy-io/react-auth';
 import {
 	useSignTransaction,
 	useSignAndSendTransaction,
-	type UseSignTransaction,
-	type UseSignAndSendTransaction,
 	useWallets,
-	ConnectedStandardSolanaWallet,
 	// type SignTransactionInput,
 	// type SignTransactionOutput,
+} from '@privy-io/react-auth/solana';
+import type {
+	UseSignTransaction,
+	UseSignAndSendTransaction,
+	ConnectedStandardSolanaWallet,
 } from '@privy-io/react-auth/solana';
 import {
 	createSolanaRpc,
