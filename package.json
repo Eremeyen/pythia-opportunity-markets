@@ -5,9 +5,9 @@
     "lint": "prettier */*.js \"*/**/*{.js,.ts}\" --check"
   },
   "dependencies": {
-    "@arcium-hq/client": "^0.3.0",
+    "@arcium-hq/client": "^0.4.0",
     "@arcium-hq/reader": "^0.3.0",
-    "@coral-xyz/anchor": "^0.31.1"
+    "@coral-xyz/anchor": "^0.32.1"
   },
   "devDependencies": {
     "@types/bn.js": "^5.1.0",

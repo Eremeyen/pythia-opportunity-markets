@@ -18,7 +18,7 @@ const COMP_DEF_OFFSET_HIDE_MARKET_STATE: u32 = comp_def_offset("hide_market_stat
 const COMP_DEF_OFFSET_VIEW_MARKET_STATE: u32 = comp_def_offset("view_market_state");
 const COMP_DEF_OFFSET_VIEW_USER_POSITION: u32 = comp_def_offset("view_user_position");
 
-declare_id!("2qjYCKDKngH2rcnPwpxKgZTdbjvvxq71u7FVChU1541U");
+declare_id!("66ss7Ao4f9WPGx1NT6m1HFNZKmVLNfqnZchT4Kwwwy5a");
 
 #[arcium_program]
 pub mod pythia_op {
