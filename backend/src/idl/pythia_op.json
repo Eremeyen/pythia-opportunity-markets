@@ -1,5 +1,5 @@
 {
-  "address": "92hgxDDhAPgWYXZez4Y7J9A2YCiDzkPDSzKhikuKaGyE",
+  "address": "8EsjesBaq2Xa7w2SFuacsumLybZDBTdm7dA5feJV84Qr",
   "metadata": {
     "name": "pythia_op",
     "version": "0.1.0",
@@ -8,120 +8,66 @@
   },
   "instructions": [
     {
-      "name": "get_sponsor_view",
+      "name": "close_position_callback",
       "discriminator": [
-        225,
-        4,
-        128,
-        199,
-        133,
-        109,
-        216,
-        99
+        180,
+        246,
+        26,
+        6,
+        16,
+        117,
+        72,
+        12
       ],
       "accounts": [
         {
-          "name": "sponsor",
-          "writable": true,
-          "signer": true
-        },
-        {
-          "name": "market",
+          "name": "user_position",
           "writable": true
         },
         {
-          "name": "sign_pda_account",
-          "writable": true,
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  83,
-                  105,
-                  103,
-                  110,
-                  101,
-                  114,
-                  65,
-                  99,
-                  99,
-                  111,
-                  117,
-                  110,
-                  116
-                ]
-              }
-            ]
-          }
-        },
-        {
-          "name": "mxe_account"
-        },
-        {
-          "name": "mempool_account",
-          "writable": true
-        },
-        {
-          "name": "executing_pool",
-          "writable": true
-        },
-        {
-          "name": "computation_account",
-          "writable": true
+          "name": "arcium_program",
+          "address": "Bv3Fb9VjzjWGfX18QTUcVycAfeLoQ5zZN6vv2g3cTZxp"
         },
         {
           "name": "comp_def_account"
         },
         {
-          "name": "cluster_account",
-          "writable": true
-        },
-        {
-          "name": "pool_account",
-          "writable": true,
-          "address": "7MGSS4iKNM4sVib7bDZDJhVqB6EcchPwVnTKenCY1jt3"
-        },
-        {
-          "name": "clock_account",
-          "address": "FHriyvoZotYiFnbUzKFjzRSb2NiaC8RPWY7jtKuKhg65"
-        },
-        {
-          "name": "system_program",
-          "address": "11111111111111111111111111111111"
-        },
-        {
-          "name": "arcium_program",
-          "address": "BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6"
+          "name": "instructions_sysvar",
+          "address": "Sysvar1nstructions1111111111111111111111111"
         }
       ],
       "args": [
         {
-          "name": "computation_offset",
-          "type": "u64"
-        },
-        {
-          "name": "pub_key",
+          "name": "output",
           "type": {
-            "array": [
-              "u8",
-              32
-            ]
+            "defined": {
+              "name": "ComputationOutputs",
+              "generics": [
+                {
+                  "kind": "type",
+                  "type": {
+                    "defined": {
+                      "name": "ClosePositionOutput"
+                    }
+                  }
+                }
+              ]
+            }
           }
         }
       ]
     },
     {
-      "name": "get_user_position_view",
+      "name": "close_position_private",
       "discriminator": [
-        123,
-        111,
-        231,
-        5,
-        108,
-        89,
-        127,
-        246
+        18,
+        166,
+        88,
+        237,
+        218,
+        13,
+        238,
+        242
       ],
       "accounts": [
         {
@@ -140,6 +86,7 @@
         },
         {
           "name": "user_position",
+          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -222,11 +169,11 @@
         {
           "name": "pool_account",
           "writable": true,
-          "address": "7MGSS4iKNM4sVib7bDZDJhVqB6EcchPwVnTKenCY1jt3"
+          "address": "FsWbPQcJQ2cCyr9ndse13fDqds4F2Ezx2WgTL25Dke4M"
         },
         {
           "name": "clock_account",
-          "address": "FHriyvoZotYiFnbUzKFjzRSb2NiaC8RPWY7jtKuKhg65"
+          "address": "AxygBawEvVwZPetj3yPJb9sGdZvaJYsVguET1zFUQkV"
         },
         {
           "name": "system_program",
@@ -234,7 +181,7 @@
         },
         {
           "name": "arcium_program",
-          "address": "BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6"
+          "address": "Bv3Fb9VjzjWGfX18QTUcVycAfeLoQ5zZN6vv2g3cTZxp"
         }
       ],
       "args": [
@@ -243,7 +190,233 @@
           "type": "u64"
         },
         {
-          "name": "pub_key",
+          "name": "close_ciphertext",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
+          "name": "close_pub_key",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
+          "name": "close_nonce",
+          "type": "u128"
+        }
+      ]
+    },
+    {
+      "name": "get_sponsor_view",
+      "discriminator": [
+        225,
+        4,
+        128,
+        199,
+        133,
+        109,
+        216,
+        99
+      ],
+      "accounts": [
+        {
+          "name": "sponsor",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "market",
+          "writable": true
+        },
+        {
+          "name": "sign_pda_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  83,
+                  105,
+                  103,
+                  110,
+                  101,
+                  114,
+                  65,
+                  99,
+                  99,
+                  111,
+                  117,
+                  110,
+                  116
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "mxe_account"
+        },
+        {
+          "name": "mempool_account",
+          "writable": true
+        },
+        {
+          "name": "executing_pool",
+          "writable": true
+        },
+        {
+          "name": "computation_account",
+          "writable": true
+        },
+        {
+          "name": "comp_def_account"
+        },
+        {
+          "name": "cluster_account",
+          "writable": true
+        },
+        {
+          "name": "pool_account",
+          "writable": true,
+          "address": "FsWbPQcJQ2cCyr9ndse13fDqds4F2Ezx2WgTL25Dke4M"
+        },
+        {
+          "name": "clock_account",
+          "address": "AxygBawEvVwZPetj3yPJb9sGdZvaJYsVguET1zFUQkV"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "arcium_program",
+          "address": "Bv3Fb9VjzjWGfX18QTUcVycAfeLoQ5zZN6vv2g3cTZxp"
+        }
+      ],
+      "args": [
+        {
+          "name": "computation_offset",
+          "type": "u64"
+        },
+        {
+          "name": "sponsor_pub_key",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "get_user_position_view",
+      "discriminator": [
+        123,
+        111,
+        231,
+        5,
+        108,
+        89,
+        127,
+        246
+      ],
+      "accounts": [
+        {
+          "name": "sponsor",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "market",
+          "relations": [
+            "user_position"
+          ]
+        },
+        {
+          "name": "user_position"
+        },
+        {
+          "name": "sign_pda_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  83,
+                  105,
+                  103,
+                  110,
+                  101,
+                  114,
+                  65,
+                  99,
+                  99,
+                  111,
+                  117,
+                  110,
+                  116
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "mxe_account"
+        },
+        {
+          "name": "mempool_account",
+          "writable": true
+        },
+        {
+          "name": "executing_pool",
+          "writable": true
+        },
+        {
+          "name": "computation_account",
+          "writable": true
+        },
+        {
+          "name": "comp_def_account"
+        },
+        {
+          "name": "cluster_account",
+          "writable": true
+        },
+        {
+          "name": "pool_account",
+          "writable": true,
+          "address": "FsWbPQcJQ2cCyr9ndse13fDqds4F2Ezx2WgTL25Dke4M"
+        },
+        {
+          "name": "clock_account",
+          "address": "AxygBawEvVwZPetj3yPJb9sGdZvaJYsVguET1zFUQkV"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "arcium_program",
+          "address": "Bv3Fb9VjzjWGfX18QTUcVycAfeLoQ5zZN6vv2g3cTZxp"
+        }
+      ],
+      "args": [
+        {
+          "name": "computation_offset",
+          "type": "u64"
+        },
+        {
+          "name": "sponsor_pub_key",
           "type": {
             "array": [
               "u8",
@@ -272,7 +445,7 @@
         },
         {
           "name": "arcium_program",
-          "address": "BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6"
+          "address": "Bv3Fb9VjzjWGfX18QTUcVycAfeLoQ5zZN6vv2g3cTZxp"
         },
         {
           "name": "comp_def_account"
@@ -304,6 +477,43 @@
       ]
     },
     {
+      "name": "init_close_position_comp_def",
+      "discriminator": [
+        104,
+        198,
+        244,
+        210,
+        166,
+        227,
+        160,
+        187
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "mxe_account",
+          "writable": true
+        },
+        {
+          "name": "comp_def_account",
+          "writable": true
+        },
+        {
+          "name": "arcium_program",
+          "address": "Bv3Fb9VjzjWGfX18QTUcVycAfeLoQ5zZN6vv2g3cTZxp"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
       "name": "init_hide_market_state_comp_def",
       "discriminator": [
         216,
@@ -331,7 +541,7 @@
         },
         {
           "name": "arcium_program",
-          "address": "BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6"
+          "address": "Bv3Fb9VjzjWGfX18QTUcVycAfeLoQ5zZN6vv2g3cTZxp"
         },
         {
           "name": "system_program",
@@ -368,7 +578,7 @@
         },
         {
           "name": "arcium_program",
-          "address": "BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6"
+          "address": "Bv3Fb9VjzjWGfX18QTUcVycAfeLoQ5zZN6vv2g3cTZxp"
         },
         {
           "name": "system_program",
@@ -405,7 +615,7 @@
         },
         {
           "name": "arcium_program",
-          "address": "BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6"
+          "address": "Bv3Fb9VjzjWGfX18QTUcVycAfeLoQ5zZN6vv2g3cTZxp"
         },
         {
           "name": "system_program",
@@ -433,6 +643,10 @@
           "signer": true
         },
         {
+          "name": "sponsor_account",
+          "writable": true
+        },
+        {
           "name": "market",
           "writable": true,
           "pda": {
@@ -450,7 +664,7 @@
               },
               {
                 "kind": "account",
-                "path": "sponsor"
+                "path": "sponsor_account"
               },
               {
                 "kind": "arg",
@@ -475,6 +689,10 @@
         },
         {
           "name": "liquidity_cap",
+          "type": "u64"
+        },
+        {
+          "name": "initial_liquidity_usdc",
           "type": "u64"
         },
         {
@@ -560,11 +778,11 @@
         {
           "name": "pool_account",
           "writable": true,
-          "address": "7MGSS4iKNM4sVib7bDZDJhVqB6EcchPwVnTKenCY1jt3"
+          "address": "FsWbPQcJQ2cCyr9ndse13fDqds4F2Ezx2WgTL25Dke4M"
         },
         {
           "name": "clock_account",
-          "address": "FHriyvoZotYiFnbUzKFjzRSb2NiaC8RPWY7jtKuKhg65"
+          "address": "AxygBawEvVwZPetj3yPJb9sGdZvaJYsVguET1zFUQkV"
         },
         {
           "name": "system_program",
@@ -572,7 +790,7 @@
         },
         {
           "name": "arcium_program",
-          "address": "BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6"
+          "address": "Bv3Fb9VjzjWGfX18QTUcVycAfeLoQ5zZN6vv2g3cTZxp"
         }
       ],
       "args": [
@@ -581,12 +799,12 @@
           "type": "u64"
         },
         {
-          "name": "initial_yes",
+          "name": "initial_liquidity_usdc",
           "type": "u64"
         },
         {
-          "name": "initial_no",
-          "type": "u64"
+          "name": "mxe_nonce",
+          "type": "u128"
         }
       ]
     },
@@ -618,7 +836,7 @@
         },
         {
           "name": "arcium_program",
-          "address": "BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6"
+          "address": "Bv3Fb9VjzjWGfX18QTUcVycAfeLoQ5zZN6vv2g3cTZxp"
         },
         {
           "name": "system_program",
@@ -655,7 +873,7 @@
         },
         {
           "name": "arcium_program",
-          "address": "BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6"
+          "address": "Bv3Fb9VjzjWGfX18QTUcVycAfeLoQ5zZN6vv2g3cTZxp"
         },
         {
           "name": "system_program",
@@ -663,6 +881,97 @@
         }
       ],
       "args": []
+    },
+    {
+      "name": "init_reveal_user_position_comp_def",
+      "discriminator": [
+        184,
+        228,
+        163,
+        182,
+        169,
+        253,
+        252,
+        147
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "mxe_account",
+          "writable": true
+        },
+        {
+          "name": "comp_def_account",
+          "writable": true
+        },
+        {
+          "name": "arcium_program",
+          "address": "Bv3Fb9VjzjWGfX18QTUcVycAfeLoQ5zZN6vv2g3cTZxp"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "init_sponsor",
+      "discriminator": [
+        171,
+        84,
+        165,
+        61,
+        98,
+        53,
+        242,
+        108
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "sponsor",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  112,
+                  111,
+                  110,
+                  115,
+                  111,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "authority"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "name",
+          "type": "string"
+        }
+      ]
     },
     {
       "name": "init_update_user_position_comp_def",
@@ -692,7 +1001,7 @@
         },
         {
           "name": "arcium_program",
-          "address": "BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6"
+          "address": "Bv3Fb9VjzjWGfX18QTUcVycAfeLoQ5zZN6vv2g3cTZxp"
         },
         {
           "name": "system_program",
@@ -807,11 +1116,11 @@
         {
           "name": "pool_account",
           "writable": true,
-          "address": "7MGSS4iKNM4sVib7bDZDJhVqB6EcchPwVnTKenCY1jt3"
+          "address": "FsWbPQcJQ2cCyr9ndse13fDqds4F2Ezx2WgTL25Dke4M"
         },
         {
           "name": "clock_account",
-          "address": "FHriyvoZotYiFnbUzKFjzRSb2NiaC8RPWY7jtKuKhg65"
+          "address": "AxygBawEvVwZPetj3yPJb9sGdZvaJYsVguET1zFUQkV"
         },
         {
           "name": "system_program",
@@ -819,13 +1128,17 @@
         },
         {
           "name": "arcium_program",
-          "address": "BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6"
+          "address": "Bv3Fb9VjzjWGfX18QTUcVycAfeLoQ5zZN6vv2g3cTZxp"
         }
       ],
       "args": [
         {
           "name": "computation_offset",
           "type": "u64"
+        },
+        {
+          "name": "mxe_nonce",
+          "type": "u128"
         }
       ]
     },
@@ -857,7 +1170,7 @@
         },
         {
           "name": "arcium_program",
-          "address": "BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6"
+          "address": "Bv3Fb9VjzjWGfX18QTUcVycAfeLoQ5zZN6vv2g3cTZxp"
         },
         {
           "name": "system_program",
@@ -894,7 +1207,7 @@
         },
         {
           "name": "arcium_program",
-          "address": "BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6"
+          "address": "Bv3Fb9VjzjWGfX18QTUcVycAfeLoQ5zZN6vv2g3cTZxp"
         },
         {
           "name": "system_program",
@@ -922,7 +1235,7 @@
         },
         {
           "name": "arcium_program",
-          "address": "BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6"
+          "address": "Bv3Fb9VjzjWGfX18QTUcVycAfeLoQ5zZN6vv2g3cTZxp"
         },
         {
           "name": "comp_def_account"
@@ -972,7 +1285,7 @@
         },
         {
           "name": "arcium_program",
-          "address": "BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6"
+          "address": "Bv3Fb9VjzjWGfX18QTUcVycAfeLoQ5zZN6vv2g3cTZxp"
         },
         {
           "name": "comp_def_account"
@@ -1022,7 +1335,7 @@
         },
         {
           "name": "arcium_program",
-          "address": "BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6"
+          "address": "Bv3Fb9VjzjWGfX18QTUcVycAfeLoQ5zZN6vv2g3cTZxp"
         },
         {
           "name": "comp_def_account"
@@ -1102,7 +1415,7 @@
         },
         {
           "name": "arcium_program",
-          "address": "BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6"
+          "address": "Bv3Fb9VjzjWGfX18QTUcVycAfeLoQ5zZN6vv2g3cTZxp"
         },
         {
           "name": "comp_def_account"
@@ -1206,11 +1519,11 @@
         {
           "name": "pool_account",
           "writable": true,
-          "address": "7MGSS4iKNM4sVib7bDZDJhVqB6EcchPwVnTKenCY1jt3"
+          "address": "FsWbPQcJQ2cCyr9ndse13fDqds4F2Ezx2WgTL25Dke4M"
         },
         {
           "name": "clock_account",
-          "address": "FHriyvoZotYiFnbUzKFjzRSb2NiaC8RPWY7jtKuKhg65"
+          "address": "AxygBawEvVwZPetj3yPJb9sGdZvaJYsVguET1zFUQkV"
         },
         {
           "name": "system_program",
@@ -1218,13 +1531,17 @@
         },
         {
           "name": "arcium_program",
-          "address": "BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6"
+          "address": "Bv3Fb9VjzjWGfX18QTUcVycAfeLoQ5zZN6vv2g3cTZxp"
         }
       ],
       "args": [
         {
           "name": "computation_offset",
           "type": "u64"
+        },
+        {
+          "name": "mxe_nonce",
+          "type": "u128"
         }
       ]
     },
@@ -1301,11 +1618,11 @@
         {
           "name": "pool_account",
           "writable": true,
-          "address": "7MGSS4iKNM4sVib7bDZDJhVqB6EcchPwVnTKenCY1jt3"
+          "address": "FsWbPQcJQ2cCyr9ndse13fDqds4F2Ezx2WgTL25Dke4M"
         },
         {
           "name": "clock_account",
-          "address": "FHriyvoZotYiFnbUzKFjzRSb2NiaC8RPWY7jtKuKhg65"
+          "address": "AxygBawEvVwZPetj3yPJb9sGdZvaJYsVguET1zFUQkV"
         },
         {
           "name": "system_program",
@@ -1313,7 +1630,7 @@
         },
         {
           "name": "arcium_program",
-          "address": "BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6"
+          "address": "Bv3Fb9VjzjWGfX18QTUcVycAfeLoQ5zZN6vv2g3cTZxp"
         }
       ],
       "args": [
@@ -1396,11 +1713,11 @@
         {
           "name": "pool_account",
           "writable": true,
-          "address": "7MGSS4iKNM4sVib7bDZDJhVqB6EcchPwVnTKenCY1jt3"
+          "address": "FsWbPQcJQ2cCyr9ndse13fDqds4F2Ezx2WgTL25Dke4M"
         },
         {
           "name": "clock_account",
-          "address": "FHriyvoZotYiFnbUzKFjzRSb2NiaC8RPWY7jtKuKhg65"
+          "address": "AxygBawEvVwZPetj3yPJb9sGdZvaJYsVguET1zFUQkV"
         },
         {
           "name": "system_program",
@@ -1408,7 +1725,7 @@
         },
         {
           "name": "arcium_program",
-          "address": "BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6"
+          "address": "Bv3Fb9VjzjWGfX18QTUcVycAfeLoQ5zZN6vv2g3cTZxp"
         }
       ],
       "args": [
@@ -1465,7 +1782,7 @@
       ],
       "args": [
         {
-          "name": "amount",
+          "name": "usdc_amount",
           "type": "u64"
         },
         {
@@ -1493,7 +1810,7 @@
         },
         {
           "name": "arcium_program",
-          "address": "BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6"
+          "address": "Bv3Fb9VjzjWGfX18QTUcVycAfeLoQ5zZN6vv2g3cTZxp"
         },
         {
           "name": "comp_def_account"
@@ -1636,11 +1953,11 @@
         {
           "name": "pool_account",
           "writable": true,
-          "address": "7MGSS4iKNM4sVib7bDZDJhVqB6EcchPwVnTKenCY1jt3"
+          "address": "FsWbPQcJQ2cCyr9ndse13fDqds4F2Ezx2WgTL25Dke4M"
         },
         {
           "name": "clock_account",
-          "address": "FHriyvoZotYiFnbUzKFjzRSb2NiaC8RPWY7jtKuKhg65"
+          "address": "AxygBawEvVwZPetj3yPJb9sGdZvaJYsVguET1zFUQkV"
         },
         {
           "name": "system_program",
@@ -1648,7 +1965,7 @@
         },
         {
           "name": "arcium_program",
-          "address": "BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6"
+          "address": "Bv3Fb9VjzjWGfX18QTUcVycAfeLoQ5zZN6vv2g3cTZxp"
         }
       ],
       "args": [
@@ -1699,7 +2016,7 @@
         },
         {
           "name": "arcium_program",
-          "address": "BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6"
+          "address": "Bv3Fb9VjzjWGfX18QTUcVycAfeLoQ5zZN6vv2g3cTZxp"
         },
         {
           "name": "comp_def_account"
@@ -1749,7 +2066,7 @@
         },
         {
           "name": "arcium_program",
-          "address": "BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6"
+          "address": "Bv3Fb9VjzjWGfX18QTUcVycAfeLoQ5zZN6vv2g3cTZxp"
         },
         {
           "name": "comp_def_account"
@@ -1779,6 +2096,31 @@
           }
         }
       ]
+    },
+    {
+      "name": "whitelist_sponsor",
+      "discriminator": [
+        147,
+        216,
+        206,
+        186,
+        143,
+        127,
+        202,
+        82
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "sponsor",
+          "writable": true
+        }
+      ],
+      "args": []
     }
   ],
   "accounts": [
@@ -1874,6 +2216,19 @@
       ]
     },
     {
+      "name": "Sponsor",
+      "discriminator": [
+        19,
+        128,
+        115,
+        109,
+        118,
+        109,
+        66,
+        213
+      ]
+    },
+    {
       "name": "UserPosition",
       "discriminator": [
         251,
@@ -1957,13 +2312,8 @@
   "errors": [
     {
       "code": 6000,
-      "name": "InvalidFinalizeTx",
-      "msg": "Invalid finalize transaction"
-    },
-    {
-      "code": 6001,
-      "name": "InvalidAccount",
-      "msg": "Invalid account"
+      "name": "InvalidCallbackTx",
+      "msg": "Invalid callback transaction"
     }
   ],
   "types": [
@@ -2069,6 +2419,56 @@
       }
     },
     {
+      "name": "ClosePositionOutput",
+      "docs": [
+        "The output of the callback instruction. Provided as a struct with ordered fields",
+        "as anchor does not support tuples and tuple structs yet."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "field_0",
+            "type": {
+              "defined": {
+                "name": "MXEEncryptedStruct",
+                "generics": [
+                  {
+                    "kind": "const",
+                    "value": "4"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "CloseRecord",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "timestamp",
+            "type": "i64"
+          },
+          {
+            "name": "yes_shares_closed",
+            "type": "u64"
+          },
+          {
+            "name": "no_shares_closed",
+            "type": "u64"
+          },
+          {
+            "name": "market_price_at_close",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
       "name": "Cluster",
       "type": {
         "kind": "struct",
@@ -2162,10 +2562,6 @@
             "type": {
               "option": "pubkey"
             }
-          },
-          {
-            "name": "finalize_during_callback",
-            "type": "bool"
           },
           {
             "name": "cu_amount",
@@ -2366,7 +2762,7 @@
                 "generics": [
                   {
                     "kind": "const",
-                    "value": "2"
+                    "value": "4"
                   }
                 ]
               }
@@ -2407,10 +2803,20 @@
             }
           },
           {
-            "name": "x25519_pubkey",
+            "name": "utility_pubkeys",
             "type": {
               "defined": {
-                "name": "X25519Pubkey"
+                "name": "SetUnset",
+                "generics": [
+                  {
+                    "kind": "type",
+                    "type": {
+                      "defined": {
+                        "name": "UtilityPubkeys"
+                      }
+                    }
+                  }
+                ]
               }
             }
           },
@@ -2512,9 +2918,13 @@
             "type": "u64"
           },
           {
+            "name": "initial_liquidity_usdc",
+            "type": "u64"
+          },
+          {
             "name": "market_state",
             "docs": [
-              "Encrypted market state: [yes_pool, no_pool, last_price, total_trades] as 32-byte ciphertexts"
+              "Encrypted market state: [yes_pool, no_pool, k, total_trades] as 32-byte ciphertexts"
             ],
             "type": {
               "array": [
@@ -2537,7 +2947,11 @@
             "type": "u64"
           },
           {
-            "name": "public_last_price",
+            "name": "public_yes_price",
+            "type": "u64"
+          },
+          {
+            "name": "public_no_price",
             "type": "u64"
           },
           {
@@ -2702,6 +3116,9 @@
           },
           {
             "name": "PlaintextFloat"
+          },
+          {
+            "name": "PlaintextPoint"
           }
         ]
       }
@@ -2823,6 +3240,43 @@
           {
             "name": "field_3",
             "type": "u64"
+          },
+          {
+            "name": "field_4",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SetUnset",
+      "generics": [
+        {
+          "kind": "type",
+          "name": "T"
+        }
+      ],
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Set",
+            "fields": [
+              {
+                "generic": "T"
+              }
+            ]
+          },
+          {
+            "name": "Unset",
+            "fields": [
+              {
+                "generic": "T"
+              },
+              {
+                "vec": "bool"
+              }
+            ]
           }
         ]
       }
@@ -2879,6 +3333,38 @@
           {
             "name": "bump",
             "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Sponsor",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "authority",
+            "type": "pubkey"
+          },
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "is_whitelisted",
+            "type": "bool"
+          },
+          {
+            "name": "creation_date",
+            "type": "i64"
+          },
+          {
+            "name": "total_markets_created",
+            "type": "u64"
           }
         ]
       }
@@ -2962,7 +3448,7 @@
                 "generics": [
                   {
                     "kind": "const",
-                    "value": "2"
+                    "value": "4"
                   }
                 ]
               }
@@ -2991,7 +3477,7 @@
           {
             "name": "position_state",
             "docs": [
-              "Encrypted user position: [yes_tokens, no_tokens] as 32-byte ciphertexts"
+              "Encrypted user position: [yes_tokens, no_tokens, yes_tokens_closed, no_tokens_closed] as 32-byte ciphertexts"
             ],
             "type": {
               "array": [
@@ -3001,13 +3487,26 @@
                     32
                   ]
                 },
-                2
+                4
               ]
             }
           },
           {
             "name": "nonce",
             "type": "u128"
+          },
+          {
+            "name": "close_records",
+            "docs": [
+              "Track position close events for public window reveal"
+            ],
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "CloseRecord"
+                }
+              }
+            }
           }
         ]
       }
@@ -3031,13 +3530,57 @@
                     32
                   ]
                 },
-                2
+                4
               ]
             }
           },
           {
             "name": "nonce",
             "type": "u128"
+          }
+        ]
+      }
+    },
+    {
+      "name": "UtilityPubkeys",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "x25519_pubkey",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "ed25519_verifying_key",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "elgamal_pubkey",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "pubkey_validity_proof",
+            "type": {
+              "array": [
+                "u8",
+                64
+              ]
+            }
           }
         ]
       }
@@ -3085,7 +3628,7 @@
                 "generics": [
                   {
                     "kind": "const",
-                    "value": "2"
+                    "value": "4"
                   }
                 ]
               }
@@ -3118,39 +3661,14 @@
           {
             "name": "no_pool",
             "type": "u64"
-          }
-        ]
-      }
-    },
-    {
-      "name": "X25519Pubkey",
-      "type": {
-        "kind": "enum",
-        "variants": [
-          {
-            "name": "Set",
-            "fields": [
-              {
-                "array": [
-                  "u8",
-                  32
-                ]
-              }
-            ]
           },
           {
-            "name": "Unset",
-            "fields": [
-              {
-                "array": [
-                  "u8",
-                  32
-                ]
-              },
-              {
-                "vec": "bool"
-              }
-            ]
+            "name": "yes_price",
+            "type": "u64"
+          },
+          {
+            "name": "no_price",
+            "type": "u64"
           }
         ]
       }

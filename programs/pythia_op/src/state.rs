@@ -1,5 +1,4 @@
 use anchor_lang::prelude::*;
-use arcium_anchor::prelude::*;
 
 #[account]
 pub struct Sponsor {

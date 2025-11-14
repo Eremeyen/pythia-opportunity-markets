@@ -6,7 +6,7 @@ resolution = true
 skip-lint = false
 
 [programs.devnet]
-pythia_op = "66ss7Ao4f9WPGx1NT6m1HFNZKmVLNfqnZchT4Kwwwy5a"
+pythia_op = "DNBCB9WzLruKzvdFYpoEXNr9bVTTJ8eCeNMzKHhZRP1m"
 
 [programs.localnet]
 pythia_op = "CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm"
@@ -29,6 +29,10 @@ upgradeable = false
 [[test.genesis]]
 address = "BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6"
 program = "/Users/aabis/Projects/pythia-opportunity-markets/program/artifacts/arcium_program_0.3.0.so"
+
+[[test.genesis]]
+address = "Bv3Fb9VjzjWGfX18QTUcVycAfeLoQ5zZN6vv2g3cTZxp"
+program = "/Users/aabis/Projects/pythia-opportunity-markets/artifacts/arcium_program_0.4.0.so"
 
 [test.validator]
 bind_address = "0.0.0.0"
