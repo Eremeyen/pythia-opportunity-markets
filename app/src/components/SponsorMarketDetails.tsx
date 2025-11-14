@@ -12,7 +12,25 @@ export default function SponsorMarketDetails({
   onResolveClick: () => void;
   sponsorMode: boolean;
 }) {
-  const values = market.priceSeries ?? [...Array(24)].map((_, i) => 100 + Math.sin(i / 3) * 2 + i * 0.2);
+  const values = market.priceSeries ?? ((): number[] => {
+    const out: number[] = [];
+    let value = 50 + (Math.random() * 40 - 20);
+    for (let i = 0; i < 24; i++) {
+      const jump = Math.random() < 0.25 ? (Math.random() * 40 - 20) : 0;
+      const noise = Math.random() * 14 - 7;
+      value = Math.max(0, Math.min(100, value + noise + jump));
+      out.push(value);
+    }
+    return out;
+  })();
+
+  const timestamps = (() => {
+    const len = values.length;
+    if (len === 0) return [] as number[];
+    const end = Date.now();
+    const start = end - (len - 1) * 3600_000;
+    return Array.from({ length: len }, (_, i) => start + i * 3600_000);
+  })();
 
   const now = Date.now();
   const isResolved = market.status === "resolved";
@@ -35,7 +53,7 @@ export default function SponsorMarketDetails({
       <div className="border-2 border-black rounded-xl overflow-hidden bg-white">
         <div className="px-4 py-3 border-b-2 border-black bg-black text-white font-bold">Market</div>
         <div className="p-4 space-y-3">
-          <div className="flex items-start justify-between gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-[1fr_520px] items-start gap-6">
             <div>
               <div className="text-xl font-extrabold text-[#0b1f3a]">{market.title}</div>
               <div className="text-sm text-[#0b1f3a] opacity-80 mt-1">{market.description}</div>
@@ -43,7 +61,18 @@ export default function SponsorMarketDetails({
                 Liquidity {market.liquidity.toLocaleString(undefined, { maximumFractionDigits: 2 })} SOL · {market.isPrivate ? "Private" : "Public"}
               </div>
             </div>
-            <Sparkline values={values} width={260} height={80} className="shrink-0" />
+            {(sponsorMode || inPublic || isResolved) && (
+              <Sparkline
+                values={values}
+                height={160}
+                className="w-full"
+                showCurrentRefLine
+                showAxes
+                showTooltip
+                yStartAtZero
+                timestamps={timestamps}
+              />
+            )}
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             <Kpi label="Probability" value={`${probability.toFixed(1)}%`} />
@@ -62,7 +91,7 @@ export default function SponsorMarketDetails({
                 onClick={onResolveClick}
                 className="px-5 py-2 rounded-xl bg-white text-black font-extrabold border-4 border-black hover:bg-neutral-100"
               >
-                Resolve…
+                Resolve
               </button>
             </div>
           )}

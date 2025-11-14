@@ -1,8 +1,8 @@
-import AttentionIndicator from "./AttentionIndicator";
 import Sparkline from "./Sparkline";
 import { formatDurationShort } from "../utils/time";
 import { useCountdown, useNow } from "../hooks/useCountdown";
 import { Link } from "react-router-dom";
+import { useMemo } from "react";
 
 export type MarketPreviewCardProps = {
   // MARKET ID MAY NEED TO BE IN DIFFERENT FORMAT
@@ -19,6 +19,7 @@ export type MarketPreviewCardProps = {
   attentionScore?: number;
   priceSeries?: number[];
   className?: string;
+  forceShowPrice?: boolean;
 };
 
 function Badge({
@@ -48,42 +49,49 @@ export default function MarketPreviewCard(props: MarketPreviewCardProps) {
     description,
     opportunityEndMs,
     resultsEndMs,
-    nextOpportunityStartMs,
     isPriceHidden,
-    attentionScore,
     priceSeries,
     className,
+    forceShowPrice,
   } = props;
 
   const { remainingMs: oppRemainMs, isPast: oppPast } =
     useCountdown(opportunityEndMs);
   const now = useNow();
 
-  const badgeA = oppPast
-    ? {
-        label: "Opportunity ended",
-        value: formatDurationShort(now - opportunityEndMs) + " ago",
-      }
-    : { label: "Opportunity ends in", value: formatDurationShort(oppRemainMs) };
+  const countdownSegments = useMemo(() => {
+    if (!isPriceHidden) return [] as { label: string; value: string }[];
+    const totalSeconds = Math.max(0, Math.floor(oppRemainMs / 1000));
+    const days = Math.floor(totalSeconds / 86400);
+    const hours = Math.floor((totalSeconds % 86400) / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const pad = (v: number) => v.toString().padStart(2, "0");
+    return [
+      { label: "Days", value: pad(days) },
+      { label: "Hours", value: pad(hours) },
+      { label: "Minutes", value: pad(minutes) },
+    ];
+  }, [isPriceHidden, oppRemainMs]);
 
-  let badgeB: { label: string; value: string } | null = null;
-  if (resultsEndMs) {
-    const { remainingMs, isPast } = useCountdown(resultsEndMs);
-    badgeB = isPast
-      ? {
-          label: "Results ended",
-          value: formatDurationShort(now - resultsEndMs) + " ago",
-        }
-      : { label: "Results end in", value: formatDurationShort(remainingMs) };
-  } else if (nextOpportunityStartMs) {
-    const { remainingMs, isPast } = useCountdown(nextOpportunityStartMs);
-    badgeB = isPast
-      ? {
-          label: "Next window started",
-          value: formatDurationShort(now - nextOpportunityStartMs) + " ago",
-        }
-      : { label: "Next window in", value: formatDurationShort(remainingMs) };
-  }
+  const showChart =  !isPriceHidden;
+
+  const resolutionDateMs = resultsEndMs ?? opportunityEndMs;
+  const resolutionBadge = {
+    label: "Estimated Resolution",
+    value: new Date(resolutionDateMs).toLocaleDateString(undefined, {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    }),
+  };
+
+  const previewTimestamps = useMemo(() => {
+    const len = priceSeries?.length ?? 0;
+    if (len === 0) return [] as number[];
+    const end = Date.now();
+    const start = end - (len - 1) * 3600_000;
+    return Array.from({ length: len }, (_, i) => start + i * 3600_000);
+  }, [priceSeries]);
 
   return (
     <Link
@@ -114,38 +122,56 @@ export default function MarketPreviewCard(props: MarketPreviewCardProps) {
         </div>
 
         <div className="mt-4 h-24 w-full flex items-center">
-          {isPriceHidden ? (
-            <div className="w-full h-full flex items-center justify-between gap-3">
-              <AttentionIndicator score={attentionScore} />
-              <span className="text-xs font-bold text-[#0b1f3a]">
-                Price hidden during opportunity
-              </span>
-            </div>
-          ) : (
+          {showChart ? (
             <Sparkline
               values={priceSeries ?? []}
-              width={480}
               height={96}
-              stroke="#0b1f3a"
-              fill="#0b1f3a10"
               className="w-full h-24"
+              showCurrentRefLine
+              yStartAtZero
+              timestamps={previewTimestamps}
             />
+          ) : (
+            <div className="w-full flex flex-col items-center gap-2">
+              <div className="text-[11px] uppercase tracking-wide text-[#0b1f3a] opacity-70">
+                Opportunity period ends in
+              </div>
+              <div className="flex items-center justify-center gap-2">
+                {countdownSegments.map((segment) => (
+                  <div
+                    key={segment.label}
+                    className="min-w-[64px] rounded-xl border-2 border-black bg-white px-3 py-2 text-center shadow-[2px_2px_0_0_rgba(11,31,58,0.15)]"
+                  >
+                    <div className="text-lg font-extrabold text-[#0b1f3a] tabular-nums">
+                      {segment.value}
+                    </div>
+                    <div className="text-[10px] uppercase tracking-wide text-[#0b1f3a] opacity-70">
+                      {segment.label}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           )}
         </div>
 
         <div className="mt-4 flex flex-wrap items-center gap-2">
+          {/* @todo HAVE SOMETHING ABOUT WHEN THE NEXT OPPORTUNITY WINDOW IS RIGHT HERE */}
           <Badge
-            label={badgeA.label}
-            value={badgeA.value}
-            ariaLabel={`${badgeA.label} ${badgeA.value}`}
+            label={resolutionBadge.label}
+            value={resolutionBadge.value}
+            ariaLabel={`${resolutionBadge.label} ${resolutionBadge.value}`}
           />
-          {badgeB && (
+          {isPriceHidden && oppPast && (
             <Badge
-              label={badgeB.label}
-              value={badgeB.value}
-              ariaLabel={`${badgeB.label} ${badgeB.value}`}
+              label="Opportunity ended"
+              value={formatDurationShort(now - opportunityEndMs) + " ago"}
+              ariaLabel={`Opportunity ended ${
+                formatDurationShort(now - opportunityEndMs) + " ago"
+              }`}
             />
           )}
+          
         </div>
       </div>
     </Link>

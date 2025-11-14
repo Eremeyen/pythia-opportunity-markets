@@ -1,21 +1,22 @@
-import { useState } from "react";
 import { useUserAddress } from "../hooks/useUserAddress";
 import { usePortfolioBalance } from "../hooks/usePortfolioBalance";
 import { useCumulativePnl } from "../hooks/useCumulativePnl";
-import { getPositions } from "../config/mockPositions";
-import type { Position } from "../types/portfolio";
 import PositionCard from "../components/PositionCard";
+import { useUserPositions } from "../hooks/useUserPositions";
 
 export default function ProfilePage() {
   const { short } = useUserAddress();
   const { balanceUsd } = usePortfolioBalance();
   const { pnlUsd } = useCumulativePnl();
-  const [positions, setPositions] = useState<Position[]>(() => getPositions());
+  const { positions, setPositions } = useUserPositions();
 
   const onClaim = (id: string) => {
-    setPositions((prev) =>
-      prev.map((p) => (p.id === id ? { ...p, claimed: true, hasPendingClaim: false } : p))
-    );
+    // Simulate onchain finality delay
+    setTimeout(() => {
+      setPositions((prev) =>
+        prev.map((p) => (p.id === id ? { ...p, claimed: true, hasPendingClaim: false } : p))
+      );
+    }, 1400);
   };
 
   return (

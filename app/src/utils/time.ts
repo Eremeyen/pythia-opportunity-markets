@@ -30,3 +30,22 @@ export function bucketAttention(score?: number): "Low" | "Medium" | "High" {
   if (s < 0.66) return "Medium";
   return "High";
 }
+
+export type CountdownSegment = {
+  label: string;
+  value: string;
+};
+
+export function getCountdownSegments(ms: number): CountdownSegment[] {
+  if (!Number.isFinite(ms) || ms < 0) ms = 0;
+  const sec = Math.floor(ms / 1000);
+  const days = Math.floor(sec / 86400);
+  const hours = Math.floor((sec % 86400) / 3600);
+  const minutes = Math.floor((sec % 3600) / 60);
+  const pad = (n: number) => n.toString().padStart(2, "0");
+  return [
+    { label: "Days", value: pad(days) },
+    { label: "Hours", value: pad(hours) },
+    { label: "Minutes", value: pad(minutes) },
+  ];
+}

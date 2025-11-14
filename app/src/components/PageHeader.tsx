@@ -1,5 +1,4 @@
 import logo from "../assets/black_pythia_logo.png";
-import AnimatedTitle from "./AnimatedTitle";
 import { usePrivy } from "@privy-io/react-auth";
 import { Link } from "react-router-dom";
 
@@ -8,7 +7,7 @@ export default function PageHeader() {
   const { ready, authenticated, logout, login } = usePrivy();
 
   return (
-    <header className="flex items-center justify-between py-3">
+    <header className="relative flex items-center justify-between py-3">
       <Link
         to="/"
         className="flex items-center gap-6 md:gap-8 no-underline hover:opacity-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#174a8c] focus-visible:ring-offset-white rounded-lg"
@@ -21,15 +20,13 @@ export default function PageHeader() {
             className="h-full w-full object-contain select-none origin-left scale-125 md:scale-150"
           />
         </div>
-        <h1 className="text-black text-2xl md:text-4xl lg:text-4xl font-extrabold tracking-tight">
-          <AnimatedTitle
-            full="Pythia's Opportunity Markets"
-            short="Pythia"
-            oncePerSession={import.meta.env.PROD}
-          />
-        </h1>
       </Link>
-       <div className="flex items-center gap-3">
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none px-4">
+        <h1 className="text-black text-3xl md:text-5xl lg:text-5xl font-semibold tracking-tight text-center">
+          Pythia Markets
+        </h1>
+      </div>
+      <div className="flex items-center gap-3">
         <Link
           to="/for-sponsors"
           className="text-sm italic text-[#0b1f3a] opacity-70 hover:opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#174a8c] focus-visible:ring-offset-white"

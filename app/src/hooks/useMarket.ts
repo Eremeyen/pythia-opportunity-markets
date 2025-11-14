@@ -1,5 +1,7 @@
 import { useMemo } from "react";
 import type { Market } from "../types/market";
+import { MOCK_SPONSOR_MARKETS } from "../config/mockSponsorMarkets";
+import { MOCK_MARKETS, type MockMarketPreview } from "../config/mockMarkets";
 
 export function useMarket(id?: string): {
   market?: Market;
@@ -8,35 +10,36 @@ export function useMarket(id?: string): {
 } {
   const market = useMemo<Market | undefined>(() => {
     if (!id) return undefined;
-    const idx = parseInt(id.replace(/\D/g, "")) || 0;
-    const isHidden = idx % 2 === 0;
-    return {
-      id,
-      title: isHidden
-        ? "Will YC fund Orchard AI in the next 6 months?"
-        : "Will a16z fund AtlasDB this quarter?",
-      description: "First-pass mock market details for development.",
-      isPriceHidden: isHidden,
-      opportunityEndMs: Date.now() + 72 * 3600_000,
-      resultsEndMs: Date.now() + 30 * 24 * 3600_000,
-      priceSeries: [...Array(96)].map(
-        (_, i) => 100 + Math.sin(i / 6) * 3 + i * 0.2
-      ),
-      attentionScore: 0.66,
-      sponsor: {
-        id: "s-1",
-        name: isHidden ? "YC" : "a16z",
-        url: "https://example-sponsor.org",
-      },
-      company: {
-        id: "c-1",
-        name: isHidden ? "Orchard AI" : "AtlasDB",
-        logoUrl: isHidden ? "/logos/apple.svg" : "/logos/google.svg",
-        website: "https://example.com",
-        summary: "AI infra startup with strong early traction.",
-      },
-    };
+    const direct = MOCK_SPONSOR_MARKETS.find((m) => m.id === id) as Market | undefined;
+    if (direct) return direct;
+    const generic = MOCK_MARKETS.find((m) => m.id === id);
+    return generic ? adaptGenericToMarket(generic) : undefined;
   }, [id]);
 
   return { market, loading: false, error: undefined };
+}
+
+function adaptGenericToMarket(m: MockMarketPreview): Market {
+  return {
+    id: m.id,
+    title: m.title,
+    description: m.description,
+    isPriceHidden: m.isPriceHidden,
+    opportunityEndMs: m.opportunityEndMs,
+    resultsEndMs: m.resultsEndMs,
+    priceSeries: m.priceSeries ?? [],
+    attentionScore: m.attentionScore,
+    sponsor: {
+      id: "sp-demo",
+      name: "Demo Sponsor",
+    },
+    company: {
+      id: `c-${m.id}`,
+      name: m.title,
+      logoUrl: m.logoUrl,
+    },
+    resolutionCriteria:
+      "Resolve to YES if the sponsor confirms a funding decision within the resolution window.",
+    nextOpportunityStartMs: m.nextOpportunityStartMs,
+  };
 }

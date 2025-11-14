@@ -81,7 +81,33 @@ export const MOCK_POSITIONS: Position[] = [
 ];
 
 export function getPositions(): Position[] {
+  try {
+    const raw = typeof window !== "undefined" ? window.localStorage.getItem("positions") : null;
+    if (raw) return JSON.parse(raw) as Position[];
+  } catch {}
   return JSON.parse(JSON.stringify(MOCK_POSITIONS));
+}
+
+export function savePositions(positions: Position[]): void {
+  try {
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem("positions", JSON.stringify(positions));
+    }
+  } catch {}
+}
+
+export function applyResolutionToPositions(marketId: string, outcome: "YES" | "NO"): void {
+  const current = getPositions();
+  const updated = current.map((p) => {
+    if (p.marketId !== marketId) return p;
+    return {
+      ...p,
+      phase: "resolved",
+      resolvedOutcome: outcome,
+      hasPendingClaim: p.side === outcome ? true : false,
+    } as Position;
+  });
+  savePositions(updated);
 }
 
 export function getMarketPhaseById(marketId: string): "public" | "private" | undefined {
