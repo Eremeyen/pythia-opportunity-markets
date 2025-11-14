@@ -15,7 +15,7 @@ pythia_op = "CQvzhuYp299gu8rDs4RyLg1cDgnbDZiEdK51NcnSVwGm"
 url = "https://api.apr.dev"
 
 [provider]
-cluster = "devnet"
+cluster = "localnet"
 wallet = "~/.config/solana/id.json"
 
 [scripts]
@@ -28,9 +28,13 @@ upgradeable = false
 
 [[test.genesis]]
 address = "BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6"
-program = "/Users/aabis/Projects/pythia-opportunity-markets/program/artifacts/arcium_program_0.3.0.so"
+program = "program/artifacts/arcium_program_0.3.0.so"
 
-[test.validator]
 bind_address = "0.0.0.0"
 ledger = ".anchor/test-ledger"
 rpc_port = 8899
+
+[test.validator]
+[[test.genesis]]
+address = "BKck65TgoKRokMjQM3datB9oRwJ8rAj2jxPXvHXUvcL6"
+program = "/Users/soham/Documents/GitHub/pythia-opportunity-markets/artifacts/arcium_program_0.3.0.so"

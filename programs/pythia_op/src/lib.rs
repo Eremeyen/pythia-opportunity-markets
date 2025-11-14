@@ -898,14 +898,14 @@ pub struct InitMarketEncrypted<'info> {
 #[callback_accounts("initialize_market")]
 #[derive(Accounts)]
 pub struct InitializeMarketCallback<'info> {
-    #[account(mut)]
-    pub market: Account<'info, Market>,
     pub arcium_program: Program<'info, Arcium>,
     #[account(address = derive_comp_def_pda!(COMP_DEF_OFFSET_INITIALIZE_MARKET))]
     pub comp_def_account: Account<'info, ComputationDefinitionAccount>,
     #[account(address = ::anchor_lang::solana_program::sysvar::instructions::ID)]
     /// CHECK: instructions_sysvar, checked by the account constraint
     pub instructions_sysvar: AccountInfo<'info>,
+    #[account(mut)]
+    pub market: Account<'info, Market>,
 }
 
 #[queue_computation_accounts("initialize_user_position", user)]
@@ -970,14 +970,14 @@ pub struct InitUserPosition<'info> {
 #[callback_accounts("initialize_user_position")]
 #[derive(Accounts)]
 pub struct InitializeUserPositionCallback<'info> {
-    #[account(mut)]
-    pub user_position: Account<'info, UserPosition>,
     pub arcium_program: Program<'info, Arcium>,
     #[account(address = derive_comp_def_pda!(COMP_DEF_OFFSET_INITIALIZE_USER_POSITION))]
     pub comp_def_account: Account<'info, ComputationDefinitionAccount>,
     #[account(address = ::anchor_lang::solana_program::sysvar::instructions::ID)]
     /// CHECK: instructions_sysvar, checked by the account constraint
     pub instructions_sysvar: AccountInfo<'info>,
+    #[account(mut)]
+    pub user_position: Account<'info, UserPosition>,
 }
 
 #[queue_computation_accounts("process_private_trade", payer)]
@@ -1034,14 +1034,14 @@ pub struct TradePrivate<'info> {
 #[callback_accounts("process_private_trade")]
 #[derive(Accounts)]
 pub struct ProcessPrivateTradeCallback<'info> {
-    #[account(mut)]
-    pub market: Account<'info, Market>,
     pub arcium_program: Program<'info, Arcium>,
     #[account(address = derive_comp_def_pda!(COMP_DEF_OFFSET_PROCESS_PRIVATE_TRADE))]
     pub comp_def_account: Account<'info, ComputationDefinitionAccount>,
     #[account(address = ::anchor_lang::solana_program::sysvar::instructions::ID)]
     /// CHECK: instructions_sysvar, checked by the account constraint
     pub instructions_sysvar: AccountInfo<'info>,
+    #[account(mut)]
+    pub market: Account<'info, Market>,
 }
 
 #[queue_computation_accounts("update_user_position", user)]
@@ -1106,14 +1106,14 @@ pub struct UpdateUserPositionPrivate<'info> {
 #[callback_accounts("update_user_position")]
 #[derive(Accounts)]
 pub struct UpdateUserPositionCallback<'info> {
-    #[account(mut)]
-    pub user_position: Account<'info, UserPosition>,
     pub arcium_program: Program<'info, Arcium>,
     #[account(address = derive_comp_def_pda!(COMP_DEF_OFFSET_UPDATE_USER_POSITION))]
     pub comp_def_account: Account<'info, ComputationDefinitionAccount>,
     #[account(address = ::anchor_lang::solana_program::sysvar::instructions::ID)]
     /// CHECK: instructions_sysvar, checked by the account constraint
     pub instructions_sysvar: AccountInfo<'info>,
+    #[account(mut)]
+    pub user_position: Account<'info, UserPosition>,
 }
 
 #[queue_computation_accounts("close_position", user)]
@@ -1242,14 +1242,14 @@ pub struct SwitchToPublic<'info> {
 #[callback_accounts("reveal_market_state")]
 #[derive(Accounts)]
 pub struct RevealMarketStateCallback<'info> {
-    #[account(mut)]
-    pub market: Account<'info, Market>,
     pub arcium_program: Program<'info, Arcium>,
     #[account(address = derive_comp_def_pda!(COMP_DEF_OFFSET_REVEAL_MARKET_STATE))]
     pub comp_def_account: Account<'info, ComputationDefinitionAccount>,
     #[account(address = ::anchor_lang::solana_program::sysvar::instructions::ID)]
     /// CHECK: instructions_sysvar, checked by the account constraint
     pub instructions_sysvar: AccountInfo<'info>,
+    #[account(mut)]
+    pub market: Account<'info, Market>,
 }
 
 #[derive(Accounts)]
@@ -1315,14 +1315,14 @@ pub struct SwitchToPrivate<'info> {
 #[callback_accounts("hide_market_state")]
 #[derive(Accounts)]
 pub struct HideMarketStateCallback<'info> {
-    #[account(mut)]
-    pub market: Account<'info, Market>,
     pub arcium_program: Program<'info, Arcium>,
     #[account(address = derive_comp_def_pda!(COMP_DEF_OFFSET_HIDE_MARKET_STATE))]
     pub comp_def_account: Account<'info, ComputationDefinitionAccount>,
     #[account(address = ::anchor_lang::solana_program::sysvar::instructions::ID)]
     /// CHECK: instructions_sysvar, checked by the account constraint
     pub instructions_sysvar: AccountInfo<'info>,
+    #[account(mut)]
+    pub market: Account<'info, Market>,
 }
 
 #[queue_computation_accounts("view_market_state", sponsor)]
@@ -1379,14 +1379,14 @@ pub struct GetSponsorView<'info> {
 #[callback_accounts("view_market_state")]
 #[derive(Accounts)]
 pub struct ViewMarketStateCallback<'info> {
-    #[account(mut)]
-    pub market: Account<'info, Market>,
     pub arcium_program: Program<'info, Arcium>,
     #[account(address = derive_comp_def_pda!(COMP_DEF_OFFSET_VIEW_MARKET_STATE))]
     pub comp_def_account: Account<'info, ComputationDefinitionAccount>,
     #[account(address = ::anchor_lang::solana_program::sysvar::instructions::ID)]
     /// CHECK: instructions_sysvar, checked by the account constraint
     pub instructions_sysvar: AccountInfo<'info>,
+    #[account(mut)]
+    pub market: Account<'info, Market>,
 }
 
 #[queue_computation_accounts("view_user_position", sponsor)]
@@ -1447,14 +1447,14 @@ pub struct GetUserPositionView<'info> {
 #[callback_accounts("view_user_position")]
 #[derive(Accounts)]
 pub struct ViewUserPositionCallback<'info> {
-    #[account(mut)]
-    pub user_position: Account<'info, UserPosition>,
     pub arcium_program: Program<'info, Arcium>,
     #[account(address = derive_comp_def_pda!(COMP_DEF_OFFSET_VIEW_USER_POSITION))]
     pub comp_def_account: Account<'info, ComputationDefinitionAccount>,
     #[account(address = ::anchor_lang::solana_program::sysvar::instructions::ID)]
     /// CHECK: instructions_sysvar, checked by the account constraint
     pub instructions_sysvar: AccountInfo<'info>,
+    #[account(mut)]
+    pub user_position: Account<'info, UserPosition>,
 }
 
 #[derive(Accounts)]
