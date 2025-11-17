@@ -235,7 +235,7 @@ export async function deriveArciumAccounts(params: {
 }
 
 /**
- * Needed for initMarketEncrypted. See pythia_op.ts for more details. 
+ * Needed for initMarketEncrypted. See pythia_op.ts for more details.
  * @returns A random computation offset
  */
 export function generateComputationOffset(): bigint {
@@ -290,7 +290,7 @@ export function encryptArciumPayload(args: {
 export const awaitComputationFinalization = async (computationOffset: bigint) => {
 	// TODO: IMPLEMENT THIS
 	return null;
-}
+};
 
 export function serializeBigint(value: bigint, byteLength: number): Uint8Array {
 	return serializeLE(value, byteLength);
