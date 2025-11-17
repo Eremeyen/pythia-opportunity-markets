@@ -125,6 +125,7 @@ export function makeCreateMarketInstructionPlan(params: CreateMarketPlanParams):
 		params.initializeMarketEncrypted.args,
 		params.initializeMarketEncrypted.accounts,
 	);
+	// @todo: NEED TO CHECK IF IXs can be sent sequentially.
 	return sequentialInstructionPlan([initMarketIx, initMarketEncryptedIx]);
 }
 
@@ -180,6 +181,7 @@ export function makePrivateTradeInstructionPlan(params: PrivateTradePlanParams):
 		params.updateUserPositionPrivate.args,
 		params.updateUserPositionPrivate.accounts,
 	);
+	// @todo: NEED TO CHECK IF IXs can be sent sequentially.
 	return sequentialInstructionPlan([tradeIx, updateIx]);
 }
 

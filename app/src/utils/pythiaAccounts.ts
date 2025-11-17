@@ -20,7 +20,7 @@ const USER_POSITION_SEED = TEXT_ENCODER.encode('user_position');
 export async function deriveSponsorPda(
 	authority: string | Address,
 	programId: string = PYTHIA_PROGRAM_ID,
-): Promise<string> {
+): Promise<Address> {
 	const [pda] = await getProgramDerivedAddress({
 		programAddress: programId as Address,
 		seeds: [SPONSOR_SEED, ADDRESS_ENCODER.encode(authority as Address)],
@@ -29,10 +29,10 @@ export async function deriveSponsorPda(
 }
 
 export async function deriveMarketPda(
-	sponsorAccount: string,
+	sponsorAccount: string | Address,
 	question: string,
 	programId: string = PYTHIA_PROGRAM_ID,
-): Promise<string> {
+): Promise<Address> {
 	const [pda] = await getProgramDerivedAddress({
 		programAddress: programId as Address,
 		seeds: [
@@ -48,7 +48,7 @@ export async function deriveUserPositionPda(
 	market: string | Address,
 	user: string | Address,
 	programId: string | Address = PYTHIA_PROGRAM_ID as Address,
-): Promise<string> {
+): Promise<Address> {
 	const [pda] = await getProgramDerivedAddress({
 		programAddress: programId as Address,
 		seeds: [

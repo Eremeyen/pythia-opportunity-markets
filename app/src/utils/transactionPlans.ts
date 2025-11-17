@@ -122,94 +122,106 @@ export type PublicTradePlanParams = Readonly<{
 // Sponsor-facing plan stubs
 // =========================
 
-export async function makeCreateMarketTransactionPlan(
+export const makeCreateMarketTransactionPlan = async (
 	planner: TransactionPlanner,
 	params: CreateMarketPlanParams,
-): Promise<TransactionPlan> {
+): Promise<TransactionPlan> => {
 	const plan = makeCreateMarketInstructionPlan(params);
 	return planner(plan);
-}
+};
 
-export async function makeSwitchToPublicTransactionPlan(
+export const makeSwitchToPublicTransactionPlan = async (
 	planner: TransactionPlanner,
 	params: SwitchToPublicPlanParams,
-): Promise<TransactionPlan> {
+): Promise<TransactionPlan> => {
 	const plan = makeSwitchToPublicInstructionPlan(params);
 	return planner(plan);
-}
+};
 
-export async function makeSwitchToPrivateTransactionPlan(
+export const makeSwitchToPrivateTransactionPlan = async (
 	planner: TransactionPlanner,
 	params: SwitchToPrivatePlanParams,
-): Promise<TransactionPlan> {
+): Promise<TransactionPlan> => {
 	const plan = makeSwitchToPrivateInstructionPlan(params);
 	return planner(plan);
-}
+};
 
-export async function makeResolveMarketTransactionPlan(
+export const makeResolveMarketTransactionPlan = async (
 	planner: TransactionPlanner,
 	params: ResolveMarketPlanParams,
-): Promise<TransactionPlan> {
+): Promise<TransactionPlan> => {
 	const plan = makeResolveMarketInstructionPlan(params);
 	return planner(plan);
-}
+};
 
-export async function makeGetSponsorViewTransactionPlan(
+export const makeGetSponsorViewTransactionPlan = async (
 	planner: TransactionPlanner,
 	params: SponsorViewMarketPlanParams,
-): Promise<TransactionPlan> {
+): Promise<TransactionPlan> => {
 	const plan = makeGetSponsorViewInstructionPlan(params);
 	return planner(plan);
-}
+};
 
-export async function makeGetUserPositionViewTransactionPlan(
+export const makeGetUserPositionViewTransactionPlan = async (
 	planner: TransactionPlanner,
 	params: SponsorViewUserPositionPlanParams,
-): Promise<TransactionPlan> {
+): Promise<TransactionPlan> => {
 	const plan = makeGetUserPositionViewInstructionPlan(params);
 	return planner(plan);
-}
+};
 
-export async function makeInitSponsorTransactionPlan(
+export const makeInitSponsorTransactionPlan = async (
 	planner: TransactionPlanner,
 	params: InitSponsorPlanParams,
-): Promise<TransactionPlan> {
+): Promise<TransactionPlan> => {
 	const plan = makeInitSponsorInstructionPlan(params);
 	return planner(plan);
-}
+};
 
 // =======================
 // Trader-facing plan stubs
 // =======================
 
-export async function makeInitUserPositionTransactionPlan(
+export const makeInitUserPositionTransactionPlan = async (
 	planner: TransactionPlanner,
 	params: InitUserPositionPlanParams,
-): Promise<TransactionPlan> {
+): Promise<TransactionPlan> => {
 	const plan = makeInitUserPositionInstructionPlan(params);
 	return planner(plan);
-}
+};
 
-export async function makePrivateTradeTransactionPlan(
+export const makePrivateTradeTransactionPlan = async (
 	planner: TransactionPlanner,
 	params: PrivateTradePlanParams,
-): Promise<TransactionPlan> {
+): Promise<TransactionPlan> => {
 	const plan = makePrivateTradeInstructionPlan(params);
 	return planner(plan);
-}
+};
 
-export async function makeClosePositionPrivateTransactionPlan(
+export const makeClosePositionPrivateTransactionPlan = async (
 	planner: TransactionPlanner,
 	params: ClosePositionPrivatePlanParams,
-): Promise<TransactionPlan> {
+): Promise<TransactionPlan> => {
 	const plan = makeClosePositionPrivateInstructionPlan(params);
 	return planner(plan);
-}
+};
 
-export async function makePublicTradeTransactionPlan(
+export const makePublicTradeTransactionPlan = async (
 	planner: TransactionPlanner,
 	params: PublicTradePlanParams,
-): Promise<TransactionPlan> {
+): Promise<TransactionPlan> => {
 	const plan = makePublicTradeInstructionPlan(params);
 	return planner(plan);
-}
+};
+
+// =========================
+// High-level builders (NEW AND NEEDS TO BE CHECKED)
+// =========================
+
+// TODO: Reintroduce high-level Arcium builders.
+// Implementation notes:
+// - Derive PDAs for sponsor/market/user position via deriveSponsorPda/deriveMarketPda/deriveUserPositionPda.
+// - Fetch MXE snapshot, generate computation offsets and MXE nonce, and derive Arcium accounts per circuit.
+// - Encrypt payloads (e.g., trade amount + side) with the MXE public key.
+// - Build account metas (signer/writable/readonly) including System Program and Arcium PDAs.
+// - Delegate to lower-level planners (makeCreateMarketTransactionPlan, makePrivateTradeTransactionPlan).
