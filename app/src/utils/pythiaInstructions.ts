@@ -1,10 +1,10 @@
-import { type Instruction } from '@solana/kit';
 import { PYTHIA_OP_PROGRAM_ADDRESS } from '../../../clients/js/src/generated/programs';
 import * as Pythia from '../../../clients/js/src/generated/instructions';
 
 export type MakeInitSponsorIxArguments = Pythia.InitSponsorInstructionDataArgs;
 
-type PythiaInstruction = Instruction<typeof PYTHIA_OP_PROGRAM_ADDRESS>;
+// type PythiaInstruction = Instruction<typeof PYTHIA_OP_PROGRAM_ADDRESS>;
+// import { type Instruction } from '@solana/kit';
 
 export type MakeInitSponsorIxAccounts = Pythia.InitSponsorInput;
 export type MakeWhitelistSponsorIxAccounts = Pythia.WhitelistSponsorInput;
