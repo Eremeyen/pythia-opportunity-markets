@@ -71,7 +71,7 @@ export type MakeResolveMarketIxArguments = Pythia.ResolveMarketInstructionDataAr
 
 export type MakeResolveMarketIxAccounts = Pythia.ResolveMarketInput;
 
-export const makeInitSponsorIx = (
+export const makeInitSponsorIxSync = (
 	_args: MakeInitSponsorIxArguments,
 	_accounts: MakeInitSponsorIxAccounts,
 ) => {
@@ -81,13 +81,13 @@ export const makeInitSponsorIx = (
 	);
 };
 
-export const makeWhitelistSponsorIx = (_accounts: MakeWhitelistSponsorIxAccounts) => {
+export const makeWhitelistSponsorIxSync = (_accounts: MakeWhitelistSponsorIxAccounts) => {
 	return Pythia.getWhitelistSponsorInstruction(_accounts, {
 		programAddress: PYTHIA_OP_PROGRAM_ADDRESS,
 	});
 };
 
-export const makeInitInitializeMarketCompDefIx = (
+export const makeInitInitializeMarketCompDefIxSync = (
 	_accounts: MakeInitInitializeMarketCompDefIxAccounts,
 ) => {
 	return Pythia.getInitInitializeMarketCompDefInstruction(_accounts, {
@@ -95,7 +95,7 @@ export const makeInitInitializeMarketCompDefIx = (
 	});
 };
 
-export const makeInitInitializeUserPositionCompDefIx = (
+export const makeInitInitializeUserPositionCompDefIxSync = (
 	_accounts: MakeInitInitializeUserPositionCompDefIxAccounts,
 ) => {
 	return Pythia.getInitInitializeUserPositionCompDefInstruction(_accounts, {
@@ -103,7 +103,7 @@ export const makeInitInitializeUserPositionCompDefIx = (
 	});
 };
 
-export const makeInitProcessPrivateTradeCompDefIx = (
+export const makeInitProcessPrivateTradeCompDefIxSync = (
 	_accounts: MakeInitProcessPrivateTradeCompDefIxAccounts,
 ) => {
 	return Pythia.getInitProcessPrivateTradeCompDefInstruction(_accounts, {
@@ -111,7 +111,7 @@ export const makeInitProcessPrivateTradeCompDefIx = (
 	});
 };
 
-export const makeInitUpdateUserPositionCompDefIx = (
+export const makeInitUpdateUserPositionCompDefIxSync = (
 	_accounts: MakeInitUpdateUserPositionCompDefIxAccounts,
 ) => {
 	return Pythia.getInitUpdateUserPositionCompDefInstruction(_accounts, {
@@ -119,7 +119,7 @@ export const makeInitUpdateUserPositionCompDefIx = (
 	});
 };
 
-export const makeInitClosePositionCompDefIx = (
+export const makeInitClosePositionCompDefIxSync = (
 	_accounts: MakeInitClosePositionCompDefIxAccounts,
 ) => {
 	return Pythia.getInitClosePositionCompDefInstruction(_accounts, {
@@ -127,7 +127,7 @@ export const makeInitClosePositionCompDefIx = (
 	});
 };
 
-export const makeInitRevealMarketStateCompDefIx = (
+export const makeInitRevealMarketStateCompDefIxSync = (
 	_accounts: MakeInitRevealMarketStateCompDefIxAccounts,
 ) => {
 	return Pythia.getInitRevealMarketStateCompDefInstruction(_accounts, {
@@ -135,7 +135,7 @@ export const makeInitRevealMarketStateCompDefIx = (
 	});
 };
 
-export const makeInitRevealUserPositionCompDefIx = (
+export const makeInitRevealUserPositionCompDefIxSync = (
 	_accounts: MakeInitRevealUserPositionCompDefIxAccounts,
 ) => {
 	return Pythia.getInitRevealUserPositionCompDefInstruction(_accounts, {
@@ -143,7 +143,7 @@ export const makeInitRevealUserPositionCompDefIx = (
 	});
 };
 
-export const makeInitHideMarketStateCompDefIx = (
+export const makeInitHideMarketStateCompDefIxSync = (
 	_accounts: MakeInitHideMarketStateCompDefIxAccounts,
 ) => {
 	return Pythia.getInitHideMarketStateCompDefInstruction(_accounts, {
@@ -151,7 +151,7 @@ export const makeInitHideMarketStateCompDefIx = (
 	});
 };
 
-export const makeInitViewMarketStateCompDefIx = (
+export const makeInitViewMarketStateCompDefIxSync = (
 	_accounts: MakeInitViewMarketStateCompDefIxAccounts,
 ) => {
 	return Pythia.getInitViewMarketStateCompDefInstruction(_accounts, {
@@ -159,7 +159,7 @@ export const makeInitViewMarketStateCompDefIx = (
 	});
 };
 
-export const makeInitViewUserPositionCompDefIx = (
+export const makeInitViewUserPositionCompDefIxSync = (
 	_accounts: MakeInitViewUserPositionCompDefIxAccounts,
 ) => {
 	return Pythia.getInitViewUserPositionCompDefInstruction(_accounts, {
@@ -167,7 +167,7 @@ export const makeInitViewUserPositionCompDefIx = (
 	});
 };
 
-export const makeInitializeMarketIx = (
+export const makeInitializeMarketIxSync = (
 	_args: MakeInitializeMarketIxArguments,
 	_accounts: MakeInitializeMarketIxAccounts,
 ) => {
@@ -177,7 +177,7 @@ export const makeInitializeMarketIx = (
 	);
 };
 
-export const makeInitializeMarketEncryptedIx = (
+export const makeInitializeMarketEncryptedIxSync = (
 	_args: MakeInitializeMarketEncryptedIxArguments,
 	_accounts: MakeInitializeMarketEncryptedIxAccounts,
 ) => {
@@ -187,7 +187,7 @@ export const makeInitializeMarketEncryptedIx = (
 	);
 };
 
-export const makeInitUserPositionIx = (
+export const makeInitUserPositionIxSync = (
 	_args: MakeInitUserPositionIxArguments,
 	_accounts: MakeInitUserPositionIxAccounts,
 ) => {
@@ -197,7 +197,7 @@ export const makeInitUserPositionIx = (
 	);
 };
 
-export const makePrivateTradeIx = (
+export const makePrivateTradeIxSync = (
 	_args: MakePrivateTradeIxArguments,
 	_accounts: MakePrivateTradeIxAccounts,
 ) => {
@@ -207,7 +207,7 @@ export const makePrivateTradeIx = (
 	);
 };
 
-export const makeUpdateUserPositionPrivateIx = (
+export const makeUpdateUserPositionPrivateIxSync = (
 	_args: MakeUpdateUserPositionPrivateIxArguments,
 	_accounts: MakeUpdateUserPositionPrivateIxAccounts,
 ) => {
@@ -217,7 +217,7 @@ export const makeUpdateUserPositionPrivateIx = (
 	);
 };
 
-export const makeClosePositionPrivateIx = (
+export const makeClosePositionPrivateIxSync = (
 	_args: MakeClosePositionPrivateIxArguments,
 	_accounts: MakeClosePositionPrivateIxAccounts,
 ) => {
@@ -227,7 +227,7 @@ export const makeClosePositionPrivateIx = (
 	);
 };
 
-export const makeSwitchToPublicIx = (
+export const makeSwitchToPublicIxSync = (
 	_args: MakeSwitchToPublicIxArguments,
 	_accounts: MakeSwitchToPublicIxAccounts,
 ) => {
@@ -237,7 +237,7 @@ export const makeSwitchToPublicIx = (
 	);
 };
 
-export const makePublicTradeIx = (
+export const makePublicTradeIxSync = (
 	_args: MakePublicTradeIxArguments,
 	_accounts: MakePublicTradeIxAccounts,
 ) => {
@@ -247,7 +247,7 @@ export const makePublicTradeIx = (
 	);
 };
 
-export const makeSwitchToPrivateIx = (
+export const makeSwitchToPrivateIxSync = (
 	_args: MakeSwitchToPrivateIxArguments,
 	_accounts: MakeSwitchToPrivateIxAccounts,
 ) => {
@@ -257,7 +257,7 @@ export const makeSwitchToPrivateIx = (
 	);
 };
 
-export const makeGetSponsorViewIx = (
+export const makeGetSponsorViewIxSync = (
 	_args: MakeGetSponsorViewIxArguments,
 	_accounts: MakeGetSponsorViewIxAccounts,
 ) => {
@@ -267,7 +267,7 @@ export const makeGetSponsorViewIx = (
 	);
 };
 
-export const makeGetUserPositionViewIx = (
+export const makeGetUserPositionViewIxSync = (
 	_args: MakeGetUserPositionViewIxArguments,
 	_accounts: MakeGetUserPositionViewIxAccounts,
 ) => {
@@ -277,7 +277,7 @@ export const makeGetUserPositionViewIx = (
 	);
 };
 
-export const makeResolveMarketIx = (
+export const makeResolveMarketIxSync = (
 	_args: MakeResolveMarketIxArguments,
 	_accounts: MakeResolveMarketIxAccounts,
 ) => {

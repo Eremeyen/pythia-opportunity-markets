@@ -30,22 +30,22 @@ import type {
 	MakeUpdateUserPositionPrivateIxArguments,
 	MakePrivateTradeIxAccounts,
 	MakePrivateTradeIxArguments,
-} from './pythiaInstructions';
+} from './pythiaInstructionsSync';
 import {
-	makeClosePositionPrivateIx,
-	makeGetSponsorViewIx,
-	makeGetUserPositionViewIx,
-	makeInitSponsorIx,
-	makeInitUserPositionIx,
-	makeInitializeMarketEncryptedIx,
-	makeInitializeMarketIx,
-	makePrivateTradeIx,
-	makeUpdateUserPositionPrivateIx,
-	makePublicTradeIx,
-	makeResolveMarketIx,
-	makeSwitchToPrivateIx,
-	makeSwitchToPublicIx,
-} from './pythiaInstructions';
+	makeClosePositionPrivateIxSync,
+	makeGetSponsorViewIxSync,
+	makeGetUserPositionViewIxSync,
+	makeInitSponsorIxSync,
+	makeInitUserPositionIxSync,
+	makeInitializeMarketEncryptedIxSync,
+	makeInitializeMarketIxSync,
+	makePrivateTradeIxSync,
+	makeUpdateUserPositionPrivateIxSync,
+	makePublicTradeIxSync,
+	makeResolveMarketIxSync,
+	makeSwitchToPrivateIxSync,
+	makeSwitchToPublicIxSync,
+} from './pythiaInstructionsSync';
 
 // Parameter types (duplicated here to avoid circular imports with transactionPlans.ts)
 export type CreateMarketPlanParams = Readonly<{
@@ -117,11 +117,11 @@ export type PublicTradePlanParams = Readonly<{
 
 // Sponsor-facing InstructionPlan helpers
 export function makeCreateMarketInstructionPlan(params: CreateMarketPlanParams): InstructionPlan {
-	const initMarketIx = makeInitializeMarketIx(
+	const initMarketIx = makeInitializeMarketIxSync(
 		params.initializeMarket.args,
 		params.initializeMarket.accounts,
 	);
-	const initMarketEncryptedIx = makeInitializeMarketEncryptedIx(
+	const initMarketEncryptedIx = makeInitializeMarketEncryptedIxSync(
 		params.initializeMarketEncrypted.args,
 		params.initializeMarketEncrypted.accounts,
 	);
@@ -132,38 +132,38 @@ export function makeCreateMarketInstructionPlan(params: CreateMarketPlanParams):
 export function makeSwitchToPublicInstructionPlan(
 	params: SwitchToPublicPlanParams,
 ): InstructionPlan {
-	const ix = makeSwitchToPublicIx(params.args, params.accounts);
+	const ix = makeSwitchToPublicIxSync(params.args, params.accounts);
 	return singleInstructionPlan(ix);
 }
 
 export function makeSwitchToPrivateInstructionPlan(
 	params: SwitchToPrivatePlanParams,
 ): InstructionPlan {
-	const ix = makeSwitchToPrivateIx(params.args, params.accounts);
+	const ix = makeSwitchToPrivateIxSync(params.args, params.accounts);
 	return singleInstructionPlan(ix);
 }
 
 export function makeResolveMarketInstructionPlan(params: ResolveMarketPlanParams): InstructionPlan {
-	const ix = makeResolveMarketIx(params.args, params.accounts);
+	const ix = makeResolveMarketIxSync(params.args, params.accounts);
 	return singleInstructionPlan(ix);
 }
 
 export function makeGetSponsorViewInstructionPlan(
 	params: SponsorViewMarketPlanParams,
 ): InstructionPlan {
-	const ix = makeGetSponsorViewIx(params.args, params.accounts);
+	const ix = makeGetSponsorViewIxSync(params.args, params.accounts);
 	return singleInstructionPlan(ix);
 }
 
 export function makeGetUserPositionViewInstructionPlan(
 	params: SponsorViewUserPositionPlanParams,
 ): InstructionPlan {
-	const ix = makeGetUserPositionViewIx(params.args, params.accounts);
+	const ix = makeGetUserPositionViewIxSync(params.args, params.accounts);
 	return singleInstructionPlan(ix);
 }
 
 export function makeInitSponsorInstructionPlan(params: InitSponsorPlanParams): InstructionPlan {
-	const ix = makeInitSponsorIx(params.args, params.accounts);
+	const ix = makeInitSponsorIxSync(params.args, params.accounts);
 	return singleInstructionPlan(ix);
 }
 
@@ -171,13 +171,13 @@ export function makeInitSponsorInstructionPlan(params: InitSponsorPlanParams): I
 export function makeInitUserPositionInstructionPlan(
 	params: InitUserPositionPlanParams,
 ): InstructionPlan {
-	const ix = makeInitUserPositionIx(params.args, params.accounts);
+	const ix = makeInitUserPositionIxSync(params.args, params.accounts);
 	return singleInstructionPlan(ix);
 }
 
 export function makePrivateTradeInstructionPlan(params: PrivateTradePlanParams): InstructionPlan {
-	const tradeIx = makePrivateTradeIx(params.tradePrivate.args, params.tradePrivate.accounts);
-	const updateIx = makeUpdateUserPositionPrivateIx(
+	const tradeIx = makePrivateTradeIxSync(params.tradePrivate.args, params.tradePrivate.accounts);
+	const updateIx = makeUpdateUserPositionPrivateIxSync(
 		params.updateUserPositionPrivate.args,
 		params.updateUserPositionPrivate.accounts,
 	);
@@ -188,11 +188,11 @@ export function makePrivateTradeInstructionPlan(params: PrivateTradePlanParams):
 export function makeClosePositionPrivateInstructionPlan(
 	params: ClosePositionPrivatePlanParams,
 ): InstructionPlan {
-	const ix = makeClosePositionPrivateIx(params.args, params.accounts);
+	const ix = makeClosePositionPrivateIxSync(params.args, params.accounts);
 	return singleInstructionPlan(ix);
 }
 
 export function makePublicTradeInstructionPlan(params: PublicTradePlanParams): InstructionPlan {
-	const ix = makePublicTradeIx(params.args, params.accounts);
+	const ix = makePublicTradeIxSync(params.args, params.accounts);
 	return singleInstructionPlan(ix);
 }

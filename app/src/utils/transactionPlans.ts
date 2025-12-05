@@ -26,7 +26,7 @@ import type {
 	MakeUpdateUserPositionPrivateIxArguments,
 	MakePrivateTradeIxAccounts,
 	MakePrivateTradeIxArguments,
-} from './pythiaInstructions';
+} from './pythiaInstructionsSync';
 import {
 	makeClosePositionPrivateInstructionPlan,
 	makeCreateMarketInstructionPlan,
@@ -40,6 +40,23 @@ import {
 	makeSwitchToPrivateInstructionPlan,
 	makeSwitchToPublicInstructionPlan,
 } from './instructionPlans';
+
+/**
+ * Note: This module currently uses the sync instruction helpers via `pythiaInstructionsSync`.
+ * To switch to the async-safe builders that auto-derive PDAs:
+ *
+ * 1) Import Async types and helpers (example):
+ *    import {
+ *      MakePrivateTradeIxAsyncAccounts,
+ *      MakePrivateTradeIxAsyncArguments,
+ *    } from './pythiaInstructionsAsync';
+ *
+ * 2) Build instructions with `await` in your flow (example):
+ *    const ix = await makePrivateTradeIxAsync(args, accounts);
+ *    const plan = singleInstructionPlan(ix);
+ *
+ * See INTEGRATION.md for when to prefer async (auto-resolving PDAs) vs sync (explicit accounts).
+ */
 
 // =========================
 // Sponsor-facing plan params
