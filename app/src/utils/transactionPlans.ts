@@ -1,32 +1,32 @@
 import { type TransactionPlan, type TransactionPlanner } from '@solana/instruction-plans';
 import type {
-	MakeClosePositionPrivateIxAccounts,
-	MakeClosePositionPrivateIxArguments,
-	MakeGetSponsorViewIxAccounts,
-	MakeGetSponsorViewIxArguments,
-	MakeGetUserPositionViewIxAccounts,
-	MakeGetUserPositionViewIxArguments,
-	MakeInitSponsorIxArguments,
-	MakeInitSponsorIxAccounts,
-	MakeInitUserPositionIxAccounts,
-	MakeInitUserPositionIxArguments,
-	MakeInitializeMarketEncryptedIxAccounts,
-	MakeInitializeMarketEncryptedIxArguments,
-	MakeInitializeMarketIxAccounts,
-	MakeInitializeMarketIxArguments,
-	MakePublicTradeIxAccounts,
-	MakePublicTradeIxArguments,
-	MakeResolveMarketIxAccounts,
-	MakeResolveMarketIxArguments,
-	MakeSwitchToPrivateIxAccounts,
-	MakeSwitchToPrivateIxArguments,
-	MakeSwitchToPublicIxAccounts,
-	MakeSwitchToPublicIxArguments,
-	MakeUpdateUserPositionPrivateIxAccounts,
-	MakeUpdateUserPositionPrivateIxArguments,
-	MakePrivateTradeIxAccounts,
-	MakePrivateTradeIxArguments,
-} from './pythiaInstructionsSync';
+	MakeClosePositionPrivateIxAsyncAccounts,
+	MakeClosePositionPrivateIxAsyncArguments,
+	MakeGetSponsorViewIxAsyncAccounts,
+	MakeGetSponsorViewIxAsyncArguments,
+	MakeGetUserPositionViewIxAsyncAccounts,
+	MakeGetUserPositionViewIxAsyncArguments,
+	MakeInitSponsorIxAsyncArguments,
+	MakeInitSponsorIxAsyncAccounts,
+	MakeInitUserPositionIxAsyncAccounts,
+	MakeInitUserPositionIxAsyncArguments,
+	MakeInitializeMarketEncryptedIxAsyncAccounts,
+	MakeInitializeMarketEncryptedIxAsyncArguments,
+	MakeInitializeMarketIxAsyncAccounts,
+	MakeInitializeMarketIxAsyncArguments,
+	MakePublicTradeIxAsyncAccounts,
+	MakePublicTradeIxAsyncArguments,
+	MakeResolveMarketIxAsyncAccounts,
+	MakeResolveMarketIxAsyncArguments,
+	MakeSwitchToPrivateIxAsyncAccounts,
+	MakeSwitchToPrivateIxAsyncArguments,
+	MakeSwitchToPublicIxAsyncAccounts,
+	MakeSwitchToPublicIxAsyncArguments,
+	MakeUpdateUserPositionPrivateIxAsyncAccounts,
+	MakeUpdateUserPositionPrivateIxAsyncArguments,
+	MakePrivateTradeIxAsyncAccounts,
+	MakePrivateTradeIxAsyncArguments,
+} from './pythiaInstructionsAsync';
 import {
 	makeClosePositionPrivateInstructionPlan,
 	makeCreateMarketInstructionPlan,
@@ -42,20 +42,8 @@ import {
 } from './instructionPlans';
 
 /**
- * Note: This module currently uses the sync instruction helpers via `pythiaInstructionsSync`.
- * To switch to the async-safe builders that auto-derive PDAs:
- *
- * 1) Import Async types and helpers (example):
- *    import {
- *      MakePrivateTradeIxAsyncAccounts,
- *      MakePrivateTradeIxAsyncArguments,
- *    } from './pythiaInstructionsAsync';
- *
- * 2) Build instructions with `await` in your flow (example):
- *    const ix = await makePrivateTradeIxAsync(args, accounts);
- *    const plan = singleInstructionPlan(ix);
- *
- * See INTEGRATION.md for when to prefer async (auto-resolving PDAs) vs sync (explicit accounts).
+ * Note: This module uses async instruction builders (pythiaInstructionsAsync) that
+ * auto-derive PDAs and fill default programs. See INTEGRATION.md for details.
  */
 
 // =========================
@@ -64,43 +52,43 @@ import {
 
 export type CreateMarketPlanParams = Readonly<{
 	initializeMarket: {
-		args: MakeInitializeMarketIxArguments;
-		accounts: MakeInitializeMarketIxAccounts;
+		args: MakeInitializeMarketIxAsyncArguments;
+		accounts: MakeInitializeMarketIxAsyncAccounts;
 	};
 	initializeMarketEncrypted: {
-		args: MakeInitializeMarketEncryptedIxArguments;
-		accounts: MakeInitializeMarketEncryptedIxAccounts;
+		args: MakeInitializeMarketEncryptedIxAsyncArguments;
+		accounts: MakeInitializeMarketEncryptedIxAsyncAccounts;
 	};
 }>;
 
 export type SwitchToPublicPlanParams = Readonly<{
-	args: MakeSwitchToPublicIxArguments;
-	accounts: MakeSwitchToPublicIxAccounts;
+	args: MakeSwitchToPublicIxAsyncArguments;
+	accounts: MakeSwitchToPublicIxAsyncAccounts;
 }>;
 
 export type SwitchToPrivatePlanParams = Readonly<{
-	args: MakeSwitchToPrivateIxArguments;
-	accounts: MakeSwitchToPrivateIxAccounts;
+	args: MakeSwitchToPrivateIxAsyncArguments;
+	accounts: MakeSwitchToPrivateIxAsyncAccounts;
 }>;
 
 export type ResolveMarketPlanParams = Readonly<{
-	args: MakeResolveMarketIxArguments;
-	accounts: MakeResolveMarketIxAccounts;
+	args: MakeResolveMarketIxAsyncArguments;
+	accounts: MakeResolveMarketIxAsyncAccounts;
 }>;
 
 export type SponsorViewMarketPlanParams = Readonly<{
-	args: MakeGetSponsorViewIxArguments;
-	accounts: MakeGetSponsorViewIxAccounts;
+	args: MakeGetSponsorViewIxAsyncArguments;
+	accounts: MakeGetSponsorViewIxAsyncAccounts;
 }>;
 
 export type SponsorViewUserPositionPlanParams = Readonly<{
-	args: MakeGetUserPositionViewIxArguments;
-	accounts: MakeGetUserPositionViewIxAccounts;
+	args: MakeGetUserPositionViewIxAsyncArguments;
+	accounts: MakeGetUserPositionViewIxAsyncAccounts;
 }>;
 
 export type InitSponsorPlanParams = Readonly<{
-	args: MakeInitSponsorIxArguments;
-	accounts: MakeInitSponsorIxAccounts;
+	args: MakeInitSponsorIxAsyncArguments;
+	accounts: MakeInitSponsorIxAsyncAccounts;
 }>;
 
 // =======================
@@ -108,31 +96,31 @@ export type InitSponsorPlanParams = Readonly<{
 // =======================
 
 export type InitUserPositionPlanParams = Readonly<{
-	args: MakeInitUserPositionIxArguments;
-	accounts: MakeInitUserPositionIxAccounts;
+	args: MakeInitUserPositionIxAsyncArguments;
+	accounts: MakeInitUserPositionIxAsyncAccounts;
 }>;
 
 export type PrivateTradePlanParams = Readonly<{
 	// Private market trade that updates the encrypted market state.
 	tradePrivate: {
-		args: MakePrivateTradeIxArguments;
-		accounts: MakePrivateTradeIxAccounts;
+		args: MakePrivateTradeIxAsyncArguments;
+		accounts: MakePrivateTradeIxAsyncAccounts;
 	};
 	// Update the trader's encrypted position after the private trade.
 	updateUserPositionPrivate: {
-		args: MakeUpdateUserPositionPrivateIxArguments;
-		accounts: MakeUpdateUserPositionPrivateIxAccounts;
+		args: MakeUpdateUserPositionPrivateIxAsyncArguments;
+		accounts: MakeUpdateUserPositionPrivateIxAsyncAccounts;
 	};
 }>;
 
 export type ClosePositionPrivatePlanParams = Readonly<{
-	args: MakeClosePositionPrivateIxArguments;
-	accounts: MakeClosePositionPrivateIxAccounts;
+	args: MakeClosePositionPrivateIxAsyncArguments;
+	accounts: MakeClosePositionPrivateIxAsyncAccounts;
 }>;
 
 export type PublicTradePlanParams = Readonly<{
-	args: MakePublicTradeIxArguments;
-	accounts: MakePublicTradeIxAccounts;
+	args: MakePublicTradeIxAsyncArguments;
+	accounts: MakePublicTradeIxAsyncAccounts;
 }>;
 
 // =========================
@@ -143,7 +131,7 @@ export const makeCreateMarketTransactionPlan = async (
 	planner: TransactionPlanner,
 	params: CreateMarketPlanParams,
 ): Promise<TransactionPlan> => {
-	const plan = makeCreateMarketInstructionPlan(params);
+	const plan = await makeCreateMarketInstructionPlan(params);
 	return planner(plan);
 };
 
@@ -151,7 +139,7 @@ export const makeSwitchToPublicTransactionPlan = async (
 	planner: TransactionPlanner,
 	params: SwitchToPublicPlanParams,
 ): Promise<TransactionPlan> => {
-	const plan = makeSwitchToPublicInstructionPlan(params);
+	const plan = await makeSwitchToPublicInstructionPlan(params);
 	return planner(plan);
 };
 
@@ -159,7 +147,7 @@ export const makeSwitchToPrivateTransactionPlan = async (
 	planner: TransactionPlanner,
 	params: SwitchToPrivatePlanParams,
 ): Promise<TransactionPlan> => {
-	const plan = makeSwitchToPrivateInstructionPlan(params);
+	const plan = await makeSwitchToPrivateInstructionPlan(params);
 	return planner(plan);
 };
 
@@ -167,7 +155,7 @@ export const makeResolveMarketTransactionPlan = async (
 	planner: TransactionPlanner,
 	params: ResolveMarketPlanParams,
 ): Promise<TransactionPlan> => {
-	const plan = makeResolveMarketInstructionPlan(params);
+	const plan = await makeResolveMarketInstructionPlan(params);
 	return planner(plan);
 };
 
@@ -175,7 +163,7 @@ export const makeGetSponsorViewTransactionPlan = async (
 	planner: TransactionPlanner,
 	params: SponsorViewMarketPlanParams,
 ): Promise<TransactionPlan> => {
-	const plan = makeGetSponsorViewInstructionPlan(params);
+	const plan = await makeGetSponsorViewInstructionPlan(params);
 	return planner(plan);
 };
 
@@ -183,7 +171,7 @@ export const makeGetUserPositionViewTransactionPlan = async (
 	planner: TransactionPlanner,
 	params: SponsorViewUserPositionPlanParams,
 ): Promise<TransactionPlan> => {
-	const plan = makeGetUserPositionViewInstructionPlan(params);
+	const plan = await makeGetUserPositionViewInstructionPlan(params);
 	return planner(plan);
 };
 
@@ -191,7 +179,7 @@ export const makeInitSponsorTransactionPlan = async (
 	planner: TransactionPlanner,
 	params: InitSponsorPlanParams,
 ): Promise<TransactionPlan> => {
-	const plan = makeInitSponsorInstructionPlan(params);
+	const plan = await makeInitSponsorInstructionPlan(params);
 	return planner(plan);
 };
 
@@ -203,7 +191,7 @@ export const makeInitUserPositionTransactionPlan = async (
 	planner: TransactionPlanner,
 	params: InitUserPositionPlanParams,
 ): Promise<TransactionPlan> => {
-	const plan = makeInitUserPositionInstructionPlan(params);
+	const plan = await makeInitUserPositionInstructionPlan(params);
 	return planner(plan);
 };
 
@@ -211,7 +199,7 @@ export const makePrivateTradeTransactionPlan = async (
 	planner: TransactionPlanner,
 	params: PrivateTradePlanParams,
 ): Promise<TransactionPlan> => {
-	const plan = makePrivateTradeInstructionPlan(params);
+	const plan = await makePrivateTradeInstructionPlan(params);
 	return planner(plan);
 };
 
@@ -219,7 +207,7 @@ export const makeClosePositionPrivateTransactionPlan = async (
 	planner: TransactionPlanner,
 	params: ClosePositionPrivatePlanParams,
 ): Promise<TransactionPlan> => {
-	const plan = makeClosePositionPrivateInstructionPlan(params);
+	const plan = await makeClosePositionPrivateInstructionPlan(params);
 	return planner(plan);
 };
 
@@ -227,7 +215,7 @@ export const makePublicTradeTransactionPlan = async (
 	planner: TransactionPlanner,
 	params: PublicTradePlanParams,
 ): Promise<TransactionPlan> => {
-	const plan = makePublicTradeInstructionPlan(params);
+	const plan = await makePublicTradeInstructionPlan(params);
 	return planner(plan);
 };
 
