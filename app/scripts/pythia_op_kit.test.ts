@@ -49,6 +49,7 @@ import {
 import {
 	makeWhitelistSponsorIxAsync,
 	makeInitSponsorIxAsync,
+	makeInitializeMarketIxAsync,
 	makeInitInitializeMarketCompDefIxAsync,
 	makeInitInitializeUserPositionCompDefIxAsync,
 	makeInitProcessPrivateTradeCompDefIxAsync,
@@ -63,9 +64,6 @@ import {
 	type MakeInitializeMarketIxAsyncInput,
 	type MakeInitializeMarketEncryptedIxAsyncInput,
 	type MakeWhitelistSponsorIxAsyncInput,
-	makeInitializeMarketIxAsync,
-} from '../src/utils/pythiaInstructionsAsync';
-import {
 	type MakeInitInitializeMarketCompDefIxAsyncInput,
 	type MakeInitInitializeUserPositionCompDefIxAsyncInput,
 	type MakeInitProcessPrivateTradeCompDefIxAsyncInput,
@@ -129,11 +127,6 @@ type TestContext = {
 		pubWindowDuration: bigint;
 	};
 	mxeSnapshot?: MxeSnapshot;
-};
-
-type TestCase = {
-	name: string;
-	run: (ctx: TestContext) => Promise<void>;
 };
 
 // Unified CompDef input type using the exported inputs from pythiaInstructionsAsync.ts
@@ -239,22 +232,18 @@ async function main() {
 		marketArgs,
 	};
 
-	const cases: TestCase[] = [
-		{ name: 'initialize computation definitions', run: initializeCompDefinitions },
-		{ name: 'fetch MXE snapshot', run: fetchAndStoreMxeSnapshot },
-		{ name: 'initialize sponsor account', run: initSponsorAccount },
-		{ name: 'whitelist sponsor account', run: whitelistSponsorAccount },
-		{ name: 'create and encrypt market', run: createEncryptedMarket },
-	];
+	console.log('\n[1/5] Initialize computation definitions');
+	await initializeCompDefinitions(ctx);
+	console.log('[2/5] Fetch MXE snapshot');
+	await fetchAndStoreMxeSnapshot(ctx);
+	console.log('[3/5] Initialize sponsor account');
+	await initSponsorAccount(ctx);
+	console.log('[4/5] Whitelist sponsor account');
+	await whitelistSponsorAccount(ctx);
+	console.log('[5/5] Create and encrypt market');
+	await createEncryptedMarket(ctx);
 
-	for (const testCase of cases) {
-		const start = Date.now();
-		console.log(`\n[${testCase.name}] starting...`);
-		await testCase.run(ctx);
-		console.log(`[${testCase.name}] ✅ done in ${Date.now() - start}ms`);
-	}
-
-	console.log('\nAll Kit-based tests passed.');
+	console.log('\nAll steps completed.');
 }
 
 async function initializeCompDefinitions(ctx: TestContext) {
@@ -371,7 +360,6 @@ async function createEncryptedMarket(ctx: TestContext) {
 	const initializeMarketInput: MakeInitializeMarketIxAsyncInput = {
 		sponsor: ctx.adminSigner,
 		sponsorAccount: ctx.sponsorPda,
-		market: ctx.marketPda,
 		question: ctx.question,
 		resolutionDate: ctx.marketArgs.resolutionDate,
 		liquidityCap: ctx.marketArgs.liquidityCap,
@@ -382,7 +370,7 @@ async function createEncryptedMarket(ctx: TestContext) {
 
 	const initializeMarketEncryptedInput: MakeInitializeMarketEncryptedIxAsyncInput = {
 		payer: ctx.adminSigner,
-		market: ctx.marketPda,
+		market: ctx.marketPda, // IS THIS CORRECT?
 		mxeAccount: arciumAccounts.mxeAccount,
 		mempoolAccount: arciumAccounts.mempoolAccount,
 		executingPool: arciumAccounts.executingPoolAccount,
@@ -504,6 +492,6 @@ async function deriveMarketAddressFromBuilder(params: {
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 main().catch((error) => {
-	console.error('Kit-based tests failed:', error);
+	console.error('Script failed:', error);
 	process.exitCode = 1;
 });
