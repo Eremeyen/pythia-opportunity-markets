@@ -1,31 +1,18 @@
 import { type TransactionPlan, type TransactionPlanner } from '@solana/instruction-plans';
 import type {
-	MakeClosePositionPrivateIxAsyncAccounts,
-	MakeClosePositionPrivateIxAsyncArguments,
-	MakeGetSponsorViewIxAsyncAccounts,
-	MakeGetSponsorViewIxAsyncArguments,
-	MakeGetUserPositionViewIxAsyncAccounts,
-	MakeGetUserPositionViewIxAsyncArguments,
-	MakeInitSponsorIxAsyncArguments,
-	MakeInitSponsorIxAsyncAccounts,
-	MakeInitUserPositionIxAsyncAccounts,
-	MakeInitUserPositionIxAsyncArguments,
-	MakeInitializeMarketEncryptedIxAsyncAccounts,
-	MakeInitializeMarketEncryptedIxAsyncArguments,
-	MakeInitializeMarketIxAsyncAccounts,
-	MakeInitializeMarketIxAsyncArguments,
-	MakePublicTradeIxAsyncAccounts,
-	MakePublicTradeIxAsyncArguments,
-	MakeResolveMarketIxAsyncAccounts,
-	MakeResolveMarketIxAsyncArguments,
-	MakeSwitchToPrivateIxAsyncAccounts,
-	MakeSwitchToPrivateIxAsyncArguments,
-	MakeSwitchToPublicIxAsyncAccounts,
-	MakeSwitchToPublicIxAsyncArguments,
-	MakeUpdateUserPositionPrivateIxAsyncAccounts,
-	MakeUpdateUserPositionPrivateIxAsyncArguments,
-	MakePrivateTradeIxAsyncAccounts,
-	MakePrivateTradeIxAsyncArguments,
+	MakeClosePositionPrivateIxAsyncInput,
+	MakeGetSponsorViewIxAsyncInput,
+	MakeGetUserPositionViewIxAsyncInput,
+	MakeInitSponsorIxAsyncInput,
+	MakeInitUserPositionIxAsyncInput,
+	MakeInitializeMarketEncryptedIxAsyncInput,
+	MakeInitializeMarketIxAsyncInput,
+	MakePublicTradeIxAsyncInput,
+	MakeResolveMarketIxAsyncInput,
+	MakeSwitchToPrivateIxAsyncInput,
+	MakeSwitchToPublicIxAsyncInput,
+	MakeUpdateUserPositionPrivateIxAsyncInput,
+	MakePrivateTradeIxAsyncInput,
 } from './pythiaInstructionsAsync';
 import {
 	makeClosePositionPrivateInstructionPlan,
@@ -51,77 +38,38 @@ import {
 // =========================
 
 export type CreateMarketPlanParams = Readonly<{
-	initializeMarket: {
-		args: MakeInitializeMarketIxAsyncArguments;
-		accounts: MakeInitializeMarketIxAsyncAccounts;
-	};
-	initializeMarketEncrypted: {
-		args: MakeInitializeMarketEncryptedIxAsyncArguments;
-		accounts: MakeInitializeMarketEncryptedIxAsyncAccounts;
-	};
+	initializeMarket: MakeInitializeMarketIxAsyncInput;
+	initializeMarketEncrypted: MakeInitializeMarketEncryptedIxAsyncInput;
 }>;
 
-export type SwitchToPublicPlanParams = Readonly<{
-	args: MakeSwitchToPublicIxAsyncArguments;
-	accounts: MakeSwitchToPublicIxAsyncAccounts;
-}>;
+export type SwitchToPublicPlanParams = MakeSwitchToPublicIxAsyncInput;
 
-export type SwitchToPrivatePlanParams = Readonly<{
-	args: MakeSwitchToPrivateIxAsyncArguments;
-	accounts: MakeSwitchToPrivateIxAsyncAccounts;
-}>;
+export type SwitchToPrivatePlanParams = MakeSwitchToPrivateIxAsyncInput;
 
-export type ResolveMarketPlanParams = Readonly<{
-	args: MakeResolveMarketIxAsyncArguments;
-	accounts: MakeResolveMarketIxAsyncAccounts;
-}>;
+export type ResolveMarketPlanParams = MakeResolveMarketIxAsyncInput;
 
-export type SponsorViewMarketPlanParams = Readonly<{
-	args: MakeGetSponsorViewIxAsyncArguments;
-	accounts: MakeGetSponsorViewIxAsyncAccounts;
-}>;
+export type SponsorViewMarketPlanParams = MakeGetSponsorViewIxAsyncInput;
 
-export type SponsorViewUserPositionPlanParams = Readonly<{
-	args: MakeGetUserPositionViewIxAsyncArguments;
-	accounts: MakeGetUserPositionViewIxAsyncAccounts;
-}>;
+export type SponsorViewUserPositionPlanParams = MakeGetUserPositionViewIxAsyncInput;
 
-export type InitSponsorPlanParams = Readonly<{
-	args: MakeInitSponsorIxAsyncArguments;
-	accounts: MakeInitSponsorIxAsyncAccounts;
-}>;
+export type InitSponsorPlanParams = MakeInitSponsorIxAsyncInput;
 
 // =======================
 // Trader-facing plan params
 // =======================
 
-export type InitUserPositionPlanParams = Readonly<{
-	args: MakeInitUserPositionIxAsyncArguments;
-	accounts: MakeInitUserPositionIxAsyncAccounts;
-}>;
+export type InitUserPositionPlanParams = MakeInitUserPositionIxAsyncInput;
 
 export type PrivateTradePlanParams = Readonly<{
 	// Private market trade that updates the encrypted market state.
-	tradePrivate: {
-		args: MakePrivateTradeIxAsyncArguments;
-		accounts: MakePrivateTradeIxAsyncAccounts;
-	};
+	tradePrivate: MakePrivateTradeIxAsyncInput;
 	// Update the trader's encrypted position after the private trade.
-	updateUserPositionPrivate: {
-		args: MakeUpdateUserPositionPrivateIxAsyncArguments;
-		accounts: MakeUpdateUserPositionPrivateIxAsyncAccounts;
-	};
+	updateUserPositionPrivate: MakeUpdateUserPositionPrivateIxAsyncInput;
 }>;
 
-export type ClosePositionPrivatePlanParams = Readonly<{
-	args: MakeClosePositionPrivateIxAsyncArguments;
-	accounts: MakeClosePositionPrivateIxAsyncAccounts;
-}>;
+export type ClosePositionPrivatePlanParams = MakeClosePositionPrivateIxAsyncInput;
 
-export type PublicTradePlanParams = Readonly<{
-	args: MakePublicTradeIxAsyncArguments;
-	accounts: MakePublicTradeIxAsyncAccounts;
-}>;
+export type PublicTradePlanParams = MakePublicTradeIxAsyncInput;
 
 // =========================
 // Sponsor-facing plan stubs

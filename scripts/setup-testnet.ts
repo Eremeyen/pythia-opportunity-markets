@@ -75,17 +75,12 @@ import {
 } from '../app/src/utils/transactionPlans';
 import {
 	makeWhitelistSponsorIxAsync,
-	type MakeInitializeMarketIxAsyncAccounts,
-	type MakeInitializeMarketIxAsyncArguments,
-	type MakeInitializeMarketEncryptedIxAsyncAccounts,
-	type MakeInitializeMarketEncryptedIxAsyncArguments,
-	type MakeSwitchToPublicIxAsyncAccounts,
-	type MakeSwitchToPublicIxAsyncArguments,
-	type MakeSwitchToPrivateIxAsyncAccounts,
-	type MakeSwitchToPrivateIxAsyncArguments,
-	type MakeInitSponsorIxAsyncArguments,
-	type MakeInitSponsorIxAsyncAccounts,
-	type MakeWhitelistSponsorIxAsyncAccounts,
+	type MakeInitializeMarketIxAsyncInput,
+	type MakeInitializeMarketEncryptedIxAsyncInput,
+	type MakeSwitchToPublicIxAsyncInput,
+	type MakeSwitchToPrivateIxAsyncInput,
+	type MakeInitSponsorIxAsyncInput,
+	type MakeWhitelistSponsorIxAsyncInput,
 } from '../app/src/utils/pythiaInstructionsAsync';
 import { deriveSponsorPda, deriveMarketPda } from '../app/src/utils/pythiaAccounts';
 import {
@@ -384,14 +379,11 @@ async function main() {
 	// Step 2 — Create and whitelist sponsor
 	console.log('\n--- Step 2 — Create + whitelist sponsor ---');
 	try {
-		const initSponsorArgs: MakeInitSponsorIxAsyncArguments = { name: SPONSOR.name };
-		const initSponsorAccounts = {
-			authority: adminSigner,
-		} as any as MakeInitSponsorIxAsyncAccounts;
-		const plan = await makeInitSponsorTransactionPlan(planner, {
-			args: initSponsorArgs,
-			accounts: initSponsorAccounts,
-		});
+	const initSponsorInput: MakeInitSponsorIxAsyncInput = {
+		authority: adminSigner,
+		name: SPONSOR.name,
+	};
+	const plan = await makeInitSponsorTransactionPlan(planner, initSponsorInput);
 		await executor(plan);
 		console.log(`✅ init_sponsor — authority=${adminSigner.address}`);
 	} catch (e: any) {
@@ -407,10 +399,11 @@ async function main() {
 	// Derive sponsor PDA for whitelisting + market derivations.
 	const sponsorPda = await deriveSponsorPda(adminSigner.address, PYTHIA_PROGRAM_ID);
 	try {
-		const whitelistIx = await makeWhitelistSponsorIxAsync({
-			admin: adminSigner,
-			sponsor: sponsorPda,
-		} as MakeWhitelistSponsorIxAsyncAccounts);
+	const whitelistInput: MakeWhitelistSponsorIxAsyncInput = {
+		admin: adminSigner,
+		sponsor: sponsorPda,
+	};
+	const whitelistIx = await makeWhitelistSponsorIxAsync(whitelistInput);
 		await executor(await planner(singleInstructionPlan(whitelistIx)));
 		console.log(`✅ whitelist_sponsor — sponsor=${sponsorPda}`);
 	} catch (e: any) {
@@ -458,7 +451,10 @@ async function main() {
 			});
 
 			// Build plan params
-			const initMarketArgs: MakeInitializeMarketIxAsyncArguments = {
+			const initMarketInput: MakeInitializeMarketIxAsyncInput = {
+				sponsor: adminSigner,
+				sponsorAccount: sponsorPda,
+				market: marketPda,
 				question: m.question,
 				resolutionDate: BigInt(m.resolutionDateSec),
 				liquidityCap: m.liquidityCap,
@@ -466,18 +462,8 @@ async function main() {
 				oppWindowDuration: m.oppWindowDuration,
 				pubWindowDuration: m.pubWindowDuration,
 			};
-			const initMarketAccounts: MakeInitializeMarketIxAsyncAccounts = {
-				sponsor: adminSigner,
-				sponsorAccount: sponsorPda,
-				market: marketPda,
-			} as any;
 
-			const initMarketEncryptedArgs: MakeInitializeMarketEncryptedIxAsyncArguments = {
-				computationOffset,
-				initialLiquidityUsdc: m.initialLiquidityUsdc,
-				mxeNonce,
-			};
-			const initMarketEncryptedAccounts = {
+			const initMarketEncryptedInput: MakeInitializeMarketEncryptedIxAsyncInput = {
 				payer: adminSigner,
 				market: marketPda,
 				signPdaAccount: arciumAccounts.signPdaAccount,
@@ -489,16 +475,15 @@ async function main() {
 				clusterAccount: arciumAccounts.clusterAccount,
 				poolAccount: arciumAccounts.feePoolAccount,
 				clockAccount: arciumAccounts.clockAccount,
-				// systemProgram + arciumProgram auto-filled if omitted
-			} as any as MakeInitializeMarketEncryptedIxAsyncAccounts;
+				computationOffset,
+				initialLiquidityUsdc: m.initialLiquidityUsdc,
+				mxeNonce,
+			};
 
 			// Execute plan (sequential: init_market then init_market_encrypted)
 			const createPlan = await makeCreateMarketTransactionPlan(planner, {
-				initializeMarket: { args: initMarketArgs, accounts: initMarketAccounts },
-				initializeMarketEncrypted: {
-					args: initMarketEncryptedArgs,
-					accounts: initMarketEncryptedAccounts,
-				},
+				initializeMarket: initMarketInput,
+				initializeMarketEncrypted: initMarketEncryptedInput,
 			});
 			await executor(createPlan);
 
@@ -532,28 +517,23 @@ async function main() {
 					programId: PYTHIA_PROGRAM_ID,
 				});
 				if (m.windowSwitch === 'public') {
-					const argsSwitch: MakeSwitchToPublicIxAsyncArguments = {
-						computationOffset: switchOffset,
-					};
-					const accSwitch = {
-						payer: adminSigner,
-						market: marketPda,
-						signPdaAccount: switchArcium.signPdaAccount,
-						mxeAccount: switchArcium.mxeAccount,
-						mempoolAccount: switchArcium.mempoolAccount,
-						executingPool: switchArcium.executingPoolAccount,
-						computationAccount: switchArcium.computationAccount,
-						compDefAccount: switchArcium.compDefAccount,
-						clusterAccount: switchArcium.clusterAccount,
-						poolAccount: switchArcium.feePoolAccount,
-						clockAccount: switchArcium.clockAccount,
-					} as any as MakeSwitchToPublicIxAsyncAccounts;
-					await executor(
-						await makeSwitchToPublicTransactionPlan(planner, {
-							args: argsSwitch,
-							accounts: accSwitch as any,
-						}),
-					);
+				const switchInput: MakeSwitchToPublicIxAsyncInput = {
+					payer: adminSigner,
+					market: marketPda,
+					signPdaAccount: switchArcium.signPdaAccount,
+					mxeAccount: switchArcium.mxeAccount,
+					mempoolAccount: switchArcium.mempoolAccount,
+					executingPool: switchArcium.executingPoolAccount,
+					computationAccount: switchArcium.computationAccount,
+					compDefAccount: switchArcium.compDefAccount,
+					clusterAccount: switchArcium.clusterAccount,
+					poolAccount: switchArcium.feePoolAccount,
+					clockAccount: switchArcium.clockAccount,
+					computationOffset: switchOffset,
+				};
+				await executor(
+					await makeSwitchToPublicTransactionPlan(planner, switchInput),
+				);
 					await awaitComputationFinalization(
 						provider as any,
 						new anchor.BN(switchOffset.toString()),
@@ -562,29 +542,24 @@ async function main() {
 					);
 					console.log(`  ↳ Switched window to PUBLIC (${Date.now() - switchStart}ms)`);
 				} else {
-					const argsSwitch: MakeSwitchToPrivateIxAsyncArguments = {
-						computationOffset: switchOffset,
-						mxeNonce: generateMxeNonce().value,
-					};
-					const accSwitch = {
-						payer: adminSigner,
-						market: marketPda,
-						signPdaAccount: switchArcium.signPdaAccount,
-						mxeAccount: switchArcium.mxeAccount,
-						mempoolAccount: switchArcium.mempoolAccount,
-						executingPool: switchArcium.executingPoolAccount,
-						computationAccount: switchArcium.computationAccount,
-						compDefAccount: switchArcium.compDefAccount,
-						clusterAccount: switchArcium.clusterAccount,
-						poolAccount: switchArcium.feePoolAccount,
-						clockAccount: switchArcium.clockAccount,
-					} as any as MakeSwitchToPrivateIxAsyncAccounts;
-					await executor(
-						await makeSwitchToPrivateTransactionPlan(planner, {
-							args: argsSwitch,
-							accounts: accSwitch as any,
-						}),
-					);
+				const switchInput: MakeSwitchToPrivateIxAsyncInput = {
+					payer: adminSigner,
+					market: marketPda,
+					signPdaAccount: switchArcium.signPdaAccount,
+					mxeAccount: switchArcium.mxeAccount,
+					mempoolAccount: switchArcium.mempoolAccount,
+					executingPool: switchArcium.executingPoolAccount,
+					computationAccount: switchArcium.computationAccount,
+					compDefAccount: switchArcium.compDefAccount,
+					clusterAccount: switchArcium.clusterAccount,
+					poolAccount: switchArcium.feePoolAccount,
+					clockAccount: switchArcium.clockAccount,
+					computationOffset: switchOffset,
+					mxeNonce: generateMxeNonce().value,
+				};
+				await executor(
+					await makeSwitchToPrivateTransactionPlan(planner, switchInput),
+				);
 					await awaitComputationFinalization(
 						provider as any,
 						new anchor.BN(switchOffset.toString()),
@@ -603,8 +578,9 @@ async function main() {
 	// Step 4 — (Optional) Resolve market (example)
 	// console.log('\n--- Step 4 — Resolve market (example) ---');
 	// const resolvePlan = await makeResolveMarketTransactionPlan(planner, {
-	// 	args: { outcome: true },
-	// 	accounts: { authority: adminSigner, market: createdMarkets[0] as any },
+	// 	authority: adminSigner,
+	// 	market: createdMarkets[0] as any,
+	// 	outcome: true,
 	// });
 	// await executor(resolvePlan);
 

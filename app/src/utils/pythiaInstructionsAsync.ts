@@ -3,100 +3,250 @@ import * as Pythia from '../../../clients/js/src/generated/instructions';
 
 // ========== Type aliases (Async) ==========
 // Arguments types are identical to sync (instruction data args).
-// Accounts types use AsyncInput when available; otherwise fall back to Input.
+// Input types include both accounts and instruction data; the comments below document
+// which fields are required vs optional for each builder.
 
 export type MakeInitSponsorIxAsyncArguments = Pythia.InitSponsorInstructionDataArgs;
-export type MakeInitSponsorIxAsyncAccounts = Pythia.InitSponsorAsyncInput;
+/**
+ * Input for initSponsor (accounts + args).
+ * Required accounts: authority (signer)
+ * Optional accounts: sponsor (auto-derived PDA), systemProgram (defaults to system id)
+ * Instruction args: name
+ */
+export type MakeInitSponsorIxAsyncInput = Pythia.InitSponsorAsyncInput;
 
 export type MakeWhitelistSponsorIxAsyncArguments = Pythia.WhitelistSponsorInstructionDataArgs;
-export type MakeWhitelistSponsorIxAsyncAccounts = Pythia.WhitelistSponsorInput;
+/**
+ * Input for whitelistSponsor.
+ * Required accounts: admin (signer), sponsor
+ * Optional accounts: none
+ * Instruction args: none
+ */
+export type MakeWhitelistSponsorIxAsyncInput = Pythia.WhitelistSponsorInput;
 
 export type MakeInitInitializeMarketCompDefIxAsyncArguments =
 	Pythia.InitInitializeMarketCompDefInstructionDataArgs;
-export type MakeInitInitializeMarketCompDefIxAsyncAccounts =
-	Pythia.InitInitializeMarketCompDefInput;
+/**
+ * Input for init_initialize_market_comp_def.
+ * Required accounts: payer (signer), mxeAccount, compDefAccount
+ * Optional accounts: arciumProgram, systemProgram
+ * Instruction args: none
+ */
+export type MakeInitInitializeMarketCompDefIxAsyncInput = Pythia.InitInitializeMarketCompDefInput;
 
 export type MakeInitInitializeUserPositionCompDefIxAsyncArguments =
 	Pythia.InitInitializeUserPositionCompDefInstructionDataArgs;
-export type MakeInitInitializeUserPositionCompDefIxAsyncAccounts =
+/**
+ * Input for init_initialize_user_position_comp_def.
+ * Required accounts: payer (signer), mxeAccount, compDefAccount
+ * Optional accounts: arciumProgram, systemProgram
+ * Instruction args: none
+ */
+export type MakeInitInitializeUserPositionCompDefIxAsyncInput =
 	Pythia.InitInitializeUserPositionCompDefInput;
 
 export type MakeInitProcessPrivateTradeCompDefIxAsyncArguments =
 	Pythia.InitProcessPrivateTradeCompDefInstructionDataArgs;
-export type MakeInitProcessPrivateTradeCompDefIxAsyncAccounts =
+/**
+ * Input for init_process_private_trade_comp_def.
+ * Required accounts: payer (signer), mxeAccount, compDefAccount
+ * Optional accounts: arciumProgram, systemProgram
+ * Instruction args: none
+ */
+export type MakeInitProcessPrivateTradeCompDefIxAsyncInput =
 	Pythia.InitProcessPrivateTradeCompDefInput;
 
 export type MakeInitUpdateUserPositionCompDefIxAsyncArguments =
 	Pythia.InitUpdateUserPositionCompDefInstructionDataArgs;
-export type MakeInitUpdateUserPositionCompDefIxAsyncAccounts =
+/**
+ * Input for init_update_user_position_comp_def.
+ * Required accounts: payer (signer), mxeAccount, compDefAccount
+ * Optional accounts: arciumProgram, systemProgram
+ * Instruction args: none
+ */
+export type MakeInitUpdateUserPositionCompDefIxAsyncInput =
 	Pythia.InitUpdateUserPositionCompDefInput;
 
 export type MakeInitClosePositionCompDefIxAsyncArguments =
 	Pythia.InitClosePositionCompDefInstructionDataArgs;
-export type MakeInitClosePositionCompDefIxAsyncAccounts = Pythia.InitClosePositionCompDefInput;
+/**
+ * Input for init_close_position_comp_def.
+ * Required accounts: payer (signer), mxeAccount, compDefAccount
+ * Optional accounts: arciumProgram, systemProgram
+ * Instruction args: none
+ */
+export type MakeInitClosePositionCompDefIxAsyncInput = Pythia.InitClosePositionCompDefInput;
 
 export type MakeInitRevealMarketStateCompDefIxAsyncArguments =
 	Pythia.InitRevealMarketStateCompDefInstructionDataArgs;
-export type MakeInitRevealMarketStateCompDefIxAsyncAccounts =
+/**
+ * Input for init_reveal_market_state_comp_def.
+ * Required accounts: payer (signer), mxeAccount, compDefAccount
+ * Optional accounts: arciumProgram, systemProgram
+ * Instruction args: none
+ */
+export type MakeInitRevealMarketStateCompDefIxAsyncInput =
 	Pythia.InitRevealMarketStateCompDefInput;
 
 export type MakeInitRevealUserPositionCompDefIxAsyncArguments =
 	Pythia.InitRevealUserPositionCompDefInstructionDataArgs;
-export type MakeInitRevealUserPositionCompDefIxAsyncAccounts =
+/**
+ * Input for init_reveal_user_position_comp_def.
+ * Required accounts: payer (signer), mxeAccount, compDefAccount
+ * Optional accounts: arciumProgram, systemProgram
+ * Instruction args: none
+ */
+export type MakeInitRevealUserPositionCompDefIxAsyncInput =
 	Pythia.InitRevealUserPositionCompDefInput;
 
 export type MakeInitHideMarketStateCompDefIxAsyncArguments =
 	Pythia.InitHideMarketStateCompDefInstructionDataArgs;
-export type MakeInitHideMarketStateCompDefIxAsyncAccounts = Pythia.InitHideMarketStateCompDefInput;
+/**
+ * Input for init_hide_market_state_comp_def.
+ * Required accounts: payer (signer), mxeAccount, compDefAccount
+ * Optional accounts: arciumProgram, systemProgram
+ * Instruction args: none
+ */
+export type MakeInitHideMarketStateCompDefIxAsyncInput = Pythia.InitHideMarketStateCompDefInput;
 
 export type MakeInitViewMarketStateCompDefIxAsyncArguments =
 	Pythia.InitViewMarketStateCompDefInstructionDataArgs;
-export type MakeInitViewMarketStateCompDefIxAsyncAccounts = Pythia.InitViewMarketStateCompDefInput;
+/**
+ * Input for init_view_market_state_comp_def.
+ * Required accounts: payer (signer), mxeAccount, compDefAccount
+ * Optional accounts: arciumProgram, systemProgram
+ * Instruction args: none
+ */
+export type MakeInitViewMarketStateCompDefIxAsyncInput = Pythia.InitViewMarketStateCompDefInput;
 
 export type MakeInitViewUserPositionCompDefIxAsyncArguments =
 	Pythia.InitViewUserPositionCompDefInstructionDataArgs;
-export type MakeInitViewUserPositionCompDefIxAsyncAccounts =
+/**
+ * Input for init_view_user_position_comp_def.
+ * Required accounts: payer (signer), mxeAccount, compDefAccount
+ * Optional accounts: arciumProgram, systemProgram
+ * Instruction args: none
+ */
+export type MakeInitViewUserPositionCompDefIxAsyncInput =
 	Pythia.InitViewUserPositionCompDefInput;
 
 export type MakeInitializeMarketIxAsyncArguments = Pythia.InitMarketInstructionDataArgs;
-export type MakeInitializeMarketIxAsyncAccounts = Pythia.InitMarketAsyncInput;
+/**
+ * Input for initMarket.
+ * Required accounts: sponsor (signer), sponsorAccount
+ * Optional accounts: market (auto-derived PDA), systemProgram
+ * Instruction args: question, resolutionDate, liquidityCap, initialLiquidityUsdc,
+ *   oppWindowDuration, pubWindowDuration
+ */
+export type MakeInitializeMarketIxAsyncInput = Pythia.InitMarketAsyncInput;
 
 export type MakeInitializeMarketEncryptedIxAsyncArguments =
 	Pythia.InitMarketEncryptedInstructionDataArgs;
-export type MakeInitializeMarketEncryptedIxAsyncAccounts = Pythia.InitMarketEncryptedAsyncInput;
+/**
+ * Input for initMarketEncrypted.
+ * Required accounts: payer (signer), market, mxeAccount, mempoolAccount, executingPool,
+ *   computationAccount, compDefAccount, clusterAccount
+ * Optional accounts: signPdaAccount, poolAccount, clockAccount, systemProgram, arciumProgram
+ * Instruction args: computationOffset, initialLiquidityUsdc, mxeNonce
+ */
+export type MakeInitializeMarketEncryptedIxAsyncInput = Pythia.InitMarketEncryptedAsyncInput;
 
 export type MakeInitUserPositionIxAsyncArguments = Pythia.InitUserPositionInstructionDataArgs;
-export type MakeInitUserPositionIxAsyncAccounts = Pythia.InitUserPositionAsyncInput;
+/**
+ * Input for initUserPosition.
+ * Required accounts: user (signer), market, userPosition
+ * Optional accounts: systemProgram
+ * Instruction args: computationOffset, userPositionNonce
+ */
+export type MakeInitUserPositionIxAsyncInput = Pythia.InitUserPositionAsyncInput;
 
 export type MakePrivateTradeIxAsyncArguments = Pythia.TradePrivateInstructionDataArgs;
-export type MakePrivateTradeIxAsyncAccounts = Pythia.TradePrivateAsyncInput;
+/**
+ * Input for tradePrivate.
+ * Required accounts: payer (signer), market, mxeAccount, mempoolAccount, executingPool,
+ *   computationAccount, compDefAccount, clusterAccount
+ * Optional accounts: signPdaAccount, poolAccount, clockAccount, systemProgram, arciumProgram
+ * Instruction args: computationOffset, tradeCiphertext, tradePubKey, tradeNonce
+ */
+export type MakePrivateTradeIxAsyncInput = Pythia.TradePrivateAsyncInput;
 
 export type MakeUpdateUserPositionPrivateIxAsyncArguments =
 	Pythia.UpdateUserPositionPrivateInstructionDataArgs;
-export type MakeUpdateUserPositionPrivateIxAsyncAccounts =
-	Pythia.UpdateUserPositionPrivateAsyncInput;
+/**
+ * Input for updateUserPositionPrivate.
+ * Required accounts: payer (signer), market, userPosition, mxeAccount, mempoolAccount,
+ *   executingPool, computationAccount, compDefAccount, clusterAccount
+ * Optional accounts: signPdaAccount, poolAccount, clockAccount, systemProgram, arciumProgram
+ * Instruction args: computationOffset, positionCiphertext, traderPublicKey, traderNonce
+ */
+export type MakeUpdateUserPositionPrivateIxAsyncInput = Pythia.UpdateUserPositionPrivateAsyncInput;
 
 export type MakeClosePositionPrivateIxAsyncArguments =
 	Pythia.ClosePositionPrivateInstructionDataArgs;
-export type MakeClosePositionPrivateIxAsyncAccounts = Pythia.ClosePositionPrivateAsyncInput;
+/**
+ * Input for closePositionPrivate.
+ * Required accounts: payer (signer), market, userPosition, mxeAccount, mempoolAccount,
+ *   executingPool, computationAccount, compDefAccount, clusterAccount
+ * Optional accounts: signPdaAccount, poolAccount, clockAccount, systemProgram, arciumProgram
+ * Instruction args: computationOffset, closeCiphertext, traderPublicKey, traderNonce
+ */
+export type MakeClosePositionPrivateIxAsyncInput = Pythia.ClosePositionPrivateAsyncInput;
 
 export type MakeSwitchToPublicIxAsyncArguments = Pythia.SwitchToPublicInstructionDataArgs;
-export type MakeSwitchToPublicIxAsyncAccounts = Pythia.SwitchToPublicAsyncInput;
+/**
+ * Input for switchToPublic.
+ * Required accounts: payer (signer), market, mxeAccount, mempoolAccount, executingPool,
+ *   computationAccount, compDefAccount, clusterAccount
+ * Optional accounts: signPdaAccount, poolAccount, clockAccount, systemProgram, arciumProgram
+ * Instruction args: computationOffset
+ */
+export type MakeSwitchToPublicIxAsyncInput = Pythia.SwitchToPublicAsyncInput;
 
 export type MakePublicTradeIxAsyncArguments = Pythia.TradePublicInstructionDataArgs;
-export type MakePublicTradeIxAsyncAccounts = Pythia.TradePublicInput;
+/**
+ * Input for tradePublic.
+ * Required accounts: trader (signer), market
+ * Optional accounts: none
+ * Instruction args: usdcAmount, isBuyYes
+ */
+export type MakePublicTradeIxAsyncInput = Pythia.TradePublicInput;
 
 export type MakeSwitchToPrivateIxAsyncArguments = Pythia.SwitchToPrivateInstructionDataArgs;
-export type MakeSwitchToPrivateIxAsyncAccounts = Pythia.SwitchToPrivateAsyncInput;
+/**
+ * Input for switchToPrivate.
+ * Required accounts: payer (signer), market, mxeAccount, mempoolAccount, executingPool,
+ *   computationAccount, compDefAccount, clusterAccount
+ * Optional accounts: signPdaAccount, poolAccount, clockAccount, systemProgram, arciumProgram
+ * Instruction args: computationOffset
+ */
+export type MakeSwitchToPrivateIxAsyncInput = Pythia.SwitchToPrivateAsyncInput;
 
 export type MakeGetSponsorViewIxAsyncArguments = Pythia.GetSponsorViewInstructionDataArgs;
-export type MakeGetSponsorViewIxAsyncAccounts = Pythia.GetSponsorViewAsyncInput;
+/**
+ * Input for getSponsorView.
+ * Required accounts: sponsor (signer), market, sponsorAccount
+ * Optional accounts: systemProgram
+ * Instruction args: none
+ */
+export type MakeGetSponsorViewIxAsyncInput = Pythia.GetSponsorViewAsyncInput;
 
 export type MakeGetUserPositionViewIxAsyncArguments = Pythia.GetUserPositionViewInstructionDataArgs;
-export type MakeGetUserPositionViewIxAsyncAccounts = Pythia.GetUserPositionViewAsyncInput;
+/**
+ * Input for getUserPositionView.
+ * Required accounts: user (signer), market, userPosition
+ * Optional accounts: none
+ * Instruction args: none
+ */
+export type MakeGetUserPositionViewIxAsyncInput = Pythia.GetUserPositionViewAsyncInput;
 
 export type MakeResolveMarketIxAsyncArguments = Pythia.ResolveMarketInstructionDataArgs;
-export type MakeResolveMarketIxAsyncAccounts = Pythia.ResolveMarketInput;
+/**
+ * Input for resolveMarket.
+ * Required accounts: resolver (signer), market
+ * Optional accounts: none
+ * Instruction args: resolution (variant specific)
+ */
+export type MakeResolveMarketIxAsyncInput = Pythia.ResolveMarketInput;
 
 // ========== Builders (Async) ==========
 
@@ -111,16 +261,14 @@ export type MakeResolveMarketIxAsyncAccounts = Pythia.ResolveMarketInput;
  * - sponsor PDA if omitted (seeds: ["sponsor", authority])
  * - systemProgram defaults
  * Example:
- *   await makeInitSponsorIxAsync({ name: 'Acme' }, { authority })
+ *   await makeInitSponsorIxAsync({ authority, name: 'Acme' })
  */
 export const makeInitSponsorIxAsync = async (
-	_args: MakeInitSponsorIxAsyncArguments,
-	_accounts: MakeInitSponsorIxAsyncAccounts,
+	_input: MakeInitSponsorIxAsyncInput,
 ) => {
-	const instruction = await Pythia.getInitSponsorInstructionAsync(
-		{ ..._accounts, ..._args },
-		{ programAddress: PYTHIA_OP_PROGRAM_ADDRESS },
-	);
+	const instruction = await Pythia.getInitSponsorInstructionAsync(_input, {
+		programAddress: PYTHIA_OP_PROGRAM_ADDRESS,
+	});
 	return instruction;
 };
 
@@ -132,7 +280,7 @@ export const makeInitSponsorIxAsync = async (
  * Note: No async client builder; this returns a resolved sync instruction.
  */
 export const makeWhitelistSponsorIxAsync = async (
-	_accounts: MakeWhitelistSponsorIxAsyncAccounts,
+	_accounts: MakeWhitelistSponsorIxAsyncInput,
 ) => {
 	const instruction = Pythia.getWhitelistSponsorInstruction(_accounts, {
 		programAddress: PYTHIA_OP_PROGRAM_ADDRESS,
@@ -148,7 +296,7 @@ export const makeWhitelistSponsorIxAsync = async (
  * - optional (auto): arciumProgram, systemProgram
  */
 export const makeInitInitializeMarketCompDefIxAsync = async (
-	_accounts: MakeInitInitializeMarketCompDefIxAsyncAccounts,
+	_accounts: MakeInitInitializeMarketCompDefIxAsyncInput,
 ) => {
 	const instruction = Pythia.getInitInitializeMarketCompDefInstruction(_accounts, {
 		programAddress: PYTHIA_OP_PROGRAM_ADDRESS,
@@ -164,7 +312,7 @@ export const makeInitInitializeMarketCompDefIxAsync = async (
  * - optional (auto): arciumProgram, systemProgram
  */
 export const makeInitInitializeUserPositionCompDefIxAsync = async (
-	_accounts: MakeInitInitializeUserPositionCompDefIxAsyncAccounts,
+	_accounts: MakeInitInitializeUserPositionCompDefIxAsyncInput,
 ) => {
 	const instruction = Pythia.getInitInitializeUserPositionCompDefInstruction(_accounts, {
 		programAddress: PYTHIA_OP_PROGRAM_ADDRESS,
@@ -180,7 +328,7 @@ export const makeInitInitializeUserPositionCompDefIxAsync = async (
  * - optional (auto): arciumProgram, systemProgram
  */
 export const makeInitProcessPrivateTradeCompDefIxAsync = async (
-	_accounts: MakeInitProcessPrivateTradeCompDefIxAsyncAccounts,
+	_accounts: MakeInitProcessPrivateTradeCompDefIxAsyncInput,
 ) => {
 	const instruction = Pythia.getInitProcessPrivateTradeCompDefInstruction(_accounts, {
 		programAddress: PYTHIA_OP_PROGRAM_ADDRESS,
@@ -196,7 +344,7 @@ export const makeInitProcessPrivateTradeCompDefIxAsync = async (
  * - optional (auto): arciumProgram, systemProgram
  */
 export const makeInitUpdateUserPositionCompDefIxAsync = async (
-	_accounts: MakeInitUpdateUserPositionCompDefIxAsyncAccounts,
+	_accounts: MakeInitUpdateUserPositionCompDefIxAsyncInput,
 ) => {
 	const instruction = Pythia.getInitUpdateUserPositionCompDefInstruction(_accounts, {
 		programAddress: PYTHIA_OP_PROGRAM_ADDRESS,
@@ -212,7 +360,7 @@ export const makeInitUpdateUserPositionCompDefIxAsync = async (
  * - optional (auto): arciumProgram, systemProgram
  */
 export const makeInitClosePositionCompDefIxAsync = async (
-	_accounts: MakeInitClosePositionCompDefIxAsyncAccounts,
+	_accounts: MakeInitClosePositionCompDefIxAsyncInput,
 ) => {
 	const instruction = Pythia.getInitClosePositionCompDefInstruction(_accounts, {
 		programAddress: PYTHIA_OP_PROGRAM_ADDRESS,
@@ -228,7 +376,7 @@ export const makeInitClosePositionCompDefIxAsync = async (
  * - optional (auto): arciumProgram, systemProgram
  */
 export const makeInitRevealMarketStateCompDefIxAsync = async (
-	_accounts: MakeInitRevealMarketStateCompDefIxAsyncAccounts,
+	_accounts: MakeInitRevealMarketStateCompDefIxAsyncInput,
 ) => {
 	const instruction = Pythia.getInitRevealMarketStateCompDefInstruction(_accounts, {
 		programAddress: PYTHIA_OP_PROGRAM_ADDRESS,
@@ -244,7 +392,7 @@ export const makeInitRevealMarketStateCompDefIxAsync = async (
  * - optional (auto): arciumProgram, systemProgram
  */
 export const makeInitRevealUserPositionCompDefIxAsync = async (
-	_accounts: MakeInitRevealUserPositionCompDefIxAsyncAccounts,
+	_accounts: MakeInitRevealUserPositionCompDefIxAsyncInput,
 ) => {
 	const instruction = Pythia.getInitRevealUserPositionCompDefInstruction(_accounts, {
 		programAddress: PYTHIA_OP_PROGRAM_ADDRESS,
@@ -260,7 +408,7 @@ export const makeInitRevealUserPositionCompDefIxAsync = async (
  * - optional (auto): arciumProgram, systemProgram
  */
 export const makeInitHideMarketStateCompDefIxAsync = async (
-	_accounts: MakeInitHideMarketStateCompDefIxAsyncAccounts,
+	_accounts: MakeInitHideMarketStateCompDefIxAsyncInput,
 ) => {
 	const instruction = Pythia.getInitHideMarketStateCompDefInstruction(_accounts, {
 		programAddress: PYTHIA_OP_PROGRAM_ADDRESS,
@@ -276,7 +424,7 @@ export const makeInitHideMarketStateCompDefIxAsync = async (
  * - optional (auto): arciumProgram, systemProgram
  */
 export const makeInitViewMarketStateCompDefIxAsync = async (
-	_accounts: MakeInitViewMarketStateCompDefIxAsyncAccounts,
+	_accounts: MakeInitViewMarketStateCompDefIxAsyncInput,
 ) => {
 	const instruction = Pythia.getInitViewMarketStateCompDefInstruction(_accounts, {
 		programAddress: PYTHIA_OP_PROGRAM_ADDRESS,
@@ -292,7 +440,7 @@ export const makeInitViewMarketStateCompDefIxAsync = async (
  * - optional (auto): arciumProgram, systemProgram
  */
 export const makeInitViewUserPositionCompDefIxAsync = async (
-	_accounts: MakeInitViewUserPositionCompDefIxAsyncAccounts,
+	_accounts: MakeInitViewUserPositionCompDefIxAsyncInput,
 ) => {
 	const instruction = Pythia.getInitViewUserPositionCompDefInstruction(_accounts, {
 		programAddress: PYTHIA_OP_PROGRAM_ADDRESS,
@@ -314,16 +462,14 @@ export const makeInitViewUserPositionCompDefIxAsync = async (
  * - optional (auto): market (PDA: seeds ["market", sponsorAccount, question]), systemProgram
  * Auto-derives market PDA when omitted.
  * Example:
- *   await makeInitializeMarketIxAsync(args, { sponsor, sponsorAccount })
+ *   await makeInitializeMarketIxAsync({ sponsor, sponsorAccount, ...args })
  */
 export const makeInitializeMarketIxAsync = async (
-	_args: MakeInitializeMarketIxAsyncArguments,
-	_accounts: MakeInitializeMarketIxAsyncAccounts,
+	_input: MakeInitializeMarketIxAsyncInput,
 ) => {
-	const instruction = await Pythia.getInitMarketInstructionAsync(
-		{ ..._accounts, ..._args },
-		{ programAddress: PYTHIA_OP_PROGRAM_ADDRESS },
-	);
+	const instruction = await Pythia.getInitMarketInstructionAsync(_input, {
+		programAddress: PYTHIA_OP_PROGRAM_ADDRESS,
+	});
 	return instruction;
 };
 
@@ -337,16 +483,14 @@ export const makeInitializeMarketIxAsync = async (
  * - required: payer (signer), market, mxeAccount, mempoolAccount, executingPool, computationAccount, compDefAccount, clusterAccount
  * - optional (auto): signPdaAccount (PDA: ["SignerAccount"]), poolAccount, clockAccount, systemProgram, arciumProgram
  * Example:
- *   await makeInitializeMarketEncryptedIxAsync(args, accounts)
+ *   await makeInitializeMarketEncryptedIxAsync({ payer, market, ...args })
  */
 export const makeInitializeMarketEncryptedIxAsync = async (
-	_args: MakeInitializeMarketEncryptedIxAsyncArguments,
-	_accounts: MakeInitializeMarketEncryptedIxAsyncAccounts,
+	_input: MakeInitializeMarketEncryptedIxAsyncInput,
 ) => {
-	const instruction = await Pythia.getInitMarketEncryptedInstructionAsync(
-		{ ..._accounts, ..._args },
-		{ programAddress: PYTHIA_OP_PROGRAM_ADDRESS },
-	);
+	const instruction = await Pythia.getInitMarketEncryptedInstructionAsync(_input, {
+		programAddress: PYTHIA_OP_PROGRAM_ADDRESS,
+	});
 	return instruction;
 };
 
@@ -360,16 +504,14 @@ export const makeInitializeMarketEncryptedIxAsync = async (
  * - optional (auto): userPosition (PDA: ["user_position", market, user]), signPdaAccount (PDA: ["SignerAccount"]), poolAccount, clockAccount, systemProgram, arciumProgram
  * Auto-derives userPosition/sign PDA and fills default programs.
  * Example:
- *   await makeInitUserPositionIxAsync(args, { user, market, ... })
+ *   await makeInitUserPositionIxAsync({ user, market, ...args })
  */
 export const makeInitUserPositionIxAsync = async (
-	_args: MakeInitUserPositionIxAsyncArguments,
-	_accounts: MakeInitUserPositionIxAsyncAccounts,
+	_input: MakeInitUserPositionIxAsyncInput,
 ) => {
-	const instruction = await Pythia.getInitUserPositionInstructionAsync(
-		{ ..._accounts, ..._args },
-		{ programAddress: PYTHIA_OP_PROGRAM_ADDRESS },
-	);
+	const instruction = await Pythia.getInitUserPositionInstructionAsync(_input, {
+		programAddress: PYTHIA_OP_PROGRAM_ADDRESS,
+	});
 	return instruction;
 };
 
@@ -385,16 +527,14 @@ export const makeInitUserPositionIxAsync = async (
  * - optional (auto): signPdaAccount (PDA: ["SignerAccount"]), poolAccount, clockAccount, systemProgram, arciumProgram
  * Auto-derives Sign PDA and fills default programs.
  * Example:
- *   await makePrivateTradeIxAsync(args, { payer, market, ... })
+ *   await makePrivateTradeIxAsync({ payer, market, ...args })
  */
 export const makePrivateTradeIxAsync = async (
-	_args: MakePrivateTradeIxAsyncArguments,
-	_accounts: MakePrivateTradeIxAsyncAccounts,
+	_input: MakePrivateTradeIxAsyncInput,
 ) => {
-	const instruction = await Pythia.getTradePrivateInstructionAsync(
-		{ ..._accounts, ..._args },
-		{ programAddress: PYTHIA_OP_PROGRAM_ADDRESS },
-	);
+	const instruction = await Pythia.getTradePrivateInstructionAsync(_input, {
+		programAddress: PYTHIA_OP_PROGRAM_ADDRESS,
+	});
 	return instruction;
 };
 
@@ -411,13 +551,11 @@ export const makePrivateTradeIxAsync = async (
  * Auto-derives userPosition/sign PDA and fills defaults.
  */
 export const makeUpdateUserPositionPrivateIxAsync = async (
-	_args: MakeUpdateUserPositionPrivateIxAsyncArguments,
-	_accounts: MakeUpdateUserPositionPrivateIxAsyncAccounts,
+	_input: MakeUpdateUserPositionPrivateIxAsyncInput,
 ) => {
-	const instruction = await Pythia.getUpdateUserPositionPrivateInstructionAsync(
-		{ ..._accounts, ..._args },
-		{ programAddress: PYTHIA_OP_PROGRAM_ADDRESS },
-	);
+	const instruction = await Pythia.getUpdateUserPositionPrivateInstructionAsync(_input, {
+		programAddress: PYTHIA_OP_PROGRAM_ADDRESS,
+	});
 	return instruction;
 };
 
@@ -434,13 +572,11 @@ export const makeUpdateUserPositionPrivateIxAsync = async (
  * Auto-derives userPosition/sign PDA and fills defaults.
  */
 export const makeClosePositionPrivateIxAsync = async (
-	_args: MakeClosePositionPrivateIxAsyncArguments,
-	_accounts: MakeClosePositionPrivateIxAsyncAccounts,
+	_input: MakeClosePositionPrivateIxAsyncInput,
 ) => {
-	const instruction = await Pythia.getClosePositionPrivateInstructionAsync(
-		{ ..._accounts, ..._args },
-		{ programAddress: PYTHIA_OP_PROGRAM_ADDRESS },
-	);
+	const instruction = await Pythia.getClosePositionPrivateInstructionAsync(_input, {
+		programAddress: PYTHIA_OP_PROGRAM_ADDRESS,
+	});
 	return instruction;
 };
 
@@ -453,13 +589,11 @@ export const makeClosePositionPrivateIxAsync = async (
  * - optional (auto): signPdaAccount (PDA: ["SignerAccount"]), poolAccount, clockAccount, systemProgram, arciumProgram
  */
 export const makeSwitchToPublicIxAsync = async (
-	_args: MakeSwitchToPublicIxAsyncArguments,
-	_accounts: MakeSwitchToPublicIxAsyncAccounts,
+	_input: MakeSwitchToPublicIxAsyncInput,
 ) => {
-	const instruction = await Pythia.getSwitchToPublicInstructionAsync(
-		{ ..._accounts, ..._args },
-		{ programAddress: PYTHIA_OP_PROGRAM_ADDRESS },
-	);
+	const instruction = await Pythia.getSwitchToPublicInstructionAsync(_input, {
+		programAddress: PYTHIA_OP_PROGRAM_ADDRESS,
+	});
 	return instruction;
 };
 
@@ -473,13 +607,11 @@ export const makeSwitchToPublicIxAsync = async (
  * Note: No async client builder; this returns a resolved sync instruction.
  */
 export const makePublicTradeIxAsync = async (
-	_args: MakePublicTradeIxAsyncArguments,
-	_accounts: MakePublicTradeIxAsyncAccounts,
+	_input: MakePublicTradeIxAsyncInput,
 ) => {
-	const instruction = Pythia.getTradePublicInstruction(
-		{ ..._accounts, ..._args },
-		{ programAddress: PYTHIA_OP_PROGRAM_ADDRESS },
-	);
+	const instruction = Pythia.getTradePublicInstruction(_input, {
+		programAddress: PYTHIA_OP_PROGRAM_ADDRESS,
+	});
 	return instruction;
 };
 
@@ -493,13 +625,11 @@ export const makePublicTradeIxAsync = async (
  * - optional (auto): signPdaAccount (PDA: ["SignerAccount"]), poolAccount, clockAccount, systemProgram, arciumProgram
  */
 export const makeSwitchToPrivateIxAsync = async (
-	_args: MakeSwitchToPrivateIxAsyncArguments,
-	_accounts: MakeSwitchToPrivateIxAsyncAccounts,
+	_input: MakeSwitchToPrivateIxAsyncInput,
 ) => {
-	const instruction = await Pythia.getSwitchToPrivateInstructionAsync(
-		{ ..._accounts, ..._args },
-		{ programAddress: PYTHIA_OP_PROGRAM_ADDRESS },
-	);
+	const instruction = await Pythia.getSwitchToPrivateInstructionAsync(_input, {
+		programAddress: PYTHIA_OP_PROGRAM_ADDRESS,
+	});
 	return instruction;
 };
 
@@ -513,13 +643,11 @@ export const makeSwitchToPrivateIxAsync = async (
  * - optional (auto): signPdaAccount (PDA: ["SignerAccount"]), poolAccount, clockAccount, systemProgram, arciumProgram
  */
 export const makeGetSponsorViewIxAsync = async (
-	_args: MakeGetSponsorViewIxAsyncArguments,
-	_accounts: MakeGetSponsorViewIxAsyncAccounts,
+	_input: MakeGetSponsorViewIxAsyncInput,
 ) => {
-	const instruction = await Pythia.getGetSponsorViewInstructionAsync(
-		{ ..._accounts, ..._args },
-		{ programAddress: PYTHIA_OP_PROGRAM_ADDRESS },
-	);
+	const instruction = await Pythia.getGetSponsorViewInstructionAsync(_input, {
+		programAddress: PYTHIA_OP_PROGRAM_ADDRESS,
+	});
 	return instruction;
 };
 
@@ -533,13 +661,11 @@ export const makeGetSponsorViewIxAsync = async (
  * - optional (auto): signPdaAccount (PDA: ["SignerAccount"]), poolAccount, clockAccount, systemProgram, arciumProgram
  */
 export const makeGetUserPositionViewIxAsync = async (
-	_args: MakeGetUserPositionViewIxAsyncArguments,
-	_accounts: MakeGetUserPositionViewIxAsyncAccounts,
+	_input: MakeGetUserPositionViewIxAsyncInput,
 ) => {
-	const instruction = await Pythia.getGetUserPositionViewInstructionAsync(
-		{ ..._accounts, ..._args },
-		{ programAddress: PYTHIA_OP_PROGRAM_ADDRESS },
-	);
+	const instruction = await Pythia.getGetUserPositionViewInstructionAsync(_input, {
+		programAddress: PYTHIA_OP_PROGRAM_ADDRESS,
+	});
 	return instruction;
 };
 
@@ -552,12 +678,10 @@ export const makeGetUserPositionViewIxAsync = async (
  * Note: No async client builder; this returns a resolved sync instruction.
  */
 export const makeResolveMarketIxAsync = async (
-	_args: MakeResolveMarketIxAsyncArguments,
-	_accounts: MakeResolveMarketIxAsyncAccounts,
+	_input: MakeResolveMarketIxAsyncInput,
 ) => {
-	const instruction = Pythia.getResolveMarketInstruction(
-		{ ..._accounts, ..._args },
-		{ programAddress: PYTHIA_OP_PROGRAM_ADDRESS },
-	);
+	const instruction = Pythia.getResolveMarketInstruction(_input, {
+		programAddress: PYTHIA_OP_PROGRAM_ADDRESS,
+	});
 	return instruction;
 };
